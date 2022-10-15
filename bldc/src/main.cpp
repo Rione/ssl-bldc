@@ -1,5 +1,4 @@
 #include <Arduino.h>
-
 #include <SimpleFOC.h>
 
 // magnetic sensor instance - SPI
