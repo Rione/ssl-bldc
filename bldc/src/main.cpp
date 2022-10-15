@@ -55,7 +55,7 @@ void setup() {
     // default 5ms - try different values to see what is the best.
     // the lower the less filtered
     motor.LPF_velocity.Tf = 0.01f;
-
+    motor.velocity_limit = 100;
     // use monitoring with serial
     Serial.begin(115200);
     // comment out if not needed needed
