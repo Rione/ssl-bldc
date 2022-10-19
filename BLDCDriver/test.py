@@ -33,7 +33,7 @@ plt.plot(tau(3), func(tau(3)), marker='.')
 # plt.plot(tau(5), func(tau(5)), marker='.')
 # plt.plot(tau(6), func(tau(6)), marker='.')
 plt.xlabel('t')
-plt.ylabel('E[V]')
+plt.ylabel('E[V] i(t)')
 # plt.show()
 
 
