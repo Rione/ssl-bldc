@@ -47,7 +47,7 @@ def i(t):
 plt.plot(t, i(t))
 
 plt.xlabel('t')
-plt.ylabel('i(t)')
+# plt.ylabel('i(t)')
 
 # plt.plot(0.5 * Cg * Rg, i(0.5 * Cg * Rg), marker='.')
 # plt.plot(0.25 * Cg * Rg, i(0.25 * Cg * Rg), marker='.')
