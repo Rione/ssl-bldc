@@ -1,56 +1,63 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-#ゲート入力電荷量 4.65nC
+# ゲート入力電荷量 4.65nC
 Qg = 4.65e-9
 
-#ゲートスイッチ電荷量 6.4nC
+# ゲートスイッチ電荷量 6.4nC
 Qs = 6.4e-9
 
-#ゲートソース電圧
+# ゲートソース電圧
 Vgs = 16.4
 
-#ゲート抵抗 1.1Ω
-Rg = 1.1
+# 寄生ゲート抵抗 1.1Ω
+Rs = 1.1
 
-#ゲート入力容量F
+# 追加するゲート抵抗
+Rg = 30
+
+# ゲート抵抗の和
+R = Rg + Rs
+
+# ゲート入力容量F
 Cg = Qg / Vgs + Qs / Vgs
 
-t = np.linspace(0.0000000001,  4 * Rg * Cg, 100)
+t = np.linspace(0.000000001,  6 * R * Cg, 100)
+
+
 def tau(x):
-    return x * Cg * Rg
+    return x * Cg * R
 
 
 def func(t):
-    return Vgs * (1 - np.exp(-t / (Rg * Cg)))
+    return Vgs * (1 - np.exp(-t / (R * Cg)))
 
 
 plt.plot(t, func(t))
-plt.plot(tau(1), func(tau(1)), marker='.')
-plt.plot(tau(2), func(tau(2)), marker='.')
-plt.plot(tau(3), func(tau(3)), marker='.')
-# plt.plot(tau(4), func(tau(4)), marker='.')
-# plt.plot(tau(5), func(tau(5)), marker='.')
-# plt.plot(tau(6), func(tau(6)), marker='.')
+plt.plot(tau(1), func(tau(1)), marker='.')  # 1τ
+plt.plot(t, func(t))
+plt.plot(tau(3), func(tau(3)), marker='.')  # 1τ
 plt.xlabel('t')
-plt.ylabel('E[V] i(t)')
-# plt.show()
-
-
-t = np.linspace(0.0000000001,  4 * Rg * Cg, 100)
+# plt.ylabel('i(t)')
 
 
 def i(t):
-    return Vgs / (Rg * (1 - np.exp(-t / (Rg * Cg))))
+    return Vgs / (R * (1 - np.exp(-t / (R * Cg))))
 
 
 plt.plot(t, i(t))
 
 plt.xlabel('t')
 # plt.ylabel('i(t)')
+plt.plot(1 * Cg * R, i(1 * Cg * R), marker='.')
+plt.plot(3 * Cg * R, i(3 * Cg * R), marker='.')
 
-# plt.plot(0.5 * Cg * Rg, i(0.5 * Cg * Rg), marker='.')
-# plt.plot(0.25 * Cg * Rg, i(0.25 * Cg * Rg), marker='.')
-# plt.plot(0.125 * Cg * Rg, i(0.125 * Cg * Rg), marker='.')
-plt.plot(Cg *Rg, i(Cg * Rg), marker='.')
+
+I = i(1 * Cg * R)
+T = 1 * Cg * R * 1e9  # ns
+# print Current
+print('Current' + '{:.4g}'.format(I), "A")
+# print time ns
+print('{:.4g}'.format(T), "ns")
+
 plt.show()
