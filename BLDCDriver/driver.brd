@@ -1428,6 +1428,10 @@ design rules under a new name.</description>
 <attribute name="NAME" x="-64.77" y="-10.776" size="1.27" layer="25"/>
 <attribute name="VALUE" x="-64.624" y="-17.7501" size="1.27" layer="27"/>
 </element>
+<element name="C16" library="SparkFun-Capacitors" package="1210" value="22UF-1210" x="-64.77" y="-55.88" smashed="yes">
+<attribute name="NAME" x="-64.77" y="-54.483" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center"/>
+<attribute name="VALUE" x="-64.77" y="-57.277" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
+</element>
 </elements>
 <signals>
 <signal name="GND">
@@ -1441,8 +1445,6 @@ design rules under a new name.</description>
 <contactref element="C7" pad="1"/>
 <contactref element="Q1" pad="G"/>
 <contactref element="C4" pad="2"/>
-<contactref element="C8" pad="1"/>
-<contactref element="C9" pad="1"/>
 <contactref element="C10" pad="2"/>
 <contactref element="R7" pad="1"/>
 <contactref element="FFC1" pad="5"/>
@@ -1465,6 +1467,10 @@ design rules under a new name.</description>
 <contactref element="R22" pad="2"/>
 <contactref element="NUCLEO_MAIN" pad="VSS"/>
 <contactref element="NUCLEO_MAIN" pad="VREF-"/>
+<contactref element="C8" pad="1"/>
+<contactref element="C9" pad="1"/>
+<contactref element="C16" pad="1"/>
+<wire x1="-65.19" y1="-51.435" x2="-66.525" y2="-55.88" width="0" layer="19" extent="1-1"/>
 <wire x1="-65.19" y1="-47.625" x2="-65.19" y2="-51.435" width="0" layer="19" extent="1-1"/>
 <wire x1="-61.38" y1="-47.625" x2="-65.19" y2="-47.625" width="0" layer="19" extent="1-1"/>
 <wire x1="-57.57" y1="-47.625" x2="-61.38" y2="-47.625" width="0" layer="19" extent="1-1"/>
@@ -1526,11 +1532,13 @@ design rules under a new name.</description>
 <contactref element="C4" pad="1"/>
 <contactref element="C8" pad="2"/>
 <contactref element="C9" pad="2"/>
-<wire x1="-28.448" y1="49.53" x2="-14.755" y2="49.53" width="0" layer="19" extent="1-1"/>
-<wire x1="-50.38" y1="48.26" x2="-28.448" y2="49.53" width="0" layer="19" extent="1-1"/>
-<wire x1="-50.315" y1="40.64" x2="-50.38" y2="48.26" width="0" layer="19" extent="1-1"/>
-<wire x1="-50.195" y1="22.61" x2="-50.315" y2="40.64" width="0" layer="19" extent="1-1"/>
-<wire x1="-16.77" y1="4.55" x2="-50.195" y2="22.61" width="0" layer="19" extent="1-1"/>
+<contactref element="C16" pad="2"/>
+<wire x1="-16.77" y1="4.55" x2="-63.015" y2="-55.88" width="0" layer="19" extent="1-1"/>
+<wire x1="-50.195" y1="22.61" x2="-16.77" y2="4.55" width="0" layer="19" extent="1-1"/>
+<wire x1="-50.315" y1="40.64" x2="-50.195" y2="22.61" width="0" layer="19" extent="1-1"/>
+<wire x1="-50.38" y1="48.26" x2="-50.315" y2="40.64" width="0" layer="19" extent="1-1"/>
+<wire x1="-28.448" y1="49.53" x2="-50.38" y2="48.26" width="0" layer="19" extent="1-1"/>
+<wire x1="-14.755" y1="49.53" x2="-28.448" y2="49.53" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="DT">
 <contactref element="U1" pad="DT"/>

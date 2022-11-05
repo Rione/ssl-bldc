@@ -2950,6 +2950,7 @@ LED</description>
 <part name="P+5" library="audio amplifier example" library_urn="urn:adsk.eagle:library:970892" deviceset="VCC" device=""/>
 <part name="P+6" library="audio amplifier example" library_urn="urn:adsk.eagle:library:970892" deviceset="VCC" device=""/>
 <part name="GND18" library="supply" deviceset="GND" device=""/>
+<part name="C16" library="SparkFun-Capacitors" deviceset="22UF" device="-1210-16V-20%" value="22UF-1210"/>
 </parts>
 <sheets>
 <sheet>
@@ -3002,10 +3003,10 @@ LED</description>
 <text x="45.72" y="123.825" size="1.778" layer="94" align="center">serial</text>
 <circle x="83.82" y="217.805" radius="1.27" width="0.1524" layer="94"/>
 <circle x="111.76" y="184.785" radius="1.27" width="0.1524" layer="94"/>
-<wire x1="0" y1="227.965" x2="0" y2="116.205" width="0.1524" layer="94"/>
-<wire x1="0" y1="116.205" x2="198.755" y2="116.84" width="0.1524" layer="94"/>
+<wire x1="0" y1="228.6" x2="0" y2="116.84" width="0.1524" layer="94"/>
+<wire x1="0" y1="116.84" x2="198.755" y2="116.84" width="0.1524" layer="94"/>
 <wire x1="198.755" y1="116.84" x2="198.755" y2="228.6" width="0.1524" layer="94"/>
-<wire x1="198.755" y1="228.6" x2="0" y2="227.965" width="0.1524" layer="94"/>
+<wire x1="198.755" y1="228.6" x2="0" y2="228.6" width="0.1524" layer="94"/>
 <text x="1.27" y="224.79" size="1.778" layer="94">STM32F446RET6</text>
 </plain>
 <instances>
@@ -3126,8 +3127,8 @@ LED</description>
 <attribute name="NAME" x="42.291" y="85.979" size="1.778" layer="95" font="vector" rot="R180"/>
 <attribute name="VALUE" x="44.831" y="87.884" size="0.762" layer="96" font="vector" rot="R180"/>
 </instance>
-<instance part="C9" gate="G$1" x="45.085" y="83.82" smashed="yes" rot="R180">
-<attribute name="NAME" x="48.641" y="85.979" size="1.778" layer="95" font="vector" rot="R180"/>
+<instance part="C9" gate="G$1" x="44.45" y="83.82" smashed="yes" rot="R180">
+<attribute name="NAME" x="48.006" y="85.979" size="1.778" layer="95" font="vector" rot="R180"/>
 </instance>
 <instance part="GND6" gate="1" x="32.385" y="72.39" smashed="yes">
 <attribute name="VALUE" x="32.385" y="72.136" size="1.778" layer="96" align="top-center"/>
@@ -3289,6 +3290,10 @@ LED</description>
 <instance part="GND18" gate="1" x="189.23" y="127" smashed="yes">
 <attribute name="VALUE" x="186.69" y="124.46" size="1.778" layer="96"/>
 </instance>
+<instance part="C16" gate="G$1" x="50.165" y="83.82" smashed="yes" rot="R180">
+<attribute name="NAME" x="53.721" y="85.979" size="1.778" layer="95" font="vector" rot="R180"/>
+<attribute name="VALUE" x="56.261" y="87.884" size="0.762" layer="96" font="vector" rot="R180"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -3339,20 +3344,22 @@ LED</description>
 <pinref part="Q1" gate="G$1" pin="G"/>
 <wire x1="15.24" y1="81.28" x2="15.24" y2="76.835" width="0.1524" layer="91"/>
 <pinref part="C4" gate="G$1" pin="2"/>
-<pinref part="C8" gate="G$1" pin="1"/>
-<pinref part="C9" gate="G$1" pin="1"/>
-<wire x1="38.735" y1="78.74" x2="41.91" y2="78.74" width="0.1524" layer="91"/>
-<wire x1="41.91" y1="78.74" x2="45.085" y2="78.74" width="0.1524" layer="91"/>
-<wire x1="41.91" y1="78.74" x2="41.91" y2="76.835" width="0.1524" layer="91"/>
-<junction x="41.91" y="78.74"/>
 <wire x1="24.13" y1="76.835" x2="24.13" y2="78.74" width="0.1524" layer="91"/>
 <wire x1="24.13" y1="76.835" x2="15.24" y2="76.835" width="0.1524" layer="91"/>
 <junction x="24.13" y="76.835"/>
 <pinref part="GND6" gate="1" pin="GND"/>
 <wire x1="24.13" y1="76.835" x2="32.385" y2="76.835" width="0.1524" layer="91"/>
-<wire x1="32.385" y1="76.835" x2="41.91" y2="76.835" width="0.1524" layer="91"/>
+<wire x1="32.385" y1="76.835" x2="44.45" y2="76.835" width="0.1524" layer="91"/>
 <wire x1="32.385" y1="74.93" x2="32.385" y2="76.835" width="0.1524" layer="91"/>
 <junction x="32.385" y="76.835"/>
+<pinref part="C9" gate="G$1" pin="1"/>
+<pinref part="C16" gate="G$1" pin="1"/>
+<wire x1="50.165" y1="78.74" x2="44.45" y2="78.74" width="0.1524" layer="91"/>
+<junction x="44.45" y="78.74"/>
+<pinref part="C8" gate="G$1" pin="1"/>
+<wire x1="38.735" y1="78.74" x2="44.45" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="44.45" y1="78.105" x2="44.45" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="44.45" y1="78.74" x2="44.45" y2="76.835" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="C10" gate="G$1" pin="2"/>
@@ -3532,11 +3539,13 @@ LED</description>
 <junction x="24.13" y="86.36"/>
 <pinref part="C8" gate="G$1" pin="2"/>
 <junction x="38.735" y="86.36"/>
-<wire x1="38.735" y1="86.36" x2="45.085" y2="86.36" width="0.1524" layer="91"/>
+<wire x1="38.735" y1="86.36" x2="44.45" y2="86.36" width="0.1524" layer="91"/>
 <pinref part="C9" gate="G$1" pin="2"/>
-<junction x="45.085" y="86.36"/>
-<wire x1="45.085" y1="86.36" x2="50.165" y2="86.36" width="0.1524" layer="91"/>
+<junction x="44.45" y="86.36"/>
+<wire x1="44.45" y1="86.36" x2="50.165" y2="86.36" width="0.1524" layer="91"/>
 <wire x1="50.165" y1="86.36" x2="50.165" y2="89.535" width="0.1524" layer="91"/>
+<pinref part="C16" gate="G$1" pin="2"/>
+<junction x="50.165" y="86.36"/>
 </segment>
 </net>
 <net name="DT" class="0">
