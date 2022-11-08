@@ -2144,27 +2144,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <rectangle x1="0.3302" y1="-0.4699" x2="0.8303" y2="0.4801" layer="51"/>
 <rectangle x1="-0.1999" y1="-0.3" x2="0.1999" y2="0.3" layer="35"/>
 </package>
-<package name="LED-1206" urn="urn:adsk.eagle:footprint:39304/1" library_version="54" library_locally_modified="yes">
-<description>&lt;h3&gt;LED 1206 SMT&lt;/h3&gt;
-
-1206, surface mount. 
-
-&lt;p&gt;Specifications:
-&lt;ul&gt;&lt;li&gt;Pin count: 2&lt;/li&gt;
-&lt;li&gt;Pin pitch: &lt;/li&gt;
-&lt;li&gt;Area: 0.125" x 0.06"&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;
-&lt;p&gt;Example device(s):
-&lt;ul&gt;&lt;li&gt;LED&lt;/li&gt;&lt;/ul&gt;</description>
-<wire x1="2.4" y1="0.6825" x2="2.4" y2="-0.6825" width="0.2032" layer="21"/>
-<wire x1="0.65375" y1="0.6825" x2="0.65375" y2="-0.6825" width="0.2032" layer="51"/>
-<wire x1="0.635" y1="0" x2="0.15875" y2="0.47625" width="0.2032" layer="51"/>
-<wire x1="0.635" y1="0" x2="0.15875" y2="-0.47625" width="0.2032" layer="51"/>
-<smd name="A" x="-1.5" y="0" dx="1.2" dy="1.4" layer="1"/>
-<smd name="C" x="1.5" y="0" dx="1.2" dy="1.4" layer="1"/>
-<text x="0" y="0.9525" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center">&gt;NAME</text>
-<text x="0" y="-0.9525" size="0.6096" layer="27" font="vector" ratio="20" align="top-center">&gt;VALUE</text>
-</package>
 </packages>
 <packages3d>
 <package3d name="0603" urn="urn:adsk.eagle:package:17412407/2" type="model" library_version="54" library_locally_modified="yes">
@@ -2179,22 +2158,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 &lt;p&gt;0.2mm courtyard excess rounded to nearest 0.05mm.&lt;/p&gt;</description>
 <packageinstances>
 <packageinstance name="R0603"/>
-</packageinstances>
-</package3d>
-<package3d name="LED-1206" urn="urn:adsk.eagle:package:17423055/2" type="model" library_version="54" library_locally_modified="yes">
-<description>LED 1206 SMT
-
-1206, surface mount. 
-
-Specifications:
-Pin count: 2
-Pin pitch: 
-Area: 0.125" x 0.06"
-
-Example device(s):
-LED</description>
-<packageinstances>
-<packageinstance name="LED-1206"/>
 </packageinstances>
 </package3d>
 </packages3d>
@@ -2223,31 +2186,6 @@ LED</description>
 <text x="0" y="-1.524" size="1.778" layer="96" font="vector" align="top-center">&gt;VALUE</text>
 <pin name="2" x="5.08" y="0" visible="off" length="short" direction="pas" swaplevel="1" rot="R180"/>
 <pin name="1" x="-5.08" y="0" visible="off" length="short" direction="pas" swaplevel="1"/>
-</symbol>
-<symbol name="LED" urn="urn:adsk.eagle:symbol:17423029/1" library_version="54" library_locally_modified="yes">
-<description>&lt;h3&gt;LED&lt;/h3&gt;
-&lt;p&gt;&lt;/p&gt;</description>
-<wire x1="1.27" y1="0" x2="0" y2="-2.54" width="0.254" layer="94"/>
-<wire x1="0" y1="-2.54" x2="-1.27" y2="0" width="0.254" layer="94"/>
-<wire x1="1.27" y1="-2.54" x2="0" y2="-2.54" width="0.254" layer="94"/>
-<wire x1="0" y1="-2.54" x2="-1.27" y2="-2.54" width="0.254" layer="94"/>
-<wire x1="1.27" y1="0" x2="-1.27" y2="0" width="0.254" layer="94"/>
-<wire x1="-2.032" y1="-0.762" x2="-3.429" y2="-2.159" width="0.1524" layer="94"/>
-<wire x1="-1.905" y1="-1.905" x2="-3.302" y2="-3.302" width="0.1524" layer="94"/>
-<text x="-3.429" y="-4.572" size="1.778" layer="95" font="vector" rot="R90">&gt;NAME</text>
-<text x="1.905" y="-4.572" size="1.778" layer="96" font="vector" rot="R90" align="top-left">&gt;VALUE</text>
-<pin name="C" x="0" y="-5.08" visible="off" length="short" direction="pas" rot="R90"/>
-<pin name="A" x="0" y="2.54" visible="off" length="short" direction="pas" rot="R270"/>
-<polygon width="0.1524" layer="94">
-<vertex x="-3.429" y="-2.159"/>
-<vertex x="-3.048" y="-1.27"/>
-<vertex x="-2.54" y="-1.778"/>
-</polygon>
-<polygon width="0.1524" layer="94">
-<vertex x="-3.302" y="-3.302"/>
-<vertex x="-2.921" y="-2.413"/>
-<vertex x="-2.413" y="-2.921"/>
-</polygon>
 </symbol>
 </symbols>
 <devicesets>
@@ -2289,25 +2227,6 @@ LED</description>
 <attribute name="PROD_ID" value="RES-07856"/>
 <attribute name="VALUE" value="1k"/>
 </technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="LED-SMD" urn="urn:adsk.eagle:component:17423057/3" prefix="LED" library_version="55">
-<gates>
-<gate name="G$1" symbol="LED" x="0" y="2.54"/>
-</gates>
-<devices>
-<device name="" package="LED-1206">
-<connects>
-<connect gate="G$1" pin="A" pad="A"/>
-<connect gate="G$1" pin="C" pad="C"/>
-</connects>
-<package3dinstances>
-<package3dinstance package3d_urn="urn:adsk.eagle:package:17423055/2"/>
-</package3dinstances>
-<technologies>
-<technology name=""/>
 </technologies>
 </device>
 </devices>
@@ -5154,7 +5073,6 @@ EIA Code 3216, Size A, 3.2 mm x 1.6 mm, grid 0.0125 inch</description>
 <part name="GND17" library="supply" deviceset="GND" device=""/>
 <part name="R18" library="Custom_Designed_By_Yusei" library_urn="urn:adsk.eagle:library:17377793" deviceset="RESISTOR" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:17422883/2" value="10k"/>
 <part name="SUPPLY11" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="VCC" device=""/>
-<part name="PILOT" library="Custom_Designed_By_Yusei" library_urn="urn:adsk.eagle:library:17377793" deviceset="LED-SMD" device="" package3d_urn="urn:adsk.eagle:package:17423055/2" value=""/>
 <part name="R20" library="Custom_Designed_By_Yusei" library_urn="urn:adsk.eagle:library:17377793" deviceset="RESISTOR" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:17422883/2" value="1k"/>
 <part name="R21" library="Custom_Designed_By_Yusei" library_urn="urn:adsk.eagle:library:17377793" deviceset="RESISTOR" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:17422883/2" value="1k"/>
 <part name="R22" library="Custom_Designed_By_Yusei" library_urn="urn:adsk.eagle:library:17377793" deviceset="RESISTOR" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:17422883/2" value="1k"/>
@@ -5209,6 +5127,7 @@ EIA Code 3216, Size A, 3.2 mm x 1.6 mm, grid 0.0125 inch</description>
 <part name="JP2" library="SparkFun-Jumpers" deviceset="JUMPER-SMT_3_1-NC_TRACE" device="_SILK"/>
 <part name="SUPPLY6" library="SparkFun-PowerSymbols" deviceset="VCC_1" device="" value="GVDD"/>
 <part name="JP3" library="adafruit" deviceset="PINHD-1X3" device="CB"/>
+<part name="D3" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="LED-WHITE" device="0603" package3d_urn="urn:adsk.eagle:package:39354/1" value="WHITE"/>
 </parts>
 <sheets>
 <sheet>
@@ -5406,10 +5325,6 @@ EIA Code 3216, Size A, 3.2 mm x 1.6 mm, grid 0.0125 inch</description>
 <instance part="SUPPLY11" gate="G$1" x="119.38" y="155.575" smashed="yes">
 <attribute name="VALUE" x="119.38" y="158.369" size="1.778" layer="96" align="bottom-center"/>
 </instance>
-<instance part="PILOT" gate="G$1" x="119.38" y="137.795" smashed="yes">
-<attribute name="NAME" x="115.951" y="133.223" size="1.778" layer="95" font="vector" rot="R90"/>
-<attribute name="VALUE" x="121.285" y="133.223" size="1.778" layer="96" font="vector" rot="R90" align="top-left"/>
-</instance>
 <instance part="R20" gate="G$1" x="119.38" y="147.955" smashed="yes" rot="R90">
 <attribute name="NAME" x="117.856" y="147.955" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
 <attribute name="VALUE" x="120.904" y="147.955" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
@@ -5583,6 +5498,10 @@ EIA Code 3216, Size A, 3.2 mm x 1.6 mm, grid 0.0125 inch</description>
 <instance part="JP3" gate="A" x="159.385" y="87.63" smashed="yes">
 <attribute name="VALUE" x="153.035" y="80.01" size="1.778" layer="96"/>
 </instance>
+<instance part="D3" gate="G$1" x="119.38" y="137.795" smashed="yes">
+<attribute name="NAME" x="117.729" y="131.191" size="1.778" layer="95" font="vector" rot="R90"/>
+<attribute name="VALUE" x="121.285" y="133.223" size="1.778" layer="96" font="vector" rot="R90" align="top-left"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -5705,11 +5624,11 @@ EIA Code 3216, Size A, 3.2 mm x 1.6 mm, grid 0.0125 inch</description>
 <wire x1="132.08" y1="132.715" x2="132.08" y2="128.905" width="0.1524" layer="91"/>
 <wire x1="132.08" y1="128.905" x2="152.4" y2="128.905" width="0.1524" layer="91"/>
 <junction x="152.4" y="128.905"/>
-<pinref part="PILOT" gate="G$1" pin="C"/>
 <wire x1="119.38" y1="132.715" x2="119.38" y2="128.905" width="0.1524" layer="91"/>
 <wire x1="119.38" y1="128.905" x2="132.08" y2="128.905" width="0.1524" layer="91"/>
 <junction x="132.08" y="128.905"/>
 <label x="154.94" y="128.905" size="1.778" layer="95"/>
+<pinref part="D3" gate="G$1" pin="C"/>
 </segment>
 <segment>
 <pinref part="R21" gate="G$1" pin="2"/>
@@ -6455,8 +6374,8 @@ EIA Code 3216, Size A, 3.2 mm x 1.6 mm, grid 0.0125 inch</description>
 <net name="POWERLED_RESISTOR" class="0">
 <segment>
 <pinref part="R20" gate="G$1" pin="1"/>
-<pinref part="PILOT" gate="G$1" pin="A"/>
 <wire x1="119.38" y1="142.875" x2="119.38" y2="140.335" width="0.1524" layer="91"/>
+<pinref part="D3" gate="G$1" pin="A"/>
 </segment>
 </net>
 <net name="LED2" class="0">
