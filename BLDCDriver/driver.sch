@@ -4658,6 +4658,11 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <junction x="133.985" y="78.74"/>
 <label x="131.445" y="78.74" size="0.762" layer="95" rot="MR0" xref="yes"/>
 </segment>
+<segment>
+<pinref part="JP3" gate="A" pin="2"/>
+<wire x1="156.845" y1="87.63" x2="151.13" y2="87.63" width="0.1524" layer="91"/>
+<label x="151.13" y="87.63" size="0.762" layer="95" rot="R180" xref="yes"/>
+</segment>
 </net>
 <net name="W" class="0">
 <segment>
@@ -4673,11 +4678,6 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <wire x1="165.862" y1="39.497" x2="165.862" y2="45.339" width="0.1524" layer="91"/>
 <junction x="165.862" y="39.497"/>
 <label x="165.862" y="45.339" size="0.762" layer="95" rot="R90" xref="yes"/>
-</segment>
-<segment>
-<pinref part="JP3" gate="A" pin="3"/>
-<wire x1="156.845" y1="85.09" x2="151.13" y2="85.09" width="0.1524" layer="91"/>
-<label x="151.13" y="85.09" size="0.762" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
 <pinref part="R11" gate="G$1" pin="2"/>
@@ -4709,13 +4709,6 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <pinref part="JP3" gate="A" pin="1"/>
 <wire x1="156.845" y1="90.17" x2="151.13" y2="90.17" width="0.1524" layer="91"/>
 <label x="151.13" y="90.17" size="0.762" layer="95" rot="R180" xref="yes"/>
-</segment>
-</net>
-<net name="V_CS" class="0">
-<segment>
-<pinref part="JP3" gate="A" pin="2"/>
-<wire x1="156.845" y1="87.63" x2="151.13" y2="87.63" width="0.1524" layer="91"/>
-<label x="151.13" y="87.63" size="0.762" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="HALL3" class="0">
@@ -5217,6 +5210,11 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <wire x1="133.985" y1="73.66" x2="131.445" y2="73.66" width="0.1524" layer="91"/>
 <junction x="133.985" y="73.66"/>
 <label x="131.445" y="73.66" size="0.762" layer="95" rot="MR0" xref="yes"/>
+</segment>
+<segment>
+<pinref part="JP3" gate="A" pin="3"/>
+<wire x1="156.845" y1="85.09" x2="151.13" y2="85.09" width="0.1524" layer="91"/>
+<label x="151.13" y="85.09" size="0.762" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="C_W" class="0">
