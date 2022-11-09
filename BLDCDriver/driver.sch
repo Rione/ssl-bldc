@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.05" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -3615,7 +3615,6 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <part name="GND16" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="C11" library="SparkFun-Capacitors" deviceset="0.1UF" device="-0603-100V-10%" value="0.1uF"/>
 <part name="C12" library="SparkFun-Capacitors" deviceset="0.1UF" device="-0603-100V-10%" value="0.1uF"/>
-<part name="C13" library="Custom_Designed_By_Yusei" library_urn="urn:adsk.eagle:library:17377793" deviceset="0.1UF_1608" device="" package3d_urn="urn:adsk.eagle:package:17412407/2" value="0.1UF"/>
 <part name="GND17" library="supply" deviceset="GND" device=""/>
 <part name="R18" library="Custom_Designed_By_Yusei" library_urn="urn:adsk.eagle:library:17377793" deviceset="RESISTOR" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:17422883/2" value="10k"/>
 <part name="SUPPLY11" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="VCC" device=""/>
@@ -3676,6 +3675,7 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <part name="GND18" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="C18" library="Custom_Designed_By_Yusei" library_urn="urn:adsk.eagle:library:17377793" deviceset="0.1UF_1608" device="" package3d_urn="urn:adsk.eagle:package:17412407/2" value="0.1UF"/>
 <part name="C10" library="Custom_Designed_By_Yusei" library_urn="urn:adsk.eagle:library:17377793" deviceset="0.1UF_1608" device="" package3d_urn="urn:adsk.eagle:package:17412407/2" value="0.1UF"/>
+<part name="R21" library="Custom_Designed_By_Yusei" library_urn="urn:adsk.eagle:library:17377793" deviceset="RESISTOR" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:17422883/2" value="10k"/>
 </parts>
 <sheets>
 <sheet>
@@ -3860,11 +3860,8 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <attribute name="NAME" x="166.624" y="198.501" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="169.164" y="197.231" size="1.778" layer="96" font="vector" rot="R270"/>
 </instance>
-<instance part="C13" gate="C$1" x="152.4" y="133.985" smashed="yes">
-<attribute name="NAME" x="153.924" y="136.906" size="1.778" layer="95" font="vector"/>
-</instance>
-<instance part="GND17" gate="1" x="152.4" y="126.365" smashed="yes">
-<attribute name="VALUE" x="149.86" y="123.825" size="1.778" layer="96"/>
+<instance part="GND17" gate="1" x="132.08" y="126.365" smashed="yes">
+<attribute name="VALUE" x="129.54" y="123.825" size="1.778" layer="96"/>
 </instance>
 <instance part="R18" gate="G$1" x="132.08" y="137.795" smashed="yes" rot="R90">
 <attribute name="NAME" x="130.556" y="137.795" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
@@ -4062,6 +4059,10 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <instance part="C10" gate="C$1" x="229.87" y="57.15" smashed="yes">
 <attribute name="NAME" x="231.394" y="54.991" size="1.778" layer="95" font="vector"/>
 </instance>
+<instance part="R21" gate="G$1" x="157.48" y="137.16" smashed="yes" rot="R90">
+<attribute name="NAME" x="155.956" y="137.16" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
+<attribute name="VALUE" x="159.004" y="137.16" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -4177,17 +4178,13 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <label x="88.9" y="123.825" size="0.762" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="C13" gate="C$1" pin="2"/>
 <pinref part="GND17" gate="1" pin="GND"/>
-<wire x1="152.4" y1="131.445" x2="152.4" y2="128.905" width="0.1524" layer="91"/>
 <pinref part="R18" gate="G$1" pin="1"/>
 <wire x1="132.08" y1="132.715" x2="132.08" y2="128.905" width="0.1524" layer="91"/>
-<wire x1="132.08" y1="128.905" x2="152.4" y2="128.905" width="0.1524" layer="91"/>
-<junction x="152.4" y="128.905"/>
 <wire x1="119.38" y1="132.715" x2="119.38" y2="128.905" width="0.1524" layer="91"/>
 <wire x1="119.38" y1="128.905" x2="132.08" y2="128.905" width="0.1524" layer="91"/>
 <junction x="132.08" y="128.905"/>
-<label x="154.94" y="128.905" size="1.778" layer="95"/>
+<label x="121.92" y="126.365" size="1.778" layer="95"/>
 <pinref part="D3" gate="G$1" pin="C"/>
 </segment>
 <segment>
@@ -4836,6 +4833,11 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <wire x1="229.87" y1="62.23" x2="232.41" y2="62.23" width="0.1524" layer="91"/>
 <junction x="229.87" y="62.23"/>
 </segment>
+<segment>
+<pinref part="R21" gate="G$1" pin="1"/>
+<wire x1="157.48" y1="132.08" x2="157.48" y2="129.54" width="0.1524" layer="91"/>
+<label x="157.48" y="129.54" size="0.762" layer="95" xref="yes"/>
+</segment>
 </net>
 <net name="C_V" class="0">
 <segment>
@@ -4950,11 +4952,6 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 </net>
 <net name="NRST" class="0">
 <segment>
-<label x="147.32" y="139.065" size="1.778" layer="95" rot="R180" xref="yes"/>
-<pinref part="C13" gate="C$1" pin="1"/>
-<wire x1="152.4" y1="139.065" x2="147.32" y2="139.065" width="0.1524" layer="91"/>
-</segment>
-<segment>
 <wire x1="12.7" y1="174.625" x2="33.02" y2="174.625" width="0.1524" layer="91"/>
 <label x="12.7" y="174.625" size="0.762" layer="95" rot="R180" xref="yes"/>
 <pinref part="NUCLEO_MAIN" gate="G$1" pin="NRST"/>
@@ -4963,6 +4960,11 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <pinref part="U$2" gate="G$1" pin="5"/>
 <wire x1="12.7" y1="134.62" x2="10.16" y2="134.62" width="0.1524" layer="91"/>
 <label x="10.16" y="134.62" size="0.762" layer="95" rot="R180" xref="yes"/>
+</segment>
+<segment>
+<pinref part="R21" gate="G$1" pin="2"/>
+<wire x1="157.48" y1="144.78" x2="157.48" y2="142.24" width="0.1524" layer="91"/>
+<label x="157.48" y="144.78" size="0.762" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="L" class="0">
