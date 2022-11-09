@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.025" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
@@ -5256,7 +5256,7 @@ EIA Code 3216, Size A, 3.2 mm x 1.6 mm, grid 0.0125 inch</description>
 </instance>
 <instance part="R11" gate="G$1" x="74.295" y="88.265" smashed="yes" rot="R180">
 <attribute name="NAME" x="74.295" y="86.741" size="1.778" layer="95" font="vector" rot="R180" align="bottom-center"/>
-<attribute name="VALUE" x="74.295" y="89.789" size="1.778" layer="96" font="vector" rot="R180" align="top-center"/>
+<attribute name="VALUE" x="69.215" y="89.789" size="1.778" layer="96" font="vector" rot="R180" align="top-center"/>
 </instance>
 <instance part="R12" gate="G$1" x="74.295" y="78.105" smashed="yes" rot="R180">
 <attribute name="NAME" x="74.295" y="76.581" size="1.778" layer="95" font="vector" rot="R180" align="bottom-center"/>
