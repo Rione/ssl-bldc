@@ -3593,8 +3593,6 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <part name="GND6" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND12" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="FFC1" library="MotorDriver_FourthEdition_prot" deviceset="FFC12_11PIN_1MM" device=""/>
-<part name="SUPPLY8" library="SparkFun-PowerSymbols" deviceset="VCC_1" device="" value="GVDD"/>
-<part name="GND11" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="U2" library="AS5048A-HTSP-500" deviceset="AS5048A-HTSP-500" device=""/>
 <part name="U4" library="NJM2732" deviceset="SOP80P620X125-8N" device=""/>
 <part name="R10" library="resistor-shunt" library_urn="urn:adsk.eagle:library:346" deviceset="SMS-REF" device="" package3d_urn="urn:adsk.eagle:package:25218/1"/>
@@ -3794,10 +3792,6 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <instance part="FFC1" gate="G$1" x="139.065" y="86.36" smashed="yes" rot="MR0">
 <attribute name="NAME" x="149.225" y="71.12" size="1.778" layer="94" rot="MR0"/>
 <attribute name="VALUE" x="149.225" y="102.87" size="1.778" layer="94" rot="MR0"/>
-</instance>
-<instance part="SUPPLY8" gate="G$2" x="124.46" y="101.6" smashed="yes"/>
-<instance part="GND11" gate="1" x="124.46" y="73.025" smashed="yes">
-<attribute name="VALUE" x="124.46" y="72.771" size="1.778" layer="96" align="top-center"/>
 </instance>
 <instance part="U2" gate="G$1" x="145.415" y="196.85" smashed="yes">
 <attribute name="NAME" x="135.2441" y="212.1063" size="1.27" layer="95"/>
@@ -4140,12 +4134,6 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <pinref part="R7" gate="G$1" pin="1"/>
 <wire x1="4.445" y1="34.29" x2="4.445" y2="31.75" width="0.1524" layer="91"/>
 <pinref part="GND12" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="FFC1" gate="G$1" pin="P$5"/>
-<pinref part="GND11" gate="1" pin="GND"/>
-<wire x1="124.46" y1="75.565" x2="124.46" y2="88.9" width="0.1524" layer="91"/>
-<wire x1="124.46" y1="88.9" x2="133.985" y2="88.9" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="U4" gate="G$1" pin="GND"/>
@@ -4711,34 +4699,7 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <label x="151.13" y="90.17" size="0.762" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
-<net name="HALL3" class="0">
-<segment>
-<pinref part="FFC1" gate="G$1" pin="P$2"/>
-<wire x1="133.985" y1="96.52" x2="129.54" y2="96.52" width="0.1524" layer="91"/>
-<label x="129.54" y="96.52" size="0.762" layer="95" rot="MR0" xref="yes"/>
-</segment>
-</net>
-<net name="HALL1" class="0">
-<segment>
-<pinref part="FFC1" gate="G$1" pin="P$3"/>
-<wire x1="133.985" y1="93.98" x2="129.54" y2="93.98" width="0.1524" layer="91"/>
-<label x="129.54" y="93.98" size="0.762" layer="95" rot="MR0" xref="yes"/>
-</segment>
-</net>
-<net name="HALL2" class="0">
-<segment>
-<pinref part="FFC1" gate="G$1" pin="P$4"/>
-<wire x1="133.985" y1="91.44" x2="129.54" y2="91.44" width="0.1524" layer="91"/>
-<label x="129.54" y="91.44" size="0.762" layer="95" rot="MR0" xref="yes"/>
-</segment>
-</net>
 <net name="5V" class="0">
-<segment>
-<pinref part="SUPPLY8" gate="G$2" pin="VCC_1"/>
-<pinref part="FFC1" gate="G$1" pin="P$1"/>
-<wire x1="133.985" y1="99.06" x2="124.46" y2="99.06" width="0.1524" layer="91"/>
-<wire x1="124.46" y1="101.6" x2="124.46" y2="99.06" width="0.1524" layer="91"/>
-</segment>
 <segment>
 <wire x1="185.42" y1="60.96" x2="182.88" y2="60.96" width="0.1524" layer="91"/>
 <label x="182.88" y="60.96" size="0.762" layer="95" rot="R180" xref="yes"/>
