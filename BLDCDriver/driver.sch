@@ -5147,12 +5147,22 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <wire x1="182.88" y1="22.86" x2="180.34" y2="22.86" width="0.1524" layer="91"/>
 <label x="180.34" y="22.86" size="0.762" layer="95" rot="R180" xref="yes"/>
 </segment>
+<segment>
+<pinref part="NUCLEO_MAIN" gate="G$1" pin="PB8"/>
+<wire x1="53.34" y1="202.565" x2="53.34" y2="208.28" width="0.1524" layer="91"/>
+<label x="53.34" y="208.28" size="0.762" layer="95" rot="R90" xref="yes"/>
+</segment>
 </net>
 <net name="CANRX" class="0">
 <segment>
 <pinref part="U3" gate="G$1" pin="RXD"/>
 <wire x1="218.44" y1="20.32" x2="220.98" y2="20.32" width="0.1524" layer="91"/>
 <label x="220.98" y="20.32" size="0.762" layer="95" xref="yes"/>
+</segment>
+<segment>
+<pinref part="NUCLEO_MAIN" gate="G$1" pin="PB9"/>
+<wire x1="50.8" y1="202.565" x2="50.8" y2="208.28" width="0.1524" layer="91"/>
+<label x="50.8" y="208.28" size="0.762" layer="95" rot="R90" xref="yes"/>
 </segment>
 </net>
 <net name="W_CS" class="0">
