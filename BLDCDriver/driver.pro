@@ -2,24 +2,24 @@ EAGLE AutoRouter Statistics:
 
 Job           : /Users/tomixrm/Documents/Dev/Robots/ssl-bldc/BLDCDriver/driver.brd
 
-Start at      : 02:17:13 (2022/11/10)
-End at        : 02:17:27 (2022/11/10)
-Elapsed time  : 00:00:12
+Start at      : 17:59:40 (2022/11/10)
+End at        : 17:59:43 (2022/11/10)
+Elapsed time  : 00:00:01
 
-Signals       :    62   RoutingGrid: 9.84252 mil  Layers: 2
-Connections   :   189   predefined:  112 ( 53 Vias )
+Signals       :    59   RoutingGrid: 9.84252 mil  Layers: 2
+Connections   :   190   predefined:  157 ( 123 Vias )
 
 Router memory :   158112
 
 Passname          :    Busses     Route Optimize1 Optimize2 Optimize3 Optimize4
 
-Time per pass     :  00:00:00  00:00:11  00:00:00  00:00:00  00:00:01  00:00:00
-Number of Ripups  :         0       192         0         0         0         0
-max. Level        :         0         3         0         0         0         0
-max. Total        :         0        30         0         0         0         0
+Time per pass     :  00:00:00  00:00:00  00:00:00  00:00:00  00:00:01  00:00:00
+Number of Ripups  :         0         0         0         0         0         0
+max. Level        :         0         0         0         0         0         0
+max. Total        :         0         0         0         0         0         0
 
-Routed            :         0        58        58        58        58        58
-Vias              :         0        52        23        19        17        17
-Resolution        :    59.3 %    89.9 %    89.9 %    89.9 %    89.9 %    89.9 %
+Routed            :         0        33        33        33        33        33
+Vias              :         0         1         1         1         1         1
+Resolution        :    82.6 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %
 
-Final             : 88.9% finished. Polygons may have fallen apart.
+Final             : 100.0% finished
