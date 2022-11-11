@@ -3623,7 +3623,7 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <part name="C9" library="SparkFun-Capacitors" deviceset="22UF" device="-1210-16V-20%" value="22UF-1210"/>
 <part name="GND6" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND12" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="FFC1" library="MotorDriver_FourthEdition_prot" deviceset="FFC12_11PIN_1MM" device=""/>
+<part name="." library="MotorDriver_FourthEdition_prot" deviceset="FFC12_11PIN_1MM" device=""/>
 <part name="U2" library="AS5048A-HTSP-500" deviceset="AS5048A-HTSP-500" device=""/>
 <part name="U4" library="NJM2732" deviceset="SOP80P620X125-8N" device=""/>
 <part name="R10" library="resistor-shunt" library_urn="urn:adsk.eagle:library:346" deviceset="SMS-REF" device="" package3d_urn="urn:adsk.eagle:package:25218/1"/>
@@ -3670,7 +3670,7 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <part name="S1" library="Alps SW" deviceset="SKRPACE010" device=""/>
 <part name="GND24" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="D6" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="LED-WHITE" device="0603" package3d_urn="urn:adsk.eagle:package:39354/1" value="WHITE"/>
-<part name="R23" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="2.0KOHM" device="-0603-1/10W-5%" package3d_urn="urn:adsk.eagle:package:39650/1" value="7k"/>
+<part name="R23" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="2.0KOHM" device="-0603-1/10W-5%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
 <part name="GND25" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="Q2" library="SIZ240DT-T1-GE3" deviceset="SIZ240DT-T1-GE3" device=""/>
 <part name="C1" library="SparkFun-Capacitors" deviceset="0.1UF" device="-0603-25V-5%" value="0.1uF"/>
@@ -3825,7 +3825,7 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <instance part="GND12" gate="1" x="4.445" y="29.21" smashed="yes">
 <attribute name="VALUE" x="4.445" y="28.956" size="1.778" layer="96" align="top-center"/>
 </instance>
-<instance part="FFC1" gate="G$1" x="139.065" y="86.36" smashed="yes" rot="MR0">
+<instance part="." gate="G$1" x="139.065" y="86.36" smashed="yes" rot="MR0">
 <attribute name="NAME" x="149.225" y="71.12" size="1.778" layer="94" rot="MR0"/>
 <attribute name="VALUE" x="149.225" y="102.87" size="1.778" layer="94" rot="MR0"/>
 </instance>
@@ -4687,8 +4687,8 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <label x="126.492" y="45.339" size="0.762" layer="95" rot="R90" xref="yes"/>
 </segment>
 <segment>
-<pinref part="FFC1" gate="G$1" pin="P$9"/>
-<pinref part="FFC1" gate="G$1" pin="P$8"/>
+<pinref part="." gate="G$1" pin="P$9"/>
+<pinref part="." gate="G$1" pin="P$8"/>
 <wire x1="133.985" y1="78.74" x2="133.985" y2="81.28" width="0.1524" layer="91"/>
 <wire x1="133.985" y1="78.74" x2="131.445" y2="78.74" width="0.1524" layer="91"/>
 <junction x="133.985" y="78.74"/>
@@ -4726,9 +4726,9 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 </net>
 <net name="U_CS" class="0">
 <segment>
-<pinref part="FFC1" gate="G$1" pin="P$7"/>
+<pinref part="." gate="G$1" pin="P$7"/>
 <wire x1="133.985" y1="83.82" x2="131.445" y2="83.82" width="0.1524" layer="91"/>
-<pinref part="FFC1" gate="G$1" pin="P$6"/>
+<pinref part="." gate="G$1" pin="P$6"/>
 <wire x1="133.985" y1="83.82" x2="133.985" y2="86.36" width="0.1524" layer="91"/>
 <junction x="133.985" y="83.82"/>
 <label x="131.445" y="83.82" size="0.762" layer="95" rot="MR0" xref="yes"/>
@@ -5226,8 +5226,8 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <label x="63.5" y="78.105" size="0.762" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="FFC1" gate="G$1" pin="P$11"/>
-<pinref part="FFC1" gate="G$1" pin="P$10"/>
+<pinref part="." gate="G$1" pin="P$11"/>
+<pinref part="." gate="G$1" pin="P$10"/>
 <wire x1="133.985" y1="73.66" x2="133.985" y2="76.2" width="0.1524" layer="91"/>
 <wire x1="133.985" y1="73.66" x2="131.445" y2="73.66" width="0.1524" layer="91"/>
 <junction x="133.985" y="73.66"/>
