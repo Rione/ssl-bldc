@@ -3714,6 +3714,8 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <part name="C23" library="SparkFun-Capacitors" deviceset="0.1UF" device="-0603-100V-10%" value="0.1uF"/>
 <part name="U$1" library="pin" deviceset="PIN" device=""/>
 <part name="U$3" library="pin" deviceset="PIN" device=""/>
+<part name="U$4" library="pin" deviceset="PIN" device=""/>
+<part name="U$5" library="pin" deviceset="PIN" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -4126,6 +4128,8 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 </instance>
 <instance part="U$1" gate="G$1" x="149.86" y="10.16" smashed="yes"/>
 <instance part="U$3" gate="G$1" x="160.02" y="10.16" smashed="yes"/>
+<instance part="U$4" gate="G$1" x="149.86" y="2.54" smashed="yes"/>
+<instance part="U$5" gate="G$1" x="160.02" y="2.54" smashed="yes"/>
 </instances>
 <busses>
 </busses>
