@@ -3680,6 +3680,7 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <part name="C20" library="SparkFun-Capacitors" deviceset="22UF" device="-1210-16V-20%" value="22UF-1210"/>
 <part name="C21" library="SparkFun-Capacitors" deviceset="22UF" device="-1210-16V-20%" value="22UF-1210"/>
 <part name="C22" library="SparkFun-Capacitors" deviceset="22UF" device="-1210-16V-20%" value="22UF-1210"/>
+<part name="C23" library="SparkFun-Capacitors" deviceset="0.1UF" device="-0603-100V-10%" value="0.1uF"/>
 </parts>
 <sheets>
 <sheet>
@@ -4086,6 +4087,10 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <attribute name="NAME" x="140.081" y="12.319" size="1.778" layer="95" font="vector" rot="R180"/>
 <attribute name="VALUE" x="142.621" y="14.224" size="0.762" layer="96" font="vector" rot="R180"/>
 </instance>
+<instance part="C23" gate="G$1" x="229.87" y="20.32" smashed="yes">
+<attribute name="NAME" x="231.394" y="23.241" size="1.778" layer="95" font="vector"/>
+<attribute name="VALUE" x="231.394" y="18.161" size="1.778" layer="96" font="vector"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -4273,6 +4278,10 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <wire x1="220.98" y1="15.24" x2="220.98" y2="12.7" width="0.1524" layer="91"/>
 <pinref part="GND10" gate="1" pin="GND"/>
 <label x="220.98" y="15.24" size="0.762" layer="95"/>
+<pinref part="C23" gate="G$1" pin="2"/>
+<wire x1="229.87" y1="17.78" x2="229.87" y2="15.24" width="0.1524" layer="91"/>
+<wire x1="229.87" y1="15.24" x2="220.98" y2="15.24" width="0.1524" layer="91"/>
+<junction x="220.98" y="15.24"/>
 </segment>
 <segment>
 <pinref part="U3" gate="G$1" pin="STBY"/>
@@ -4711,6 +4720,9 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <wire x1="220.98" y1="25.4" x2="220.98" y2="27.94" width="0.1524" layer="91"/>
 <pinref part="SUPPLY14" gate="G$2" pin="VCC_1"/>
 <label x="219.71" y="27.94" size="0.762" layer="95"/>
+<pinref part="C23" gate="G$1" pin="1"/>
+<wire x1="220.98" y1="25.4" x2="229.87" y2="25.4" width="0.1524" layer="91"/>
+<junction x="220.98" y="25.4"/>
 </segment>
 <segment>
 <pinref part="REG" gate="G$1" pin="IN"/>
