@@ -3564,6 +3564,37 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 </deviceset>
 </devicesets>
 </library>
+<library name="pin">
+<packages>
+<package name="3MM">
+<smd name="P$1" x="0" y="0" dx="3" dy="3" layer="1" roundness="100"/>
+<circle x="0" y="0" radius="1.5" width="0.127" layer="20"/>
+</package>
+</packages>
+<symbols>
+<symbol name="PIN">
+<circle x="0" y="0" radius="2.54" width="0.254" layer="94"/>
+<pin name="P$1" x="0" y="0" visible="off" length="point" rot="R270"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="PIN">
+<gates>
+<gate name="G$1" symbol="PIN" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="3MM">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -3681,6 +3712,8 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <part name="C21" library="SparkFun-Capacitors" deviceset="22UF" device="-1210-16V-20%" value="22UF-1210"/>
 <part name="C22" library="SparkFun-Capacitors" deviceset="22UF" device="-1210-16V-20%" value="22UF-1210"/>
 <part name="C23" library="SparkFun-Capacitors" deviceset="0.1UF" device="-0603-100V-10%" value="0.1uF"/>
+<part name="U$1" library="pin" deviceset="PIN" device=""/>
+<part name="U$3" library="pin" deviceset="PIN" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -4091,6 +4124,8 @@ Number of pins: &lt;b&gt;6&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <attribute name="NAME" x="231.394" y="23.241" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="231.394" y="18.161" size="1.778" layer="96" font="vector"/>
 </instance>
+<instance part="U$1" gate="G$1" x="149.86" y="10.16" smashed="yes"/>
+<instance part="U$3" gate="G$1" x="160.02" y="10.16" smashed="yes"/>
 </instances>
 <busses>
 </busses>
