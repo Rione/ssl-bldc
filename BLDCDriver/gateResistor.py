@@ -1,81 +1,97 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
-# ゲート入力電荷量 4.65nC
-Qg = 4.65e-9
-
-# ゲートスイッチ電荷量 6.4nC
-Qs = 6.4e-9
-
 # ゲートソース電圧
-Vgs = 15
+Vgs = 15.5
 
 # 寄生ゲート抵抗 1.1Ω
-Rs = 1.1
+Rgp = 1.2
 
 # 追加するゲート抵抗
-Rg = 50
+Rg = 50  # [10, 20, 50, 100]
 
-# Ciss 2000pF
-Ciss = 2000e-12
-# ゲート抵抗の和
-R = Rg + Rs
+# Total gate charge 20nC
+Qg = 20e-9
 
-# ゲート入力容量F
-# Cg = Qg / Vgs + Qs / Vgs
-Cg = Ciss  # alpacoにこれくらいになるって言われた
+# Gate-source charge 2.7nC
+Qgs = 2.7e-9
 
-t = np.linspace(0.0000000001,  6 * R * Cg, 200)
+# Gate-drain charge 1.8nC
+Qgd = 1.8e-9
 
+# Ciss 795pF
+Ciss = 795e-12
 
-def tau(x):
-    return x * Cg * R
+# Q = CV → C = Q/V
+Cg = Qg / Vgs  # これであってるん？Cgってここで書きたいのはトータル電荷量ではなくCissじゃないの？
+print('Cg:', '{:.6g}'.format(Cg * 1e12), 'pF')
 
+# 時定数　τ = RC
+tau = Ciss * (Rgp + Rg)
 
-def func(t):
-    return Vgs * (1 - np.exp(-t / (R * Cg)))
+# 最大ゲート電流
+Ig = Vgs / (Rgp + Rg)
+print('IgMax:', '{:.3g}'.format(Ig), 'A')
 
+# 3τ後のゲート電流z
+Ig_3tau = Ig*(1-0.95)
 
-def i(t):
-    return Vgs / (R * (1 - np.exp(-t / (R * Cg))))
+# 駆動周波数 KHz
+F = 20e3
+# 周期 us
+T = 1 / F
+print('period:', T * 1e9, 'ns')
 
+T_min = T / 256
+print('period Min:', T_min * 1e9, 'ns')
 
-# plt.plot(t, i(t))
-
-# plt.xlabel('t')
-# # plt.ylabel('i(t)')
-# plt.plot(1 * Cg * R, i(1 * Cg * R), marker='.')
-# plt.plot(2 * Cg * R, i(3 * Cg * R), marker='.')
-
-
-I = i(1 * Cg * R)
-T = 1 * Cg * R * 1e9  # ns
-
-
-plt.plot(t, func(t))
-plt.plot(tau(1), func(tau(1)), marker='.')  # 1τ
-plt.text(tau(1), func(tau(1)) + 0.1, '1τ:'+'{:.4g}'.format(T) + 'ns')
-
-plt.plot(tau(2), func(tau(2)), marker='.')  # 2τ
-plt.text(tau(2), func(tau(2)) + 0.1, '2τ:'+'{:.4g}'.format(T * 2) + 'ns')
-
-plt.plot(tau(3), func(tau(3)), marker='.')  # 3τ
-plt.text(tau(3), func(tau(3)) + 0.1, '3τ:'+'{:.4g}'.format(T * 3) + 'ns')
-plt.xlabel('t')
-# plt.ylabel('i(t)')
-
-plt.title('Gate resistor:' + str(Rg) + 'Ω' +
-          ' ,Gate source voltage:' + str(Vgs) + 'V' + ' ,Current:' + '{:.4g}'.format(I) + 'A')
-
-# plt.plot(3 * Cg * R, i(3 * Cg * R), marker='.')
+# ターンオン時間
+timeTurnOn = -tau * np.log(Ig_3tau * (Rgp + Rg) / Vgs)
+print('timeTurnOn', '{:.3g}'.format(timeTurnOn * 1e9), 'ns')
 
 
-# print Current
-print('Current' + '{:.4g}'.format(I), "A")
-# print time ns
-print('1tau:' + '{:.4g}'.format(T), "ns")
-print('2tau:' + '{:.4g}'.format(T * 2), "ns")
-print('3tau:' + '{:.4g}'.format(T * 3), "ns")
+# Graph Settings
+fig = plt.figure()  # グラフ領域作成
+graph1 = fig.add_subplot(1, 2, 1)  # グラフ1
+graph2 = fig.add_subplot(1, 2, 2)  # グラフ1
+t = np.linspace(0.0000000001,  8 * tau, 200)  # 時間ベクトル作成
 
 
-plt.show()
+def transientCurrent(t):  # 過渡電流
+    return Vgs / (Rgp + Rg) * (np.exp(-t / tau))
+
+
+def drawGateResistorCurrentGraph():  # ゲート抵抗に流れる電流のグラフ
+    graph1.set_xlabel('t')
+    graph1.set_ylabel('i(t)')
+    graph1.set_title('Gate Resistor Current [' + 'Rg:' + str(Rg) + 'Ω' +
+                     ' ,Vgs:' + str(Vgs) + 'V]')
+    graph1.plot(t, transientCurrent(t))
+    graph1.plot(tau * 1, transientCurrent(tau * 1), marker='.')  # 1τ
+    graph1.plot(tau * 2, transientCurrent(tau * 2), marker='.')  # 2τ
+    graph1.plot(tau * 3, transientCurrent(tau * 3), marker='.')  # 3τ
+
+
+def transientCVoltage(t):  # コンデンサの過渡電圧
+    return Vgs * (1-np.exp(-t / tau))
+
+
+def drawCissVoltageGraph():  # Cissにチャージされた電圧のグラフ
+    graph2.set_xlabel('t')
+    graph2.set_ylabel('V(t)')
+    graph2.set_title('Ciss Voltage [' + 'Rg:' + str(Rg) + 'Ω' +
+                     ' ,Vgs:' + str(Vgs) + 'V]')
+    graph2.plot(t, transientCVoltage(t))
+    graph2.plot(tau * 1, transientCVoltage(tau * 1), marker='.')  # 1τ
+    graph2.plot(tau * 2, transientCVoltage(tau * 2), marker='.')  # 2τ
+    graph2.plot(tau * 3, transientCVoltage(tau * 3), marker='.')  # 3τ
+
+
+def main():
+    print('Param [Rg:', Rg, 'Ω', 'Vgs:', Vgs, 'V]')
+    drawGateResistorCurrentGraph()  # ゲート抵抗に流れる電流のグラフ
+    drawCissVoltageGraph()  # Cissにチャージされた電圧のグラフ
+    plt.show()
+
+
+if __name__ == "__main__":
+    main()
