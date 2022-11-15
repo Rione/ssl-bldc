@@ -21,9 +21,9 @@ Qgd = 1.8e-9
 # Ciss 795pF
 Ciss = 795e-12
 
-# Q = CV → C = Q/V
+# Q = CV → C = Q/V 
 Cg = Qg / Vgs  # これであってるん？Cgってここで書きたいのはトータル電荷量ではなくCissじゃないの？
-print('Cg:', '{:.6g}'.format(Cg * 1e12), 'pF')
+print('Cg:', '{:.6g}'.format(Cg * 1e12), 'pF') #これはなに？
 
 # 時定数　τ = RC
 tau = Ciss * (Rgp + Rg)
@@ -46,7 +46,7 @@ print('period Min:', T_min * 1e9, 'ns')
 
 # ターンオン時間
 timeTurnOn = -tau * np.log(Ig_3tau * (Rgp + Rg) / Vgs)
-print('timeTurnOn', '{:.3g}'.format(timeTurnOn * 1e9), 'ns')
+print('timeTurnOn:', '{:.3g}'.format(timeTurnOn * 1e9), 'ns')
 
 
 # Graph Settings
@@ -87,7 +87,7 @@ def drawCissVoltageGraph():  # Cissにチャージされた電圧のグラフ
 
 
 def main():
-    print('Param [Rg:', Rg, 'Ω', 'Vgs:', Vgs, 'V]')
+    print('Param [Rg:', Rg, 'Ω', ',Vgs:', Vgs, 'V]')
     drawGateResistorCurrentGraph()  # ゲート抵抗に流れる電流のグラフ
     drawCissVoltageGraph()  # Cissにチャージされた電圧のグラフ
     plt.show()
