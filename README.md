@@ -11,3 +11,9 @@
 | Shunt Resistor| 10mΩ | 
 | 3.3V Regulator | [AP7333-33SAG](https://akizukidenshi.com/catalog/g/gI-11360/) |
 | Motor | [EC 45 flat 30W](https://www.maxongroup.com/medias/sys_master/root/8846629470238/20-JP-285.pdf)|
+
+---
+
+初めて作ったモータドライバ基板です．
+記事も書いたので，良かったら見てください．
+[tomixrm 初のモタドラ設計！！ゲート抵抗を計算して求めてみた](https://tomixrm.vercel.app/2e7cb67096e143f2a43334a63c00d47e)
