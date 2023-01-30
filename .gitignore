@@ -1,4 +1,5 @@
+**.s#**
+**.b#**
+*.dwl*
 .DS_Store
-.pio
-.vscode
-*.s#*
+*.bak
