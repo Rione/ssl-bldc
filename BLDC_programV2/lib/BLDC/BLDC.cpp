@@ -66,12 +66,13 @@ void BLDCMotor::setVelocity(float _velocity) {
         pc->printf("setVelocity:%f\n", targetVelocity);
 }
 
-void BLDCMotor::writePwm(float _pwmA, float _pwmB, float _pwmC) {
-    pwmU.write(_pwmA);
-    pwmV.write(_pwmB);
-    pwmW.write(_pwmC);
-    if (debug)
-        pc->printf("%f %f %f\r", _pwmA, _pwmB, _pwmC);
+void BLDCMotor::writePwm(float pwmA, float pwmB, float pwmC) {
+    pwmA = Constrain(pwmA, 0, 1.0);
+    pwmB = Constrain(pwmB, 0, 1.0);
+    pwmC = Constrain(pwmC, 0, 1.0);
+    pwmU.write(pwmA);
+    pwmU.write(pwmB);
+    pwmU.write(pwmC);
 }
 
 void BLDCMotor::setPWMFrequency(int _freq) {
@@ -116,6 +117,8 @@ float BLDCMotor::getAnglerVelocity() {
 void BLDCMotor::setPhaseVoltage(float Uq, float _elAngle) {
     float T0, T1, T2;
     float Ta, Tb, Tc;
+    float Ua, Ub, Uc;
+
     uint8_t sector;
     _elAngle = normalizeDegrees(_elAngle);
 
@@ -156,12 +159,22 @@ void BLDCMotor::setPhaseVoltage(float Uq, float _elAngle) {
         Tb = 0;
         Tc = 0;
     }
-    float Ua, Ub, Uc;
+
     Ua = Ta * supplyVoltage;
     Ub = Tb * supplyVoltage;
     Uc = Tc * supplyVoltage;
 
-    writePwm(Ua, Ub, Uc);
+    Ua = Constrain(Ua, 0, limitVoltage);
+    Ub = Constrain(Ub, 0, limitVoltage);
+    Uc = Constrain(Uc, 0, limitVoltage);
+
+    if (debug)
+        pc->printf("%f %f %f\r", Ua, Ub, Uc);
+
+    if (debug)
+        pc->printf("%f %f %f\r", Ta, Tb, Tc);
+
+    writePwm(Ta, Tb, Tc);
 }
 
 void BLDCMotor::drive() {
@@ -170,4 +183,6 @@ void BLDCMotor::drive() {
     velocityPID.appendError(targetVelocity - velocity);
     float Uq = velocityPID.getPID();
     setPhaseVoltage(Uq, elAngle);
+    if (debug)
+        pc->printf("velocity: %f\n", velocity);
 }
