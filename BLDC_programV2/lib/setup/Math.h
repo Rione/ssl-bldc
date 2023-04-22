@@ -112,4 +112,5 @@ float cos(int theta);
 float tan(int theta);
 int normalizeDegrees(int theta);
 float normalizeRadians(float theta);
+int gapDegrees(int deg1, int deg2);
 #endif

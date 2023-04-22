@@ -155,3 +155,12 @@ float normalizeRadians(float theta) {
     }
     return theta;
 }
+
+int gapDegrees(int deg1, int deg2) {
+    int a = deg1 - deg2;
+    while (a < 0)
+        a += 360;
+    while (a > 180)
+        a -= 360;
+    return a;
+}

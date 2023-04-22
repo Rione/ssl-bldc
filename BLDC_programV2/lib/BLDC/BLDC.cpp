@@ -4,32 +4,54 @@ BLDCMotor::BLDCMotor(PinName _pwmU, PinName _pwmV, PinName _pwmW, uint8_t _poler
     : pwmU(_pwmU),
       pwmV(_pwmV),
       pwmW(_pwmW),
-      polerQty(_polerQty),
+      polerPairQty(_polerQty),
       velocityPID(0, 0, 0, _dt, _pc), // default gain
       pc(_pc),
       encoder(D11, D12, D13, D10),
-      supplyVoltage(12),
-      limitVoltage(6),
       debug(_pc != 0), targetVelocity(0) {}
 
 void BLDCMotor::init() {
     pwmU.period_us(5);
     pwmV.period_us(5);
     pwmW.period_us(5);
+    writePwm(0, 0, 0);
 
     velocityPID.setLimit(200);
     velocityPID.setGain(0, 0, 0);
 
-    encoder.frequency(8000000);
-
+    encoder.frequency(8e6);
     timer.start();
+
+    supplyVoltage = 12;
+    limitVoltage = 6;
+    limitVelocity = 400;
+    shAnglePrev = shAngle = 0;
+    setAbsoluteZero();
     if (debug)
-        pc->printf("BLDC init\r");
+        pc->printf("BLDC init\n");
+}
+
+void BLDCMotor::setAbsoluteZero(int _shAngleZero) {
+    if (_shAngleZero != NOTSET) {
+        shAngleZero = _shAngleZero;
+    } else {
+        writePwm(0.5, 0, 0);
+        wait(0.5);
+        shAngleZero = updateEncoder();
+        writePwm(0, 0, 0);
+    }
+    if (debug)
+        pc->printf("shaftAngleZero:%d\n", shAngleZero);
 }
 
 void BLDCMotor::setSupplyVoltage(uint8_t _supplyVoltage, uint8_t _limitVoltage) {
     supplyVoltage = _supplyVoltage;
     limitVoltage = _limitVoltage;
+}
+
+void BLDCMotor::setVelocityLimit(float _limit) {
+    limitVelocity = _limit;
+    velocityPID.setLimit(_limit);
 }
 
 void BLDCMotor::setPIDGain(float _p, float _i, float _d) {
@@ -52,11 +74,19 @@ void BLDCMotor::writePwm(float _pwmA, float _pwmB, float _pwmC) {
         pc->printf("%f %f %f\r", _pwmA, _pwmB, _pwmC);
 }
 
-bool BLDCMotor::getEncoder() {
+void BLDCMotor::setPWMFrequency(int _freq) {
+    pwmU.period_us(10e6 / _freq);
+    pwmV.period_us(10e6 / _freq);
+    pwmW.period_us(10e6 / _freq);
+}
+
+bool BLDCMotor::updateEncoder() {
     int _angle = *encoder.read_angle();
     if (encoder.parity_check(_angle)) {
-        shAngle = As5048Spi::degrees(_angle) / 100;
-        elAngle = shAngle * polerQty;
+        shAnglePrev = shAngle;
+        _angle = As5048Spi::degrees(_angle) / 100;
+        shAngle = gapDegrees(shAngleZero, _angle);
+        elAngle = shAngle * polerPairQty;
         return true;
     } else {
         if (debug)
@@ -74,14 +104,12 @@ int BLDCMotor::getElectricAngle() {
 }
 
 float BLDCMotor::getAnglerVelocity() {
-    shAnglePrev = shAngle;
-    shAngle = getEncoder();
     float dt = timer.read();
     timer.reset();
-    float vel = (shAnglePrev - shAngle) / dt;
+    float vel = gapDegrees(targetVelocity, velocity) / dt;
 
     if (debug)
-        pc->printf("shAngle: %d elAngle: %d\r", shAngle, elAngle);
+        pc->printf("shAngle: %d elAngle: %d\n", shAngle, elAngle);
     return vel;
 }
 
@@ -137,7 +165,7 @@ void BLDCMotor::setPhaseVoltage(float Uq, float _elAngle) {
 }
 
 void BLDCMotor::drive() {
-    getEncoder();
+    updateEncoder();
     velocity = getAnglerVelocity();
     velocityPID.appendError(targetVelocity - velocity);
     float Uq = velocityPID.getPID();
