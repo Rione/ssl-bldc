@@ -1,5 +1,5 @@
-#include "mbed.h"
-#include <setup.h>
+#include <mbed.h>
+#include "BLDC.h"
 
 RawSerial pc(USBTX, USBRX, 2000000); // tx, rx
 BLDCMotor BLDC(PC_7, PB_4, PB_10, 8, 5e-3, &pc);
