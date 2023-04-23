@@ -1,8 +1,8 @@
 #include <mbed.h>
 #include "BLDC.h"
-
+// LPF
 RawSerial pc(USBTX, USBRX, 2000000); // tx, rx
-BLDCMotor BLDC(PC_7, PB_4, PB_10, 8, 5e-3, &pc);
+BLDCMotor BLDC(D9, D5, D6, 8, 5e-3, &pc);
 
 void setup() {
     wait(3);
@@ -12,12 +12,12 @@ void setup() {
     BLDC.setVelocity(0);
 }
 
+int deg = 0;
 int main() {
     setup();
     while (1) {
         // BLDC.drive();
-        BLDC.updateEncoder();
-        // float velocity = BLDC.getAnglerVelocity();
-        wait_us(200);
+        // BLDC.updateEncoder();
+        // float velocity = BLDC.getAngularVelocity();
     }
 }

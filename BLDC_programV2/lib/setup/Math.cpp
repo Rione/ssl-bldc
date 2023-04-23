@@ -187,3 +187,26 @@ float gapRadians(float rad1, float rad2) {
         a += TWO_PI;
     return a;
 }
+
+// template <typename T>
+// class MovingAverage {
+//   public:
+//     MovingAverage(int windowSize) : windowSize(windowSize), windowSum(0) {}
+
+//     T operator()(const T &value) {
+//         windowSum += value;
+//         window.push_back(value);
+
+//         if (window.size() > windowSize) {
+//             windowSum -= window.front();
+//             window.pop_front();
+//         }
+
+//         return windowSum / static_cast<T>(window.size());
+//     }
+
+//   private:
+//     int windowSize;
+//     T windowSum;
+//     std::deque<T> window;
+// };

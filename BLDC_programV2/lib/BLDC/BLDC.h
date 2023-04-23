@@ -2,21 +2,24 @@
 #define BLDC_H
 
 #include <mbed.h>
-#include <FastPWM.h>
-#include <PID.h>
-#include <AS5048A.h>
-#include <Math.h>
+#include "FastPWM.h"
+#include "PID.h"
+#include "AS5048A.h"
+#include "Math.h"
+#include "LPF.h"
 
 #define NOTSET -9999
 class BLDCMotor {
   private:
     FastPWM pwmU, pwmV, pwmW;
-    uint8_t polerPairQty;
+    uint8_t polePairQty;
     PID velocityPID;
     RawSerial *pc;
     As5048Spi encoder;
     uint8_t supplyVoltage;
     uint8_t limitVoltage;
+    LPF velocityLPF;
+    int8_t available;
     bool debug;
 
     float elAngle;                           // electrical angle
@@ -33,8 +36,9 @@ class BLDCMotor {
     void init();
 
     void setAbsoluteZero(int _shAngleZero = NOTSET);
+    void Diagnose();
 
-    void setSupplyVoltage(uint8_t _supplyVoltage, uint8_t _limitVoltage);
+        void setSupplyVoltage(uint8_t _supplyVoltage, uint8_t _limitVoltage);
     void setPIDGain(float _p, float _i, float _d);
 
     void setVelocity(float _velocity);
@@ -46,10 +50,10 @@ class BLDCMotor {
     float updateEncoder();
     int getShaftAngle();
     int getElectricAngle();
-    float getAnglerVelocity();
+    float getAngularVelocity();
 
     void setPhaseVoltage(float _Uq, float _elAngle);
-
+    void openLoopControl(float _A, float _elAngle);
     void drive();
 };
 
