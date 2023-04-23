@@ -8,6 +8,8 @@
 #define RAD_TO_DEG 57.295779513082320876798154814105
 #define EULER 2.718281828459045235360287471352
 #define SQRT3 1.73205080757f
+#define SQRT2 1.41421356237f
+#define PI_3 1.0471975512f
 
 #define Range(a, x, b) ((a) <= (x) && (x) <= (b))
 #define Constrain(amt, low, high) ((amt) < (low) ? (low) : ((amt) > (high) ? (high) : (amt)))
@@ -112,5 +114,8 @@ float cos(int theta);
 float tan(int theta);
 int normalizeDegrees(int theta);
 float normalizeRadians(float theta);
+int gapDegrees180(int deg1, int deg2);
 int gapDegrees(int deg1, int deg2);
+float gapRadians180(float rad1, float rad2);
+float gapRadians(float rad1, float rad2);
 #endif

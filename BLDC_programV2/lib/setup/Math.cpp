@@ -156,11 +156,34 @@ float normalizeRadians(float theta) {
     return theta;
 }
 
-int gapDegrees(int deg1, int deg2) {
+int gapDegrees180(int deg1, int deg2) {
     int a = deg1 - deg2;
     while (a < 0)
         a += 360;
     while (a > 180)
         a -= 360;
+    return a;
+}
+
+int gapDegrees(int deg1, int deg2) {
+    int a = normalizeDegrees(deg1) - normalizeDegrees(deg2);
+    if (a < 0)
+        a += 360;
+    return a;
+}
+
+float gapRadians180(float rad1, float rad2) {
+    float a = rad1 - rad2;
+    while (a < 0)
+        a += TWO_PI;
+    while (a > PI)
+        a -= TWO_PI;
+    return a;
+}
+
+float gapRadians(float rad1, float rad2) {
+    float a = normalizeRadians(rad1) - normalizeRadians(rad2);
+    if (a < 0)
+        a += TWO_PI;
     return a;
 }

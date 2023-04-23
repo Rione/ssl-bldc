@@ -19,8 +19,8 @@ class BLDCMotor {
     uint8_t limitVoltage;
     bool debug;
 
-    int elAngle;                           // electrical angle
-    int shAngle, shAnglePrev, shAngleZero; // shaft angle　
+    float elAngle;                           // electrical angle
+    float shAngle, shAnglePrev, shAngleZero; // shaft angle　
 
     Timer timer;
 
@@ -43,7 +43,7 @@ class BLDCMotor {
     void writePwm(float _pwmA, float _pwmB, float _pwmC);
     void setPWMFrequency(int _freq);
 
-    bool updateEncoder();
+    float updateEncoder();
     int getShaftAngle();
     int getElectricAngle();
     float getAnglerVelocity();

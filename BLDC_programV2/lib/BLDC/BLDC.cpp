@@ -38,10 +38,12 @@ void BLDCMotor::setAbsoluteZero(int _shAngleZero) {
         writePwm(0.5, 0, 0);
         wait(0.5);
         shAngleZero = updateEncoder();
+        if (shAngleZero == -1)
+            pc->printf("error: encoder not found");
         writePwm(0, 0, 0);
     }
     if (debug)
-        pc->printf("shaftAngleZero:%d\n", shAngleZero);
+        pc->printf("shaftAngleZero:%f\n", shAngleZero);
 }
 
 void BLDCMotor::setSupplyVoltage(uint8_t _supplyVoltage, uint8_t _limitVoltage) {
@@ -81,18 +83,20 @@ void BLDCMotor::setPWMFrequency(int _freq) {
     pwmW.period_us(10e6 / _freq);
 }
 
-bool BLDCMotor::updateEncoder() {
+float BLDCMotor::updateEncoder() {
     int _angle = *encoder.read_angle();
     if (encoder.parity_check(_angle)) {
         shAnglePrev = shAngle;
-        _angle = As5048Spi::degrees(_angle) / 100;
-        shAngle = gapDegrees(shAngleZero, _angle);
-        elAngle = shAngle * polerPairQty;
-        return true;
+        float __angle = (float)(As5048Spi::radian(_angle)) / 10000;
+        shAngle = gapRadians(shAngleZero, __angle);
+        elAngle = normalizeRadians(shAngle * polerPairQty);
+        if (debug)
+            pc->printf("shAngleZero:%f :shAngle: %f elAngle: %f\n", shAngleZero, shAngle, elAngle);
+        return __angle;
     } else {
         if (debug)
             pc->printf("ENCODER: Parity check failed.\n");
-        return false;
+        return -1;
     }
 }
 
@@ -107,10 +111,8 @@ int BLDCMotor::getElectricAngle() {
 float BLDCMotor::getAnglerVelocity() {
     float dt = timer.read();
     timer.reset();
-    float vel = gapDegrees(targetVelocity, velocity) / dt;
-
-    if (debug)
-        pc->printf("shAngle: %d elAngle: %d\n", shAngle, elAngle);
+    float vel = gapRadians(shAnglePrev, shAngle) / dt;
+    pc->printf("vel:%.4f sh:%f\n", vel, shAngle);
     return vel;
 }
 
@@ -120,7 +122,7 @@ void BLDCMotor::setPhaseVoltage(float Uq, float _elAngle) {
     float Ua, Ub, Uc;
 
     uint8_t sector;
-    _elAngle = normalizeDegrees(_elAngle);
+    _elAngle = Degrees(_elAngle);
 
     Uq = abs(Uq);
 
@@ -129,7 +131,7 @@ void BLDCMotor::setPhaseVoltage(float Uq, float _elAngle) {
     T2 = SQRT3 * sin(_elAngle - (sector - 1.0) * 60) * Uq / supplyVoltage;
     T0 = 0 - T1 - T2;
     if (debug)
-        pc->printf("sector:%d \n", sector);
+        pc->printf("elAngle:%f, sector:%d \n", _elAngle, sector);
     if (sector == 1) {
         Ta = T1 + T2 + T0 / 2;
         Tb = T2 + T0 / 2;
