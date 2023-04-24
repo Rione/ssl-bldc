@@ -9,6 +9,7 @@
 #include "LPF.h"
 
 #define NOTSET -9999
+#define ENCODER_DIR -1
 class BLDCMotor {
   private:
     FastPWM pwmU, pwmV, pwmW;
@@ -16,10 +17,10 @@ class BLDCMotor {
     PID velocityPID;
     RawSerial *pc;
     As5048Spi encoder;
-    uint8_t supplyVoltage;
-    uint8_t limitVoltage;
+    float supplyVoltage;
+    float limitVoltage;
     LPF velocityLPF;
-    int8_t available;
+    int16_t available;
     bool debug;
 
     float elAngle;                           // electrical angle
@@ -38,7 +39,7 @@ class BLDCMotor {
     void setAbsoluteZero(int _shAngleZero = NOTSET);
     void Diagnose();
 
-        void setSupplyVoltage(uint8_t _supplyVoltage, uint8_t _limitVoltage);
+    void setSupplyVoltage(float _supplyVoltage, float _limitVoltage);
     void setPIDGain(float _p, float _i, float _d);
 
     void setVelocity(float _velocity);
