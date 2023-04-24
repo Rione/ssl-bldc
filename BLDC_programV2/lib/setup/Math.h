@@ -109,9 +109,12 @@
 #define SIN89 0.999847695156391
 #define SIN90 1
 
-float sin(int theta);
-float cos(int theta);
-float tan(int theta);
+float sinDeg(int deg);
+float cosDeg(int deg);
+float tanDeg(int deg);
+float sin(float rad);
+float cos(float rad);
+float tan(float rad);
 int normalizeDegrees(int theta);
 float normalizeRadians(float theta);
 int gapDegrees180(int deg1, int deg2);

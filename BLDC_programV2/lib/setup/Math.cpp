@@ -93,30 +93,27 @@ const float _sin[91] = {
     SIN89,
     SIN90};
 
-float sin(int theta) {
-    int theta_cal;
+float sinDeg(int deg) {
     // 0~360の値に変換
-    theta %= 360;
-    if (theta < 0)
-        theta += 360;
-    theta_cal = theta % 90;
-    if (theta >= 90 && theta < 180) {
+    deg = normalizeDegrees(deg);
+    int theta_cal = deg % 90;
+    if (deg >= 90 && deg < 180) {
         theta_cal = 90 - theta_cal;
     }
-    if (theta >= 270 && theta < 360) {
+    if (deg >= 270 && deg < 360) {
         theta_cal = 90 - theta_cal;
     }
 
-    if (theta >= 0 && theta <= 90) {
+    if (deg >= 0 && deg <= 90) {
         // 0~90 第一象限
         return _sin[theta_cal];
-    } else if (theta > 90 && theta <= 180) {
+    } else if (deg > 90 && deg <= 180) {
         // 91~180 第二象限
         return _sin[theta_cal];
-    } else if (theta > 180 && theta <= 270) {
+    } else if (deg > 180 && deg <= 270) {
         // 181~270 第三象限
         return -_sin[theta_cal];
-    } else if (theta > 270 && theta < 360) {
+    } else if (deg > 270 && deg < 360) {
         // 271~360 第四象限
         return -_sin[theta_cal];
     } else {
@@ -124,19 +121,28 @@ float sin(int theta) {
     }
 }
 
-float cos(int theta) {
-    return sin(theta + 90);
+float cosDeg(int deg) {
+    return sin(deg + 90);
 }
 
-float tan(int theta) {
-    theta %= 360;
-    if (theta < 0)
-        theta += 360;
-
-    if (cos(theta) == 0)
+float tanDeg(int deg) {
+    float rad = Radians(deg);
+    if (cosDeg(rad) == 0)
         return 0;
     else
-        return sin(theta) / cos(theta);
+        return sinDeg(rad) / cosDeg(rad);
+}
+
+float sin(float rad) {
+    return sinDeg(Degrees(rad));
+}
+
+float cos(float rad) {
+    return cosDeg(Degrees(rad));
+}
+
+float tan(float rad) {
+    return tanDeg(Degrees(rad));
 }
 
 int normalizeDegrees(int theta) {
