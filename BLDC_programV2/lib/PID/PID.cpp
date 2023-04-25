@@ -36,15 +36,16 @@ void PID::reset() {
 
 void PID::compute() {
     // please append error before compute
-    integral += (abs(_output) > limit ? 0 : error * dt); // アンチワインドアップ
+    float _error = error;
+    integral += (abs(_output) > limit ? 0 : _error * dt); // アンチワインドアップ
 
-    pTerm = p * error;                    // 比例
-    iTerm = i * integral;                 // 積分
-    dTerm = d * (error - lastError) / dt; // 微分
-    lastError = error;
+    pTerm = p * _error;                    // 比例
+    iTerm = i * integral;                  // 積分
+    dTerm = d * (_error - lastError) / dt; // 微分
+    lastError = _error;
 
     _output = (pTerm + iTerm + dTerm);
-    output = Constrain(_output, max, min);
+    output = Constrain(_output, min, max);
     // pc->printf("p:%f i:%f d:%f Output: %f _out:%f\n", pTerm, iTerm, dTerm, output, _output);
 }
 
