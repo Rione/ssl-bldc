@@ -1,5 +1,5 @@
 #include "Math.h"
-#include <math.h>
+
 const float _sin[91] = {
     SIN0,
     SIN1,
@@ -145,6 +145,50 @@ float tan(float rad) {
     return tanDeg(Degrees(rad));
 }
 
+/// 2018/03 imo lab.
+/// https://garchiving.com
+
+int atan2(int _y, int _x) {
+    int x = abs(_x);
+    int y = abs(_y);
+    float z;
+    bool c;
+
+    c = y < x;
+    if (c)
+        z = (float)y / x;
+    else
+        z = (float)x / y;
+
+    int a;
+    // a = z * (-1556 * z + 6072);                     //2次曲線近似
+    // a = z * (z * (-448 * z - 954) + 5894);          //3次曲線近似
+    a = z * (z * (z * (829 * z - 2011) - 58) + 5741); // 4次曲線近似
+
+    if (c) {
+        if (_x > 0) {
+            if (_y < 0) a *= -1;
+        }
+        if (_x < 0) {
+            if (_y > 0) a = 18000 - a;
+            if (_y < 0) a = a - 18000;
+        }
+    }
+
+    if (!c) {
+        if (_x > 0) {
+            if (_y > 0) a = 9000 - a;
+            if (_y < 0) a = a - 9000;
+        }
+        if (_x < 0) {
+            if (_y > 0) a = a + 9000;
+            if (_y < 0) a = -a - 9000;
+        }
+    }
+
+    return a;
+}
+
 int normalizeDegrees(int theta) {
     theta %= 360;
     if (theta < 0)
@@ -194,25 +238,23 @@ float gapRadians(float rad1, float rad2) {
     return a;
 }
 
-// template <typename T>
-// class MovingAverage {
-//   public:
-//     MovingAverage(int windowSize) : windowSize(windowSize), windowSum(0) {}
+float sqrt(float x) {
+    float s, last;
 
-//     T operator()(const T &value) {
-//         windowSum += value;
-//         window.push_back(value);
+    if (x < 0.0) {
+        return 0;
+    }
 
-//         if (window.size() > windowSize) {
-//             windowSum -= window.front();
-//             window.pop_front();
-//         }
+    if (x > 1.0) {
+        s = x;
+    } else {
+        s = 1.0;
+    }
 
-//         return windowSum / static_cast<T>(window.size());
-//     }
+    do {
+        last = s;
+        s = (x / s + s) / 2.0;
+    } while (s < last);
 
-//   private:
-//     int windowSize;
-//     T windowSum;
-//     std::deque<T> window;
-// };
+    return last;
+}

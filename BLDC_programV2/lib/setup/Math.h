@@ -11,6 +11,7 @@
 #define SQRT2 1.41421356237f
 #define PI_3 1.0471975512f
 
+#define abs(x) ((x) > 0 ? (x) : -(x))
 #define Range(a, x, b) ((a) <= (x) && (x) <= (b))
 #define Constrain(amt, low, high) ((amt) < (low) ? (low) : ((amt) > (high) ? (high) : (amt)))
 #define Round(x) ((x) >= 0 ? (long)((x) + 0.5) : (long)((x)-0.5))
@@ -115,10 +116,12 @@ float tanDeg(int deg);
 float sin(float rad);
 float cos(float rad);
 float tan(float rad);
+int atan2(int _y, int _x);
 int normalizeDegrees(int theta);
 float normalizeRadians(float theta);
 int gapDegrees180(int deg1, int deg2);
 int gapDegrees(int deg1, int deg2);
 float gapRadians180(float rad1, float rad2);
 float gapRadians(float rad1, float rad2);
+float sqrt(float x);
 #endif
