@@ -53,7 +53,7 @@ class BLDCMotor {
     int getElectricAngle();
     float getAngularVelocity();
 
-    void setPhaseVoltage(float _Uq, float _elAngle);
+    void setPhaseVoltage(float _Uq, float Ud, float _elAngle);
     void openLoopControl(float _A, float _elAngle);
     void drive();
 };

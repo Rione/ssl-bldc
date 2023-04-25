@@ -5,10 +5,10 @@ BLDCMotor::BLDCMotor(PinName _pwmU, PinName _pwmV, PinName _pwmW, uint8_t _poler
       pwmV(_pwmV),
       pwmW(_pwmW),
       polePairQty(_polerQty),
-      velocityPID(0, 0, 0, _dt, _pc), // default gain
+      velocityPID(0.0001, 0, 0, _dt, _pc), // default gain
       pc(_pc),
       encoder(D11, D12, D13, D10),
-      velocityLPF(0.005),
+      velocityLPF(0.01),
       available(NOTSET),
       debug(_pc != 0), targetVelocity(0) {}
 
@@ -18,7 +18,7 @@ void BLDCMotor::init() {
     pwmW.period_us(5);
     writePwm(0, 0, 0);
 
-    velocityPID.setLimit(5);
+    velocityPID.setLimit(6);
     encoder.frequency(8e6);
     timer.start();
 
@@ -38,7 +38,7 @@ void BLDCMotor::setAbsoluteZero(int _shAngleZero) {
     if (_shAngleZero != NOTSET) {
         shAngleZero = _shAngleZero;
     } else {
-        openLoopControl(1.5, 0);
+        openLoopControl(1.5, 3 * HALF_PI);
         wait(0.5);
         shAngleZero = updateEncoder();
 
@@ -55,31 +55,39 @@ void BLDCMotor::setAbsoluteZero(int _shAngleZero) {
 }
 
 void BLDCMotor::Diagnose() {
+    available = NOTSET;
     if (debug) {
         pc->printf("- Diagnose the Motor Driver..\n");
     }
-
-    int d = 0;
+    updateEncoder();
+    int d = 3 * HALF_PI;
     float angleMin = TWO_PI;
     float angleMax = 0;
+    float zero = shAngle;
+
     // max search
     while (d < 360 * polePairQty) {
-        updateEncoder();
         openLoopControl(1.5, Radians(d));
         d += 1;
+        updateEncoder();
+        pc->printf("%f\n", shAngle);
     }
-    wait_ms(100);
-    angleMax = shAngle;
+    wait_ms(500);
+    updateEncoder();
+    angleMax = gapRadians(zero, shAngle);
 
     // min search
     while (d > 0) {
-        updateEncoder();
         openLoopControl(1.5, Radians(d));
         d -= 1;
+        updateEncoder();
+        pc->printf("%f\n", shAngle);
     }
-    wait_ms(100);
+    wait_ms(500);
+    updateEncoder();
+    angleMin = gapRadians(zero, shAngle);
+    ;
 
-    angleMin = shAngle;
     available = (abs(angleMax - TWO_PI) < 0.1 && abs(angleMin) < 0.1); // check 1 tern
     if (debug)
         pc->printf("- EncoderMax:%f EncoderMin:%f\n", angleMax, angleMin);
@@ -179,19 +187,34 @@ float BLDCMotor::getAngularVelocity() {
     return angularVelocity;
 }
 
-void BLDCMotor::setPhaseVoltage(float Uq, float _elAngle) {
+void BLDCMotor::setPhaseVoltage(float Uq, float Ud, float _elAngle) {
     float T0, T1, T2;
     float Ta, Tb, Tc;
     float Ua, Ub, Uc;
 
     uint8_t sector;
+
+    float Uout;
+    // a bit of optitmisation
+    if (Ud) { // only if Ud and Uq set
+        // _sqrt is an approx of sqrt (3-4% error)
+        Uout = sqrt(Ud * Ud + Uq * Uq) / limitVoltage;
+        // angle normalisation in between 0 and 2pi
+        // only necessary if using _sin and _cos - approximation functions
+        _elAngle = normalizeRadians(_elAngle + atan2(Uq, Ud));
+    } else { // only Uq available - no need for atan2 and sqrt
+        Uout = Uq / limitVoltage;
+        // angle normalisation in between 0 and 2pi
+        // only necessary if using _sin and _cos - approximation functions
+        _elAngle = normalizeRadians(_elAngle + HALF_PI);
+    }
     _elAngle = normalizeRadians(_elAngle);
 
     Uq = abs(Uq);
 
     sector = (int)(_elAngle / PI_3) + 1;
-    T1 = SQRT3 * sin(sector * PI_3 - _elAngle) * Uq / supplyVoltage;
-    T2 = SQRT3 * sin(_elAngle - (sector - 1.0) * PI_3) * Uq / supplyVoltage;
+    T1 = SQRT3 * sin(sector * PI_3 - _elAngle) * Uout;
+    T2 = SQRT3 * sin(_elAngle - (sector - 1.0) * PI_3) * Uout;
     T0 = 0 - T1 - T2;
     // if (debug)
     //     pc->printf("elAngle:%f, sector:%d \n", _elAngle, sector);
@@ -244,7 +267,7 @@ void BLDCMotor::openLoopControl(float _Uq, float _elAngle) {
     // float b = _Uq * sin(_elAngle + PI_3) + 0.5;
     // float c = _Uq * sin(_elAngle - PI_3) + 0.5;
     // writePwm(a, b, c);
-    setPhaseVoltage(_Uq, _elAngle);
+    setPhaseVoltage(_Uq, 0, _elAngle);
     wait_us(200);
 }
 
@@ -253,5 +276,7 @@ void BLDCMotor::drive() {
     velocity = getAngularVelocity();
     velocityPID.appendError(targetVelocity - velocity);
     float Uq = velocityPID.getPID();
-    setPhaseVoltage(Uq, elAngle);
+    float Ud = 0.1;
+    setPhaseVoltage(Uq, Ud, elAngle);
+    pc->printf("V:%f\tdiff:%f\tUq:%f \n", velocity, targetVelocity - velocity, Uq);
 }
