@@ -12,22 +12,9 @@ void setup() {
     BLDC.setVelocity(1);
 }
 
-// V = 16のとき
-// Uq = 5の時に2.0A流れます → PIDlimit 5
-
-int deg = 0;
 int main() {
     setup();
     while (1) {
-        // BLDC.drive();
-        BLDC.Diagnose();
-        // BLDC.setPhaseVoltage(1.0, Radians(deg));
-
-        // wait_us(1);
-        // BLDC.Diagnose(o);
-        // deg += 1;
-        // BLDC.openLoopControl(1, Radians(deg));
-
-        // float velocity = BLDC.getAngularVelocity();
+        BLDC.drive();
     }
 }

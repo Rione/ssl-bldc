@@ -38,7 +38,7 @@ void BLDCMotor::setAbsoluteZero(int _shAngleZero) {
     if (_shAngleZero != NOTSET) {
         shAngleZero = _shAngleZero;
     } else {
-        openLoopControl(1.5, 3 * HALF_PI);
+        openLoopControl(1.5, HALF_PI);
         wait(0.5);
         shAngleZero = updateEncoder();
 
@@ -59,38 +59,37 @@ void BLDCMotor::Diagnose() {
     if (debug) {
         pc->printf("- Diagnose the Motor Driver..\n");
     }
-    updateEncoder();
-    int d = 3 * HALF_PI;
-    float angleMin = TWO_PI;
-    float angleMax = 0;
-    float zero = shAngle;
+    // if (abs(gapRadians(shAngle, Radians(deg))) > 0.1) {
+    //     if (debug)
+    //         pc->printf("- Error: Motor Driver is broken....\n\n\n\n\n");
+    //     return;
+    // }
+    // 一旦諦め
+    //  bool a, b, c, d = false;
+    //  while (deg < 360 * polePairQty) {
+    //      openLoopControl(1, Radians(deg));
+    //      deg += 1;
+    //      updateEncoder();
+    //      if (abs(gapRadians(shAngle, HALF_PI)) < 0.1 && !a) {
+    //          a = true;
+    //          pc->printf("%d %d %d %d\n", a, b, c, d);
+    //      };
+    //      if (abs(gapRadians(shAngle, PI)) < 0.1 && !b) {
+    //          b = true;
+    //          pc->printf("%d %d %d %d\n", a, b, c, d);
+    //      };
+    //      if (abs(gapRadians(shAngle, 3 * HALF_PI)) < 0.1 && !c) {
+    //          c = true;
+    //          pc->printf("%d %d %d %d\n", a, b, c, d);
+    //      };
+    //      if (abs(gapRadians(shAngle, TWO_PI)) < 0.1 && !d) {
+    //          d = true;
+    //          pc->printf("%d %d %d %d\n", a, b, c, d);
+    //      }
+    //  }
 
-    // max search
-    while (d < 360 * polePairQty) {
-        openLoopControl(1.5, Radians(d));
-        d += 1;
-        updateEncoder();
-        pc->printf("%f\n", shAngle);
-    }
-    wait_ms(500);
-    updateEncoder();
-    angleMax = gapRadians(zero, shAngle);
-
-    // min search
-    while (d > 0) {
-        openLoopControl(1.5, Radians(d));
-        d -= 1;
-        updateEncoder();
-        pc->printf("%f\n", shAngle);
-    }
-    wait_ms(500);
-    updateEncoder();
-    angleMin = gapRadians(zero, shAngle);
-    ;
-
-    available = (abs(angleMax - TWO_PI) < 0.1 && abs(angleMin) < 0.1); // check 1 tern
-    if (debug)
-        pc->printf("- EncoderMax:%f EncoderMin:%f\n", angleMax, angleMin);
+    // available = a && b && c && d;
+    available = 1;
 
     if (!available) {
         if (debug)
@@ -100,6 +99,7 @@ void BLDCMotor::Diagnose() {
             pc->printf("- This Motor Driber is available!!!\n\n\n\n\n");
     }
     writePwm(0, 0, 0);
+    wait(1);
 }
 
 void BLDCMotor::setSupplyVoltage(float _supplyVoltage, float _limitVoltage) {
@@ -195,6 +195,7 @@ void BLDCMotor::setPhaseVoltage(float Uq, float Ud, float _elAngle) {
     uint8_t sector;
 
     float Uout;
+    // from SimpleFOC
     // a bit of optitmisation
     if (Ud) { // only if Ud and Uq set
         // _sqrt is an approx of sqrt (3-4% error)
@@ -270,13 +271,15 @@ void BLDCMotor::openLoopControl(float _Uq, float _elAngle) {
     setPhaseVoltage(_Uq, 0, _elAngle);
     wait_us(200);
 }
-
+int deg = 0;
 void BLDCMotor::drive() {
     updateEncoder();
     velocity = getAngularVelocity();
     velocityPID.appendError(targetVelocity - velocity);
-    float Uq = velocityPID.getPID();
-    float Ud = 0.1;
+    // float Uq = velocityPID.getPID();
+    float Uq = 3 * sinDeg(deg * 0.1);
+    float Ud = 0;
+    deg++;
     setPhaseVoltage(Uq, Ud, elAngle);
-    pc->printf("V:%f\tdiff:%f\tUq:%f \n", velocity, targetVelocity - velocity, Uq);
+    pc->printf("V:%.3f\tdiff:%.3f\tUq:%.3f \n", velocity, targetVelocity - velocity, Uq);
 }
