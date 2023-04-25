@@ -9,8 +9,18 @@ BLDCMotor::BLDCMotor(PinName _pwmU, PinName _pwmV, PinName _pwmW, uint8_t _poler
       pc(_pc),
       encoder(D11, D12, D13, D10),
       velocityLPF(0.01),
+
+      supplyVoltage(12),
+      limitVoltage(6),
+      elAngle(0),
+      shAngle(0),
+      shAnglePrev(0),
+      shAngleZero(0),
+      targetVelocity(0),
+      limitVelocity(300),
+      velocity(0),
       available(NOTSET),
-      debug(_pc != 0), targetVelocity(0) {}
+      debug(_pc != 0) {}
 
 void BLDCMotor::init() {
     pwmU.period_us(5);
@@ -18,18 +28,12 @@ void BLDCMotor::init() {
     pwmW.period_us(5);
     writePwm(0, 0, 0);
 
-    velocityPID.setLimit(6);
+    velocityPID.setLimit(8); // 2.3
     encoder.frequency(8e6);
     timer.start();
-
-    supplyVoltage = 12;
-    limitVoltage = 6;
-    limitVelocity = 400;
-    shAnglePrev = shAngle = 0;
     setAbsoluteZero();
     Diagnose(); // 故障診断
     available = true;
-    wait(2);
     if (debug)
         pc->printf("\n\n\n\n\n\nBLDC init\n");
 }
@@ -118,9 +122,10 @@ void BLDCMotor::setPIDGain(float _p, float _i, float _d) {
 }
 
 void BLDCMotor::setVelocity(float _velocity) {
-    targetVelocity = _velocity;
-    if (debug)
-        pc->printf("setVelocity:%f\n", targetVelocity);
+
+    targetVelocity = Constrain(_velocity, -limitVelocity, limitVelocity);
+    // if (debug)
+    //     pc->printf("setVelocity:%f\n", targetVelocity);
 }
 
 void BLDCMotor::writePwm(float pwmA, float pwmB, float pwmC) {
@@ -276,10 +281,8 @@ void BLDCMotor::drive() {
     updateEncoder();
     velocity = getAngularVelocity();
     velocityPID.appendError(targetVelocity - velocity);
-    // float Uq = velocityPID.getPID();
-    float Uq = 3 * sinDeg(deg * 0.1);
+    float Uq = velocityPID.getPID();
     float Ud = 0;
-    deg++;
     setPhaseVoltage(Uq, Ud, elAngle);
-    pc->printf("V:%.3f\tdiff:%.3f\tUq:%.3f \n", velocity, targetVelocity - velocity, Uq);
+    // pc->printf("V:%.3f\tUq:%.3f \n", velocity, Uq);
 }

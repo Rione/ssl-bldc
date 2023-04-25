@@ -17,20 +17,21 @@ class BLDCMotor {
     PID velocityPID;
     RawSerial *pc;
     As5048Spi encoder;
-    float supplyVoltage;
-    float limitVoltage;
     LPF velocityLPF;
-    int16_t available;
-    bool debug;
+    Timer timer;
+
+    float supplyVoltage;
+    float limitVoltage; // min = -limitVoltage, max = limitVoltage
 
     float elAngle;                           // electrical angle
     float shAngle, shAnglePrev, shAngleZero; // shaft angle　
 
-    Timer timer;
-
     float targetVelocity;
     float limitVelocity;
     float velocity;
+
+    int16_t available;
+    bool debug;
 
   public:
     BLDCMotor(PinName _pwmU, PinName _pwmV, PinName _pwmW, uint8_t _polerPairQty, float _dt, RawSerial *_pc);
