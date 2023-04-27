@@ -122,10 +122,13 @@ void BLDCMotor::setPIDGain(float _p, float _i, float _d) {
 }
 
 void BLDCMotor::setVelocity(float _velocity) {
-
     targetVelocity = Constrain(_velocity, -limitVelocity, limitVelocity);
     // if (debug)
     //     pc->printf("setVelocity:%f\n", targetVelocity);
+}
+
+float BLDCMotor::getTargetVelocity() {
+    return targetVelocity;
 }
 
 void BLDCMotor::writePwm(float pwmA, float pwmB, float pwmC) {
@@ -284,5 +287,5 @@ void BLDCMotor::drive() {
     float Uq = velocityPID.getPID();
     float Ud = 0;
     setPhaseVoltage(Uq, Ud, elAngle);
-    // pc->printf("V:%.3f\tUq:%.3f \n", velocity, Uq);
+    pc->printf("V:%.3f\tUq:%.3f \n", velocity, Uq);
 }

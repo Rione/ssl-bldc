@@ -45,6 +45,7 @@ class BLDCMotor {
 
     void setVelocity(float _velocity);
     void setVelocityLimit(float _limit);
+    float getTargetVelocity();
 
     void writePwm(float _pwmA, float _pwmB, float _pwmC);
     void setPWMFrequency(int _freq);
