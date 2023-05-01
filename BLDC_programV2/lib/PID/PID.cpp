@@ -1,6 +1,6 @@
 #include "PID.h"
 
-PID::PID(float _p, float _i, float _d, float _dt, RawSerial *_pc) : ticker() {
+PID::PID(float _p, float _i, float _d, float _dt, Serial *_pc) : ticker() {
     pc = _pc;
     p = _p;
     i = _i;

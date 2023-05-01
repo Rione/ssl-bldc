@@ -15,7 +15,7 @@ class BLDCMotor {
     FastPWM pwmU, pwmV, pwmW;
     uint8_t polePairQty;
     PID velocityPID;
-    RawSerial *pc;
+    Serial *pc;
     As5048Spi encoder;
     LPF velocityLPF;
     Timer timer;
@@ -34,7 +34,7 @@ class BLDCMotor {
     bool debug;
 
   public:
-    BLDCMotor(PinName _pwmU, PinName _pwmV, PinName _pwmW, uint8_t _polerPairQty, float _dt, RawSerial *_pc);
+    BLDCMotor(PinName _pwmU, PinName _pwmV, PinName _pwmW, uint8_t _polerPairQty, float _dt, Serial *_pc);
     void init();
 
     void setAbsoluteZero(int _shAngleZero = NOTSET);

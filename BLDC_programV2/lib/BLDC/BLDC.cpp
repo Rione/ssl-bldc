@@ -1,6 +1,6 @@
 #include <BLDC.h>
 
-BLDCMotor::BLDCMotor(PinName _pwmU, PinName _pwmV, PinName _pwmW, uint8_t _polerQty, float _dt, RawSerial *_pc)
+BLDCMotor::BLDCMotor(PinName _pwmU, PinName _pwmV, PinName _pwmW, uint8_t _polerQty, float _dt, Serial *_pc)
     : pwmU(_pwmU),
       pwmV(_pwmV),
       pwmW(_pwmW),
@@ -287,5 +287,5 @@ void BLDCMotor::drive() {
     float Uq = velocityPID.getPID();
     float Ud = 0;
     setPhaseVoltage(Uq, Ud, elAngle);
-    pc->printf("V:%.3f\tUq:%.3f \n", velocity, Uq);
+    // pc->printf("V:%.3f\tUq:%.3f \n", velocity, Uq);
 }

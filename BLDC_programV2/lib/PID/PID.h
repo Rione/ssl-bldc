@@ -8,7 +8,7 @@ class PID {
     float p, i, d; // PID gain
     float dt;      // interval of PID loop [s]
     Ticker ticker;
-    RawSerial *pc;
+    Serial *pc;
     float lastError;
     float error;
 
@@ -23,7 +23,7 @@ class PID {
     void compute();
 
   public:
-    PID(float _p, float _i, float _d, float _dt, RawSerial *_pc);
+    PID(float _p, float _i, float _d, float _dt, Serial *_pc);
     void setLimit(float limit);
     void setGain(float _p, float _i, float _d);
     void reset();

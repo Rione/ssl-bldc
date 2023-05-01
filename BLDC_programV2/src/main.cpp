@@ -1,17 +1,29 @@
 #include <mbed.h>
 #include "BLDC.h"
 // LPF
-RawSerial pc(USBTX, USBRX, 2000000); // tx, rx
+Serial pc(USBTX, USBRX, 230400); // tx, rx
 BLDCMotor BLDC(D9, D5, D6, 8, 5e-3, &pc);
 DigitalOut led(PC_14);
-int d = 0;
+
+char buffer[64];
+volatile bool data_received = false;
+
+void recvRx() {
+    if (pc.readable()) {
+        pc.gets(buffer, sizeof(buffer));
+        int v = atoi(buffer);
+        pc.printf("%d\n", v);
+        BLDC.setVelocity(v);
+    }
+}
 
 void setup() {
     BLDC.init();
     BLDC.setPIDGain(0.02, 0.7, 0);
     BLDC.setSupplyVoltage(16, 7);
-    BLDC.setVelocityLimit(300);
+    BLDC.setVelocityLimit(350);
     BLDC.setVelocity(50);
+    pc.attach(recvRx);
 }
 
 int main() {
@@ -23,7 +35,5 @@ int main() {
         } else {
             led = 0;
         }
-        // BLDC.setVelocity(300 * sinDeg(d * 0.001));
-        d++;
     }
 }
