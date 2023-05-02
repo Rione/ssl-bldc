@@ -2,7 +2,7 @@
 #include "BLDC.h"
 // LPF
 Serial pc(USBTX, USBRX, 230400); // tx, rx
-BLDCMotor BLDC(D9, D5, D6, 8, 5e-3, &pc);
+BLDCMotor BLDC(PC_7, PB_4, PB_10, 8, 5e-3, &pc);
 DigitalOut led(PC_14);
 
 char buffer[64];
@@ -30,10 +30,6 @@ int main() {
     setup();
     while (1) {
         BLDC.drive();
-        if (abs(BLDC.getTargetVelocity() - BLDC.getAngularVelocity()) < 1) {
-            led = 1;
-        } else {
-            led = 0;
-        }
+        led = abs(BLDC.getTargetVelocity() - BLDC.getAngularVelocity()) < 1;
     }
 }
