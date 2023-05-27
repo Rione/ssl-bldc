@@ -41,7 +41,7 @@ void setup() {
     BLDC.setPIDGain(0.02, 0.7, 0);
     BLDC.setSupplyVoltage(16, 7);
     BLDC.setVelocityLimit(350);
-    BLDC.setPWMFrequency(20501);
+    // BLDC.setPWMFrequency(20501);
     BLDC.setVelocity(30);
     pc.attach(recvRx);
     ticker.attach(changeMelody, 0.45);
