@@ -1,56 +1,63 @@
 #include <mbed.h>
-#include "BLDC.h"
 
 Serial pc(USBTX, USBRX, 230400); // tx, rx
-BLDCMotor BLDC(PC_7, PB_4, PB_10, 8, 5e-3, &pc);
 DigitalOut led(PC_14);
 
-Ticker ticker;
+CAN can(PB_8, PB_9, 100000);
+CANMessage msg;
 
-int melody[8] = {1046, 1174, 1318, 1396, 1567, 1760, 1975, 2093};
-int C = 0;
-int8_t direction = 1;
-int8_t save = 0;
-// CAN can(PB_8, PB_9);
-
-char buffer[64];
-
-void changeMelody() {
-    BLDC.setPWMFrequency(melody[C] * 19.6);
-    if (save == 0) C += direction;
-    if (C == 0 || C == 7) {
-        save++;
-        if (save == 3) {
-            direction = -direction;
-            save = 0;
-        }
-    }
-}
-
-void recvRx() {
-    if (pc.readable()) {
-        pc.gets(buffer, sizeof(buffer));
-        int v = atoi(buffer);
-        pc.printf("%d\n", v);
-        BLDC.setVelocity(v);
-    }
-}
-
-void setup() {
-    BLDC.init();
-    BLDC.setPIDGain(0.02, 0.7, 0);
-    BLDC.setSupplyVoltage(16, 7);
-    BLDC.setVelocityLimit(350);
-    // BLDC.setPWMFrequency(20501);
-    BLDC.setVelocity(30);
-    pc.attach(recvRx);
-    ticker.attach(changeMelody, 0.45);
-}
-
+char counter = 0;
 int main() {
-    setup();
     while (1) {
-        BLDC.drive();
-        led = abs(BLDC.getTargetVelocity() - BLDC.getAngularVelocity()) < 1;
+        wait_ms(100);
+        pc.printf(".");
+        // if (can.read(msg)) {
+        //     pc.printf("\nMessage received: %d\n", msg.data[0]);
+        //     // led = !led;
+        // }
+        if (can.write(CANMessage(100, &counter, 1))) {
+            printf("wloop()\n");
+            counter++;
+            printf("Message sent: %d\n", counter);
+            // led = !led;
+        }
+        led = !led;
     }
 }
+
+// // Creates a CAN interface connected to specific pins.
+
+// @param rd read from transmitter
+//     @param td transmit to transmitter
+
+// #include "mbed.h"
+
+//         Ticker ticker;
+// DigitalOut led1(LED1);
+// DigitalOut led2(LED2);
+// // The constructor takes in RX, and TX pin respectively.
+// // These pins, for this example, are defined in mbed_app.json
+// CAN can1(MBED_CONF_APP_CAN1_RD, MBED_CONF_APP_CAN1_TD);
+// CAN can2(MBED_CONF_APP_CAN2_RD, MBED_CONF_APP_CAN2_TD);
+
+// char counter = 0;
+
+// void send() {
+//     if (can1.write(CANMessage(1337, &counter, 1))) {
+//         printf("Message sent: %d\n", counter);
+//         counter++;
+//     }
+//     led1 = !led1;
+// }
+
+// int main() {
+//     ticker.attach(&send, 1);
+//     CANMessage msg;
+//     while (1) {
+//         if (can2.read(msg)) {
+//             printf("Message received: %d\n\n", msg.data[0]);
+//             led2 = !led2;
+//         }
+//         wait(0.2);
+//     }
+// }
