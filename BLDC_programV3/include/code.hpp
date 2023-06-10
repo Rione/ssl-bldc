@@ -8,6 +8,8 @@
 #include "usart.h"
 #include "gpio.h"
 
+#include <stdio.h>
+
 void setup();
 void loop();
 void pwm();
