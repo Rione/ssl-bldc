@@ -43,7 +43,8 @@ void BLDCMotor::setAbsoluteZero(int _shAngleZero) {
         shAngleZero = _shAngleZero;
     } else {
         openLoopControl(1.5, HALF_PI);
-        wait(0.5);
+        // wait(0.5);
+        wait_us(500000);
         shAngleZero = updateEncoder();
 
         if (debug) {
@@ -103,7 +104,8 @@ void BLDCMotor::Diagnose() {
             pc->printf("- This Motor Driber is available!!!\n\n\n\n\n");
     }
     writePwm(0, 0, 0);
-    wait(1);
+    // wait(1);
+    wait_us(1000000);
 }
 
 void BLDCMotor::setSupplyVoltage(float _supplyVoltage, float _limitVoltage) {

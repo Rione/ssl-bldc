@@ -2,7 +2,8 @@
 #include "BLDC.h"
 
 Serial pc(USBTX, USBRX, 230400); // tx, rx
-BLDCMotor BLDC(PB_10, PB_4, PC_7, 8, 5e-3, &pc);
+// BLDCMotor BLDC(PB_10, PB_4, PC_7, 8, 5e-3, &pc);
+BLDCMotor BLDC(PC_7, PB_4, PB_10, 8, 5e-3, &pc);
 DigitalOut led(PC_14);
 
 DigitalOut red(PB_14);
@@ -17,7 +18,7 @@ void rgb(bool r, bool g, bool b) {
     blue = !b;
 }
 
-// CAN can(PB_8, PB_9);
+CAN can(PB_8, PB_9);
 
 char buffer[64];
 
@@ -54,17 +55,17 @@ void Led() {
 }
 void setup() {
     led = 1;
-    wait_ms(200);
+    wait_us(200000);
     led = 0;
-    wait_ms(200);
+    wait_us(200000);
     led = 1;
-    wait_ms(200);
+    wait_us(200000);
     led = 0;
-    wait_ms(200);
+    wait_us(200000);
     BLDC.init();
     BLDC.setPIDGain(0.02, 0.7, 0);
     BLDC.setSupplyVoltage(16, 7);
-    BLDC.setVelocityLimit(350);
+    BLDC.setVelocityLimit(500);
     BLDC.setVelocity(-30);
     pc.attach(recvRx);
 }
