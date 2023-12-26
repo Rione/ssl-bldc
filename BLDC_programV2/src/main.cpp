@@ -25,7 +25,7 @@ void rgb(bool r, bool g, bool b) {
 
 char buffer[64];
 
-typedef struct {
+typedef union {
     int16_t data;
     uint8_t split[2];
 } int16Splitter;
