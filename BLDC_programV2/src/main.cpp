@@ -30,10 +30,10 @@ typedef union {
     uint8_t split[2];
 } int16Splitter;
 
-volatile int16Splitter vel[4];
-volatile uint8_t velIndex = 0;     // 4つが最大
-volatile uint8_t velInt8Index = 0; // 4 * 2 = 8が最大
-volatile uint8_t motorId = 0;      // 1 ~ 4
+int16Splitter vel[4];
+uint8_t velIndex = 0;                 // 4つが最大
+uint8_t velInt8Index = 0;             // 4 * 2 = 8が最大
+uint8_t motorId = Constrain(2, 1, 4); // 1 ~ 4
 
 // void recvRx() {
 //     if (pc.readable()) {
@@ -59,32 +59,40 @@ void recvRx() {
      */
     const uint8_t HEADER = 0xAA; // 仮のヘッダバイト
     static bool headerReceived = false;
+    static uint8_t sum = 0;
 
     if (pc.readable()) {
         uint8_t receivedByte = pc.getc();
 
+        pc.printf("headerReceived:%d, velInt8Index:%d receivedByte:%d\n", headerReceived, velInt8Index, receivedByte);
         if (!headerReceived) {
+            velIndex = 0;
+            velInt8Index = 0;
             if (receivedByte == HEADER) {
                 // ヘッダを受信したら速度データの受信を開始
                 headerReceived = true;
-                velIndex = 0;
-                velInt8Index = 0;
+                pc.printf("header received %d\n ", receivedByte);
+            } else {
+                headerReceived = false;
+                pc.printf("error: Header is not received %d\n", receivedByte);
             }
         } else { // ヘッダを受信した後の処理
             if (velInt8Index < 8) {
                 // 速度データ受信
-                vel[velIndex].split[velInt8Index] = receivedByte;
+                vel[velIndex].split[velInt8Index % 2] = receivedByte;
                 velInt8Index++;
                 velIndex = velInt8Index / 2;
+
+                // checksum
+                sum += receivedByte;
             } else { // 速度データ受信完了
                 // チェックサムの処理
-                uint8_t checksum = pc.getc();
-                uint8_t sum = 0;
-                for (uint8_t i = 0; i < 8; i++) {
-                    sum += vel[i / 2].split[i % 2];
-                }
+                uint8_t checksum = receivedByte;
                 if (sum == checksum) {
                     // 受信成功
+                    pc.printf("success: Check sum match %d == %d\n", sum, checksum);
+                    pc.printf("motorId:%d vel[0]:%d\tvel[1]:%d\tvel[2]:%d\tvel[3]:%d\n", motorId, vel[0].data, vel[1].data, vel[2].data, vel[3].data);
+
                     int16_t v = vel[motorId - 1].data;
                     pc.printf("%d\n", v);
                     BLDC.setVelocity(v);
@@ -97,13 +105,6 @@ void recvRx() {
             }
         }
     }
-
-    // if (pc.readable()) {
-    //     pc.gets(buffer, sizeof(buffer));
-    //     int v = atoi(buffer);
-    //     pc.printf("%d\n", v);
-    //     BLDC.setVelocity(v);
-    // }
 }
 
 void Led() {
@@ -154,8 +155,8 @@ void setup() {
     // } else if (a == 1 && b == 1) {
     //     motorId = 4;
     // }
-    bool a = swA.read();
-    bool b = swB.read();
+    bool a = !swA.read();
+    bool b = !swB.read();
     motorId = ((a << 1) | b) + 1;
 }
 
@@ -164,5 +165,6 @@ int main() {
     while (1) {
         BLDC.drive();
         Led();
+        pc.printf("targetVel:%f, vel:%f\n", BLDC.getTargetVelocity(), BLDC.getAngularVelocity());
     }
 }
