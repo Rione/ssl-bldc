@@ -1,5 +1,6 @@
 #include <mbed.h>
 #include "BLDC.h"
+#include "FLASH_EEPROM.hpp"
 
 Serial pc(USBTX, USBRX, 230400); // tx, rx
 // BLDCMotor BLDC(PB_10, PB_4, PC_7, 8, 5e-3, &pc);
@@ -161,10 +162,14 @@ void setup() {
 }
 
 int main() {
-    setup();
+    // setup();
     while (1) {
-        BLDC.drive();
+        // BLDC.drive();
         Led();
-        pc.printf("targetVel:%f, vel:%f\n", BLDC.getTargetVelocity(), BLDC.getAngularVelocity());
+        writeFlashTest();
+        // pc.printf("targetVel:%f, vel:%f\n", BLDC.getTargetVelocity(), BLDC.getAngularVelocity());
+
+        while (1)
+            ;
     }
 }
