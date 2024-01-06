@@ -162,14 +162,12 @@ void setup() {
 }
 
 int main() {
-    // setup();
+    setup();
     while (1) {
-        // BLDC.drive();
+        BLDC.drive();
         Led();
-        writeFlashTest();
+        // writeFlashTest();
         // pc.printf("targetVel:%f, vel:%f\n", BLDC.getTargetVelocity(), BLDC.getAngularVelocity());
-
-        while (1)
-            ;
+        pc.printf("angle:%.2f, vel:%.2f\n", BLDC.getShaftAngle(), BLDC.getAngularVelocity());
     }
 }

@@ -51,8 +51,8 @@ class BLDCMotor {
     void setPWMFrequency(int _freq);
 
     float updateEncoder();
-    int getShaftAngle();
-    int getElectricAngle();
+    float getShaftAngle();
+    float getElectricAngle();
     float getAngularVelocity();
 
     void setPhaseVoltage(float _Uq, float Ud, float _elAngle);

@@ -169,11 +169,11 @@ float BLDCMotor::updateEncoder() {
     }
 }
 
-int BLDCMotor::getShaftAngle() {
+float BLDCMotor::getShaftAngle() {
     return shAngle;
 }
 
-int BLDCMotor::getElectricAngle() {
+float BLDCMotor::getElectricAngle() {
     return elAngle;
 }
 
