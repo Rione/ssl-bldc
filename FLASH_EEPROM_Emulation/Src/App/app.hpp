@@ -3,9 +3,10 @@
 
 #include <main.h>
 #include <stdio.h>
-#include "FLASH_EEPROM.hpp"
-#include "spi.h"
+#include "MyMath.hpp"
 #include "PWM.hpp"
+#include "FLASH_EEPROM.hpp"
+#include "AS5048A.hpp"
 
 #ifdef __cplusplus
 
