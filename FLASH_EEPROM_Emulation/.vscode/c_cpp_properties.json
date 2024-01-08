@@ -8,10 +8,11 @@
         {
             "name": "PlatformIO",
             "includePath": [
-                "/Users/tomixrm/Documents/PlatformIO/Projects/FLASH_EEPROM_Emulation/Inc",
-                "/Users/tomixrm/Documents/PlatformIO/Projects/FLASH_EEPROM_Emulation/Src",
-                "/Users/tomixrm/Documents/PlatformIO/Projects/FLASH_EEPROM_Emulation/lib/AS5048A",
-                "/Users/tomixrm/Documents/PlatformIO/Projects/FLASH_EEPROM_Emulation/lib/FLASH_EEPROM",
+                "/Users/tomixrm/Documents/Dev/Robots/ssl-bldc/FLASH_EEPROM_Emulation/Inc",
+                "/Users/tomixrm/Documents/Dev/Robots/ssl-bldc/FLASH_EEPROM_Emulation/Src",
+                "/Users/tomixrm/Documents/Dev/Robots/ssl-bldc/FLASH_EEPROM_Emulation/lib/PWM",
+                "/Users/tomixrm/Documents/Dev/Robots/ssl-bldc/FLASH_EEPROM_Emulation/lib/MyMath",
+                "/Users/tomixrm/Documents/Dev/Robots/ssl-bldc/FLASH_EEPROM_Emulation/lib/FLASH_EEPROM",
                 "/Users/tomixrm/.platformio/packages/framework-stm32cubef4/Drivers/CMSIS/Include",
                 "/Users/tomixrm/.platformio/packages/framework-stm32cubef4/Drivers/CMSIS/Device/ST/STM32F4xx/Include",
                 "/Users/tomixrm/.platformio/packages/framework-stm32cubef4/Drivers/STM32F4xx_HAL_Driver/Inc",
@@ -91,10 +92,11 @@
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "/Users/tomixrm/Documents/PlatformIO/Projects/FLASH_EEPROM_Emulation/Inc",
-                    "/Users/tomixrm/Documents/PlatformIO/Projects/FLASH_EEPROM_Emulation/Src",
-                    "/Users/tomixrm/Documents/PlatformIO/Projects/FLASH_EEPROM_Emulation/lib/AS5048A",
-                    "/Users/tomixrm/Documents/PlatformIO/Projects/FLASH_EEPROM_Emulation/lib/FLASH_EEPROM",
+                    "/Users/tomixrm/Documents/Dev/Robots/ssl-bldc/FLASH_EEPROM_Emulation/Inc",
+                    "/Users/tomixrm/Documents/Dev/Robots/ssl-bldc/FLASH_EEPROM_Emulation/Src",
+                    "/Users/tomixrm/Documents/Dev/Robots/ssl-bldc/FLASH_EEPROM_Emulation/lib/PWM",
+                    "/Users/tomixrm/Documents/Dev/Robots/ssl-bldc/FLASH_EEPROM_Emulation/lib/MyMath",
+                    "/Users/tomixrm/Documents/Dev/Robots/ssl-bldc/FLASH_EEPROM_Emulation/lib/FLASH_EEPROM",
                     "/Users/tomixrm/.platformio/packages/framework-stm32cubef4/Drivers/CMSIS/Include",
                     "/Users/tomixrm/.platformio/packages/framework-stm32cubef4/Drivers/CMSIS/Device/ST/STM32F4xx/Include",
                     "/Users/tomixrm/.platformio/packages/framework-stm32cubef4/Drivers/STM32F4xx_HAL_Driver/Inc",

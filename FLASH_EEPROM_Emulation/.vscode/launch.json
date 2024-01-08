@@ -8,6 +8,7 @@
 {
     "version": "0.2.0",
     "configurations": [
+        
         {
             "name": "C/C++ Runner: Debug Session",
             "type": "cppdbg",
@@ -31,7 +32,7 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug",
-            "executable": "/Users/tomixrm/Documents/PlatformIO/Projects/FLASH_EEPROM_Emulation/.pio/build/nucleo_f446re/firmware.elf",
+            "executable": "/Users/tomixrm/Documents/Dev/Robots/ssl-bldc/FLASH_EEPROM_Emulation/.pio/build/nucleo_f446re/firmware.elf",
             "projectEnvName": "nucleo_f446re",
             "toolchainBinDir": "/Users/tomixrm/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin",
             "internalConsoleOptions": "openOnSessionStart",
@@ -45,7 +46,7 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug (skip Pre-Debug)",
-            "executable": "/Users/tomixrm/Documents/PlatformIO/Projects/FLASH_EEPROM_Emulation/.pio/build/nucleo_f446re/firmware.elf",
+            "executable": "/Users/tomixrm/Documents/Dev/Robots/ssl-bldc/FLASH_EEPROM_Emulation/.pio/build/nucleo_f446re/firmware.elf",
             "projectEnvName": "nucleo_f446re",
             "toolchainBinDir": "/Users/tomixrm/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin",
             "internalConsoleOptions": "openOnSessionStart",
@@ -55,7 +56,7 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug (without uploading)",
-            "executable": "/Users/tomixrm/Documents/PlatformIO/Projects/FLASH_EEPROM_Emulation/.pio/build/nucleo_f446re/firmware.elf",
+            "executable": "/Users/tomixrm/Documents/Dev/Robots/ssl-bldc/FLASH_EEPROM_Emulation/.pio/build/nucleo_f446re/firmware.elf",
             "projectEnvName": "nucleo_f446re",
             "toolchainBinDir": "/Users/tomixrm/.platformio/packages/toolchain-gccarmnoneeabi@1.70201.0/bin",
             "internalConsoleOptions": "openOnSessionStart",

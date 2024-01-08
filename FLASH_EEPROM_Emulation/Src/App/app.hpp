@@ -5,12 +5,11 @@
 #include <stdio.h>
 #include "FLASH_EEPROM.hpp"
 #include "spi.h"
-#include "as5048a.h"
+#include "PWM.hpp"
 
 #ifdef __cplusplus
 
 extern "C" {
-AS5048A angleSensor(&hspi1, GPIOA, GPIO_PIN_4);
 
 void main_app();
 class App {

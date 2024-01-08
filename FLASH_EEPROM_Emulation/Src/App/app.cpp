@@ -77,11 +77,28 @@ void main_app() {
     printf("Hello World!\n");
     // while(1);
     HAL_Delay(100);
+    // printf("data:%d\n", getAS5048A_DMA(0x3FFF) * 360 / 0x3FFF);
 
-    // writeFlashTest();
+    Flash_EEPROM flash;
+
+    flash.writeFlashTest();
+
+    HAL_Delay(1000);
+
+    PwmOut pwm1(&htim1, TIM_CHANNEL_1, TIM_CHANNEL_2, TIM_CHANNEL_3);
+    PwmOut pwm2(&htim3, TIM_CHANNEL_1, TIM_CHANNEL_2, TIM_CHANNEL_3);
+    pwm1.init();
+    pwm2.init();
+    int deg = 0;
     while (1) {
-        printf("data:%d\n", getAS5048A_DMA(0x3FFF) * 360 / 0x3FFF);
-        HAL_Delay(100);
+        deg++;
+        float u = 0.5 * MyMath::sinDeg(deg) + 0.5;
+        float v = 0.5 * MyMath::sinDeg(deg + 120) + 0.5;
+        float w = 0.5 * MyMath::sinDeg(deg + 240) + 0.5;
+        pwm1.write(u, v, w);
+        pwm2.write(u, v, w);
+        HAL_Delay(10);
+        printf("%d %d %d\n", (int)(u * 1000), (int)(v * 1000), (int)(w * 1000));
     }
 }
 
