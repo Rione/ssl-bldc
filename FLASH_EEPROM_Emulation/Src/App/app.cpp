@@ -4,6 +4,9 @@ Serial uart2(&huart2, 64);
 PwmOut pwm1(&pin_PWM1_A, &pin_PWM1_B, &pin_PWM1_C);
 AS5048A encoder1(&hspi1, CS1_GPIO_Port, CS1_Pin);
 
+DigitalOut led_blue(led_blue_GPIO_Port, led_blue_Pin);
+DigitalOut led_red(led_red_GPIO_Port, led_red_Pin);
+DigitalOut led_green(led_green_GPIO_Port, led_green_Pin);
 typedef union {
     int16_t data;
     uint8_t split[2];
@@ -92,11 +95,7 @@ void main_app() {
 
     uart2.init();
     pwm1.init();
-    // while (1) {
-    //     while (uart2.available()) {
-    //         recvRx();
-    //     }
-    // }
+
     int deg = 0;
 
     while (1) {
@@ -104,10 +103,16 @@ void main_app() {
         float u = 0.5 * MyMath::sinDeg(deg) + 0.5;
         float v = 0.5 * MyMath::sinDeg(deg + 120) + 0.5;
         float w = 0.5 * MyMath::sinDeg(deg + 240) + 0.5;
-        // writePWM(u, v, w);
+        
         pwm1.write(u, v, w);
-        // led.write(u, v, w);
         HAL_Delay(10);
         printf("%d %d %d\n", (int)(u * 1000), (int)(v * 1000), (int)(w * 1000));
+
+        led_blue = (u > 0.5);
+        led_red = (v > 0.5);
+        led_green = (w > 0.5);
+        while (uart2.available()) {
+            recvRx();
+        }
     }
 }

@@ -9,6 +9,7 @@
 #include "FLASH_EEPROM.hpp"
 #include "AS5048A.hpp"
 #include "Serial.hpp"
+#include "DigitalInOut.hpp"
 
 #ifdef __cplusplus
 
