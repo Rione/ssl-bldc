@@ -44,6 +44,10 @@ class Serial {
         HAL_UART_Transmit(_huart, &data, 1, 100);
     }
 
+    uint8_t getc() {
+        return read();
+    }
+
     void write(const uint8_t *data, uint16_t len) {
         HAL_UART_Transmit(_huart, (uint8_t *)data, len, 100);
     }
