@@ -1,13 +1,14 @@
 #ifndef __APP__
 #define __APP__
 
-#include <main.h>
 #include <stdio.h>
+
+#include "main.h"
 #include "MyMath.hpp"
 #include "PWM.hpp"
 #include "FLASH_EEPROM.hpp"
 #include "AS5048A.hpp"
-#include "usart.h"
+#include "Serial.hpp"
 
 #ifdef __cplusplus
 

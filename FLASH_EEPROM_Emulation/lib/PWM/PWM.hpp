@@ -1,9 +1,8 @@
 #ifndef MYPWM_HPP
 #define MYPWM_HPP
 
-#include "main.h"
-#include "MyMath.hpp"
 #include "tim.h"
+#include "MyMath.hpp"
 
 #ifdef __cplusplus
 extern "C" {
