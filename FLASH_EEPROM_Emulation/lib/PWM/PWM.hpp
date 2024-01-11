@@ -13,9 +13,6 @@ class PwmOut {
         channel[0] = channel1;
         channel[1] = channel2;
         channel[2] = channel3;
-    }
-
-    void init() {
         maxValue = htim->Init.Period;
         HAL_TIM_PWM_Start(htim, channel[0]);
         HAL_TIM_PWM_Start(htim, channel[1]);
