@@ -3,9 +3,11 @@
 
 #include "tim.h"
 #include "MyMath.hpp"
+#include "PinDefs.hpp"
 
 #ifdef __cplusplus
 extern "C" {
+
 class PwmOut {
   public:
     PwmOut(TIM_HandleTypeDef *_htim, uint32_t channel1, uint32_t channel2, uint32_t channel3) {
@@ -14,25 +16,55 @@ class PwmOut {
         channel[1] = channel2;
         channel[2] = channel3;
         maxValue = htim->Init.Period;
-        HAL_TIM_PWM_Start(htim, channel[0]);
-        HAL_TIM_PWM_Start(htim, channel[1]);
-        HAL_TIM_PWM_Start(htim, channel[2]);
+        usePin_t = false;
+    }
+
+    PwmOut(Pin_t *pinA, Pin_t *pinB, Pin_t *pinC) {
+        pin[0] = pinA;
+        pin[1] = pinB;
+        pin[2] = pinC;
+        usePin_t = true;
+    }
+
+    void init() {
+        if (usePin_t) {
+            HAL_TIM_PWM_Start(pin[0]->htim, pin[0]->timerChannel);
+            HAL_TIM_PWM_Start(pin[1]->htim, pin[1]->timerChannel);
+            HAL_TIM_PWM_Start(pin[2]->htim, pin[2]->timerChannel);
+        } else {
+            HAL_TIM_PWM_Start(htim, channel[0]);
+            HAL_TIM_PWM_Start(htim, channel[1]);
+            HAL_TIM_PWM_Start(htim, channel[2]);
+        }
     }
 
     void write(float duty1, float duty2, float duty3) {
-        duty1 = (int)(Constrain(duty1, 0.0, 1.0) * maxValue);
-        duty2 = (int)(Constrain(duty2, 0.0, 1.0) * maxValue);
-        duty3 = (int)(Constrain(duty3, 0.0, 1.0) * maxValue);
+        if (usePin_t) {
+            duty1 = (int)(Constrain(duty1, 0.0, 1.0) * pin[0]->htim->Init.Period);
+            duty2 = (int)(Constrain(duty2, 0.0, 1.0) * pin[1]->htim->Init.Period);
+            duty3 = (int)(Constrain(duty3, 0.0, 1.0) * pin[2]->htim->Init.Period);
 
-        __HAL_TIM_SET_COMPARE(htim, channel[0], duty1);
-        __HAL_TIM_SET_COMPARE(htim, channel[1], duty2);
-        __HAL_TIM_SET_COMPARE(htim, channel[2], duty3);
+            __HAL_TIM_SET_COMPARE(pin[0]->htim, pin[0]->timerChannel, duty1);
+            __HAL_TIM_SET_COMPARE(pin[1]->htim, pin[1]->timerChannel, duty2);
+            __HAL_TIM_SET_COMPARE(pin[2]->htim, pin[2]->timerChannel, duty3);
+        } else {
+            duty1 = (int)(Constrain(duty1, 0.0, 1.0) * maxValue);
+            duty2 = (int)(Constrain(duty2, 0.0, 1.0) * maxValue);
+            duty3 = (int)(Constrain(duty3, 0.0, 1.0) * maxValue);
+
+            __HAL_TIM_SET_COMPARE(htim, channel[0], duty1);
+            __HAL_TIM_SET_COMPARE(htim, channel[1], duty2);
+            __HAL_TIM_SET_COMPARE(htim, channel[2], duty3);
+        }
     }
 
   private:
     TIM_HandleTypeDef *htim;
     uint32_t channel[3];
     uint32_t maxValue;
+
+    Pin_t *pin[3];
+    bool usePin_t;
 };
 };
 

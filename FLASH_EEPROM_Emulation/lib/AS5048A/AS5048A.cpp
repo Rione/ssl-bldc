@@ -1,7 +1,7 @@
 #include "AS5048A.hpp"
 
 AS5048A::AS5048A(SPI_HandleTypeDef *hspi, GPIO_TypeDef *csPort, uint16_t csPin) : hspi(hspi), csPort(csPort), csPin(csPin) {
-    HAL_GPIO_WritePin(CS0_GPIO_Port, CS0_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(csPort, csPin, GPIO_PIN_SET);
 }
 
 uint16_t AS5048A::get(uint16_t addr) {
