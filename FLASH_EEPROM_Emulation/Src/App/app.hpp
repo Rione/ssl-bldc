@@ -7,6 +7,7 @@
 #include "PWM.hpp"
 #include "FLASH_EEPROM.hpp"
 #include "AS5048A.hpp"
+#include "usart.h"
 
 #ifdef __cplusplus
 
