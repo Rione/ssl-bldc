@@ -10,6 +10,7 @@
 #include "AS5048A.hpp"
 #include "Serial.hpp"
 #include "DigitalInOut.hpp"
+#include "Timer.hpp"
 
 #ifdef __cplusplus
 
