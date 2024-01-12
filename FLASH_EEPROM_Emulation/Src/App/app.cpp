@@ -9,8 +9,6 @@ DigitalOut led_red(led_red_GPIO_Port, led_red_Pin);
 DigitalOut led_green(led_green_GPIO_Port, led_green_Pin);
 DigitalOut led_alive(led_alive_GPIO_Port, led_alive_Pin);
 
-
-
 typedef union {
     int16_t data;
     uint8_t split[2];
@@ -104,25 +102,24 @@ void main_app() {
 
     Timer timer;
     while (1) {
-        // deg++;
-        // float u = 0.5 * MyMath::sinDeg(deg) + 0.5;
-        // float v = 0.5 * MyMath::sinDeg(deg + 120) + 0.5;
-        // float w = 0.5 * MyMath::sinDeg(deg + 240) + 0.5;
-
-        // pwm1.write(u, v, w);
-        // HAL_Delay(10);
-        // printf("%d %d %d\n", (int)(u * 1000), (int)(v * 1000), (int)(w * 1000));
-
-        // led_blue = (u > 0.5);
-        // led_red = (v > 0.5);
-        // led_green = (w > 0.5);
-        // while (uart2.available()) {
-        //     recvRx();
-        //     led_alive = !led_alive;
-        // }
         timer.reset();
-        // DWT_CYCCNT
-        HAL_Delay(1000);
-        printf("%d\n", timer.read_ms());
+        deg++;
+        float u = 0.5 * MyMath::sinDeg(deg) + 0.5;
+        float v = 0.5 * MyMath::sinDeg(deg + 120) + 0.5;
+        float w = 0.5 * MyMath::sinDeg(deg + 240) + 0.5;
+
+        pwm1.write(u, v, w);
+        // HAL_Delay(10);
+        // printf("%d %d %d\t", (int)(u * 1000), (int)(v * 1000), (int)(w * 1000));
+        uint16_t deg = encoder1.getAngleDeg();
+        led_blue = (u > 0.5);
+        led_red = (v > 0.5);
+        led_green = (w > 0.5);
+        while (uart2.available()) {
+            recvRx();
+            led_alive = !led_alive;
+        }
+        uint32_t time = timer.read_us();
+        printf("%d %d\n", time, deg);
     }
 }

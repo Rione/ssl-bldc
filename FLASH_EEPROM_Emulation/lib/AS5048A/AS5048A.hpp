@@ -22,6 +22,7 @@ class AS5048A {
     GPIO_TypeDef *csPort;
     uint16_t csPin;
     uint8_t spiCalcEvenParity(uint16_t value);
+    void wait_ns(uint32_t mircos);
 };
 }
 

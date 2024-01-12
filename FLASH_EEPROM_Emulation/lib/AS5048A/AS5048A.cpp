@@ -36,7 +36,7 @@ uint16_t AS5048A::get(uint16_t addr) {
     // printf("data1:%d\n", rxData.data);
     HAL_GPIO_WritePin(csPort, csPin, GPIO_PIN_SET);
 
-    HAL_Delay(1);
+    wait_ns(10);
 
     HAL_GPIO_WritePin(csPort, csPin, GPIO_PIN_RESET);
     // NOPを送信
@@ -77,4 +77,13 @@ float AS5048A::getAngleRad() {
 
 float AS5048A::getAngleDeg() {
     return static_cast<float>(get(0x3FFF)) * 360 / 0x3FFF;
+}
+
+void AS5048A::wait_ns(uint32_t micros) {
+    uint32_t startTick = DWT->CYCCNT;
+    uint32_t requiredTicks = micros * (SystemCoreClock / 1000000000);
+
+    while ((DWT->CYCCNT - startTick) < requiredTicks) {
+        // Wait until the required number of ticks has elapsed
+    }
 }
