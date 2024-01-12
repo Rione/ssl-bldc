@@ -7,6 +7,8 @@ AS5048A encoder1(&hspi1, CS1_GPIO_Port, CS1_Pin);
 DigitalOut led_blue(led_blue_GPIO_Port, led_blue_Pin);
 DigitalOut led_red(led_red_GPIO_Port, led_red_Pin);
 DigitalOut led_green(led_green_GPIO_Port, led_green_Pin);
+DigitalOut led_alive(led_alive_GPIO_Port, led_alive_Pin);
+
 typedef union {
     int16_t data;
     uint8_t split[2];
@@ -103,7 +105,7 @@ void main_app() {
         float u = 0.5 * MyMath::sinDeg(deg) + 0.5;
         float v = 0.5 * MyMath::sinDeg(deg + 120) + 0.5;
         float w = 0.5 * MyMath::sinDeg(deg + 240) + 0.5;
-        
+
         pwm1.write(u, v, w);
         HAL_Delay(10);
         printf("%d %d %d\n", (int)(u * 1000), (int)(v * 1000), (int)(w * 1000));
@@ -113,6 +115,7 @@ void main_app() {
         led_green = (w > 0.5);
         while (uart2.available()) {
             recvRx();
+            led_alive = !led_alive;
         }
     }
 }

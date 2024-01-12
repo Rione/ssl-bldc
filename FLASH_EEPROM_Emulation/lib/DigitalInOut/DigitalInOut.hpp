@@ -20,6 +20,10 @@ class DigitalOut {
         HAL_GPIO_WritePin(port, pin, value ? GPIO_PIN_SET : GPIO_PIN_RESET);
     }
 
+    operator bool() {
+        return HAL_GPIO_ReadPin(port, pin) == GPIO_PIN_SET;
+    }
+
   private:
     GPIO_TypeDef *port;
     uint16_t pin;
