@@ -36,7 +36,7 @@ uint16_t AS5048A::get(uint16_t addr) {
     // printf("data1:%d\n", rxData.data);
     HAL_GPIO_WritePin(csPort, csPin, GPIO_PIN_SET);
 
-    wait_ns(10);
+    wait_ns(1000);
 
     HAL_GPIO_WritePin(csPort, csPin, GPIO_PIN_RESET);
     // NOPを送信

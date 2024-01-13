@@ -1,7 +1,6 @@
-#include "LPF.h"
+#include "LPF.hpp"
 
 LPF::LPF(float _timeConstant) : timeConstant(_timeConstant), prevValue(0) {
-    timer.start();
 }
 
 float LPF::update(float _value) {

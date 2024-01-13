@@ -10,6 +10,8 @@ DigitalOut led_red(led_red_GPIO_Port, led_red_Pin);
 DigitalOut led_green(led_green_GPIO_Port, led_green_Pin);
 DigitalOut led_alive(led_alive_GPIO_Port, led_alive_Pin);
 
+BLDCMotor BLDC(&pwm1, &encoder1, 8, 0.005);
+
 Timer timer;
 CAN::CANData canRecvData;
 typedef union {
@@ -88,6 +90,8 @@ void recvRx() {
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
     if (can.getHcan() == &hcan1) {
         can.recv(canRecvData);
+        can.send(canRecvData);
+        led_alive = !led_alive;
     }
 }
 
@@ -127,11 +131,7 @@ void main_app() {
             led_alive = !led_alive;
         }
 
-        CAN::CANData canData = {
-            .stdId = 0x555,
-            .data = {0x11, 0x22, 0x33, 0x44, 0x65, 0x66, 0x77, 0x88}};
-        can.send(canData);
         uint32_t time = timer.read_us();
-        printf("time: %d deg: %3d CANrecv: %d %x %x %x %x %x %x %x %x\n", time, deg, canRecvData.stdId, canRecvData.data[0], canRecvData.data[1], canRecvData.data[2], canRecvData.data[3], canRecvData.data[4], canRecvData.data[5], canRecvData.data[6], canRecvData.data[7]);
+        printf("time: %d deg: %3d CANrecv: %d data:%x %x %x %x %x %x %x %x\n", time, deg, canRecvData.stdId, canRecvData.data[0], canRecvData.data[1], canRecvData.data[2], canRecvData.data[3], canRecvData.data[4], canRecvData.data[5], canRecvData.data[6], canRecvData.data[7]);
     }
 }

@@ -6,33 +6,29 @@
 #ifdef __cplusplus
 
 extern "C" {
+
 class Timer {
   public:
     // using DWT for timer watching
-    Timer() {
-        CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
-        DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
-    }
-    void reset() {
-        startTime = DWT->CYCCNT;
-    }
+    Timer();
 
-    uint32_t read_ms() {
+    void reset();
 
-        return (uint32_t)((float)(DWT->CYCCNT - startTime) / HAL_RCC_GetSysClockFreq() * 1000);
-    }
+    float read();
 
-    uint32_t read_us() {
-        return (uint32_t)((float)(DWT->CYCCNT - startTime) / HAL_RCC_GetSysClockFreq() * 1000000);
-    }
+    uint32_t read_ms();
 
-    uint32_t read_count() {
-        return DWT->CYCCNT - startTime;
-    }
+    uint32_t read_us();
+
+    uint32_t read_count();
 
   private:
     uint32_t startTime;
 };
+
+void wait_ns(uint32_t micros);
+void wait_us(uint32_t micros);
+void wait_ms(uint32_t micros);
 }
 
 #endif

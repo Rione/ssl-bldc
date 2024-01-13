@@ -1,16 +1,10 @@
 #include "PID.h"
 
-PID::PID(float _p, float _i, float _d, float _dt, Serial *_pc) : ticker() {
-    pc = _pc;
-    p = _p;
-    i = _i;
-    d = _d;
-    dt = _dt;
+PID::PID(float _p, float _i, float _d, float _dt) : p(_p), i(_i), d(_d), dt(_dt) {
     limit = 1000;
     setLimit(limit);
     lastError = 0;
-    pc->printf("PID init\r");
-    ticker.attach(callback(this, &PID::compute), _dt);
+    timer.reset();
 }
 
 void PID::setLimit(float _limit) {
@@ -50,5 +44,7 @@ void PID::compute() {
 }
 
 float PID::getPID() {
+    // if (dt != 0) compute();
+    if (timer.read() > dt) compute();
     return output;
 }

@@ -1,22 +1,26 @@
 #ifndef BLDC_H
 #define BLDC_H
 
-#include <mbed.h>
-#include "FastPWM.h"
 #include "PID.h"
-#include "AS5048A.h"
-#include "Math.h"
-#include "LPF.h"
+#include "AS5048A.hpp"
+#include "MyMath.hpp"
+#include "LPF.hpp"
+#include "PWM.hpp"
+#include "Timer.hpp"
+#include "stdio.h"
+
+#ifdef __cplusplus
+
+extern "C" {
 
 #define NOTSET -9999
 #define ENCODER_DIR -1
 class BLDCMotor {
   private:
-    FastPWM pwmU, pwmV, pwmW;
+    PwmOut *pwm;
+    AS5048A *encoder;
     uint8_t polePairQty;
     PID velocityPID;
-    Serial *pc;
-    As5048Spi encoder;
     LPF velocityLPF;
     Timer timer;
 
@@ -34,7 +38,7 @@ class BLDCMotor {
     bool debug;
 
   public:
-    BLDCMotor(PinName _pwmU, PinName _pwmV, PinName _pwmW, uint8_t _polerPairQty, float _dt, Serial *_pc);
+    BLDCMotor(PwmOut *_pwm, AS5048A *_encoder, uint8_t _polerPairQty, float _dt);
     void init();
 
     void setAbsoluteZero(int _shAngleZero = NOTSET);
@@ -48,7 +52,6 @@ class BLDCMotor {
     float getTargetVelocity();
 
     void writePwm(float _pwmA, float _pwmB, float _pwmC);
-    void setPWMFrequency(int _freq);
 
     float updateEncoder();
     float getShaftAngle();
@@ -59,5 +62,7 @@ class BLDCMotor {
     void openLoopControl(float _A, float _elAngle);
     void drive();
 };
+}
 
+#endif
 #endif

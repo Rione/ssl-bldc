@@ -1,15 +1,11 @@
-#include <BLDC.h>
+#include "BLDC.hpp"
 
-BLDCMotor::BLDCMotor(PinName _pwmU, PinName _pwmV, PinName _pwmW, uint8_t _polerQty, float _dt, Serial *_pc)
-    : pwmU(_pwmU),
-      pwmV(_pwmV),
-      pwmW(_pwmW),
+BLDCMotor::BLDCMotor(PwmOut *_pwm, AS5048A *_encoder, uint8_t _polerQty, float _dt)
+    : pwm(_pwm),
+      encoder(_encoder),
       polePairQty(_polerQty),
-      velocityPID(0.0001, 0, 0, _dt, _pc), // default gain
-      pc(_pc),
-      encoder(D11, D12, D13, D10),
+      velocityPID(0.0001, 0, 0, _dt), // default gain
       velocityLPF(0.01),
-
       supplyVoltage(12),
       limitVoltage(6),
       elAngle(0),
@@ -20,22 +16,16 @@ BLDCMotor::BLDCMotor(PinName _pwmU, PinName _pwmV, PinName _pwmW, uint8_t _poler
       limitVelocity(300),
       velocity(0),
       available(NOTSET),
-      debug(_pc != 0) {}
+      debug(false) {}
 
 void BLDCMotor::init() {
-    pwmU.period_us(5);
-    pwmV.period_us(5);
-    pwmW.period_us(5);
-    writePwm(0, 0, 0);
-
+    pwm->write(0, 0, 0);
     velocityPID.setLimit(8); // 2.3
-    encoder.frequency(8e6);
-    timer.start();
+
     setAbsoluteZero();
     Diagnose(); // 故障診断
     available = true;
-    if (debug)
-        pc->printf("\n\n\n\n\n\nBLDC init\n");
+    printf("- BLDC init\n");
 }
 
 void BLDCMotor::setAbsoluteZero(int _shAngleZero) {
@@ -44,15 +34,14 @@ void BLDCMotor::setAbsoluteZero(int _shAngleZero) {
     } else {
         openLoopControl(1.5, HALF_PI);
         // wait(0.5);
-        wait_us(500000);
+        wait_ms(500);
         shAngleZero = updateEncoder();
 
         if (debug) {
-            pc->printf("\n\n\n\n\n");
             if (shAngleZero == -1) {
-                pc->printf("- error: encoder not found");
+                printf("- error: encoder not found");
             } else {
-                pc->printf("- shAngleZero:%f", shAngleZero);
+                printf("- shAngleZero:%f", shAngleZero);
             }
         }
         writePwm(0, 0, 0);
@@ -62,7 +51,7 @@ void BLDCMotor::setAbsoluteZero(int _shAngleZero) {
 void BLDCMotor::Diagnose() {
     available = NOTSET;
     if (debug) {
-        pc->printf("- Diagnose the Motor Driver..\n");
+        printf("- Diagnose the Motor Driver..\n");
     }
     // if (abs(gapRadians(shAngle, Radians(deg))) > 0.1) {
     //     if (debug)
@@ -98,10 +87,10 @@ void BLDCMotor::Diagnose() {
 
     if (!available) {
         if (debug)
-            pc->printf("- Error: polerPairQty isn't correct or Motor Driver is broken....\n\n\n\n\n");
+            printf("- Error: polerPairQty isn't correct or Motor Driver is broken....\n\n\n\n\n");
     } else {
         if (debug)
-            pc->printf("- This Motor Driber is available!!!\n\n\n\n\n");
+            printf("- This Motor Driber is available!!!\n\n\n\n\n");
     }
     writePwm(0, 0, 0);
     // wait(1);
@@ -120,13 +109,13 @@ void BLDCMotor::setVelocityLimit(float _limit) {
 void BLDCMotor::setPIDGain(float _p, float _i, float _d) {
     velocityPID.setGain(_p, _i, _d);
     if (debug)
-        pc->printf("setGain P:%f I:%f D:%f\n", _p, _i, _d);
+        printf("setGain P:%f I:%f D:%f\n", _p, _i, _d);
 }
 
 void BLDCMotor::setVelocity(float _velocity) {
     targetVelocity = Constrain(_velocity, -limitVelocity, limitVelocity);
     // if (debug)
-    //     pc->printf("setVelocity:%f\n", targetVelocity);
+    //     printf("setVelocity:%f\n", targetVelocity);
 }
 
 float BLDCMotor::getTargetVelocity() {
@@ -135,38 +124,16 @@ float BLDCMotor::getTargetVelocity() {
 
 void BLDCMotor::writePwm(float pwmA, float pwmB, float pwmC) {
     if (available == false) return;
-    pwmA = Constrain(pwmA, 0, 1.0);
-    pwmB = Constrain(pwmB, 0, 1.0);
-    pwmC = Constrain(pwmC, 0, 1.0);
-    pwmU.write(pwmA);
-    pwmV.write(pwmB);
-    pwmW.write(pwmC);
+    pwm->write(pwmA, pwmB, pwmC);
     // if (debug)
-    //     pc->printf("%f %f %f\n", pwmA * 1000, pwmB * 1000, pwmC * 1000);
-}
-
-void BLDCMotor::setPWMFrequency(int _freq) {
-    pwmU.period_us(10e6 / _freq);
-    pwmV.period_us(10e6 / _freq);
-    pwmW.period_us(10e6 / _freq);
+    //     printf("%f %f %f\n", pwmA * 1000, pwmB * 1000, pwmC * 1000);
 }
 
 float BLDCMotor::updateEncoder() {
-    int _angle = *encoder.read_angle();
-    if (encoder.parity_check(_angle)) {
-        shAnglePrev = shAngle;
-        _angle *= ENCODER_DIR;
-        float __angle = (float)(As5048Spi::radian(_angle)) / 10000;
-        shAngle = gapRadians(shAngleZero, __angle);
-        elAngle = normalizeRadians(shAngle * polePairQty);
-        // if (debug)
-        //     pc->printf("shAngleZero:%f :shAngle: %f elAngle: %f\n", shAngleZero, shAngle, elAngle);
-        return __angle;
-    } else {
-        if (debug)
-            pc->printf("ENCODER: Parity check failed.\n");
-        return -1;
-    }
+    int _angle = encoder->getAngleRad();
+    shAngle = MyMath::gapRadians(shAngleZero, _angle);
+    elAngle = MyMath::normalizeRadians(shAngle * polePairQty);
+    return _angle;
 }
 
 float BLDCMotor::getShaftAngle() {
@@ -209,23 +176,23 @@ void BLDCMotor::setPhaseVoltage(float Uq, float Ud, float _elAngle) {
     // a bit of optitmisation
     if (Ud) { // only if Ud and Uq set
         // _sqrt is an approx of sqrt (3-4% error)
-        Uout = sqrt(Ud * Ud + Uq * Uq) / limitVoltage;
+        Uout = MyMath::sqrt(Ud * Ud + Uq * Uq) / limitVoltage;
         // angle normalisation in between 0 and 2pi
         // only necessary if using _sin and _cos - approximation functions
-        _elAngle = normalizeRadians(_elAngle + atan2(Uq, Ud));
+        _elAngle = MyMath::normalizeRadians(_elAngle + MyMath::atan2(Uq, Ud));
     } else { // only Uq available - no need for atan2 and sqrt
         Uout = Uq / limitVoltage;
         // angle normalisation in between 0 and 2pi
         // only necessary if using _sin and _cos - approximation functions
-        _elAngle = normalizeRadians(_elAngle + HALF_PI);
+        _elAngle = MyMath::normalizeRadians(_elAngle + HALF_PI);
     }
-    _elAngle = normalizeRadians(_elAngle);
+    _elAngle = MyMath::normalizeRadians(_elAngle);
 
     Uq = abs(Uq);
 
     sector = (int)(_elAngle / PI_3) + 1;
-    T1 = SQRT3 * sin(sector * PI_3 - _elAngle) * Uout;
-    T2 = SQRT3 * sin(_elAngle - (sector - 1.0) * PI_3) * Uout;
+    T1 = SQRT3 * MyMath::sin(sector * PI_3 - _elAngle) * Uout;
+    T2 = SQRT3 * MyMath::sin(_elAngle - (sector - 1.0) * PI_3) * Uout;
     T0 = 0 - T1 - T2;
     // if (debug)
     //     pc->printf("elAngle:%f, sector:%d \n", _elAngle, sector);

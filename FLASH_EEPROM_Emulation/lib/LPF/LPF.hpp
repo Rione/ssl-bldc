@@ -1,8 +1,9 @@
 #ifndef LPF_H
 #define LPF_H
 
-#include <mbed.h>
-
+#ifdef __cplusplus
+#include "Timer.hpp"
+extern "C" {
 class LPF {
   private:
     float timeConstant;
@@ -13,5 +14,6 @@ class LPF {
     LPF(float _timeConstant);
     float update(float _value);
 };
-
+}
+#endif
 #endif
