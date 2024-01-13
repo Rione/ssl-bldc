@@ -9,6 +9,15 @@ DigitalOut led_red(led_red_GPIO_Port, led_red_Pin);
 DigitalOut led_green(led_green_GPIO_Port, led_green_Pin);
 DigitalOut led_alive(led_alive_GPIO_Port, led_alive_Pin);
 
+// CAN
+CAN_RxHeaderTypeDef RxHeader;
+CAN_TxHeaderTypeDef TxHeader;
+
+uint8_t TxData[8];
+uint8_t RxData[8];
+uint32_t TxMailbox;
+uint8_t cnt;
+
 typedef union {
     int16_t data;
     uint8_t split[2];
@@ -18,6 +27,10 @@ int16Splitter vel[4];
 uint8_t velIndex = 0;                 // 4つが最大
 uint8_t velInt8Index = 0;             // 4 * 2 = 8が最大
 uint8_t motorId = Constrain(2, 1, 4); // 1 ~ 4
+
+uint32_t id;
+uint32_t dlc;
+uint8_t data[8];
 
 void recvRx() {
     /*
@@ -92,34 +105,61 @@ void setup() {
     HAL_Delay(1000);
 }
 
+void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
+    CAN_RxHeaderTypeDef RxHeader;
+    uint8_t RxData[8];
+    if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData) == HAL_OK) {
+        id = (RxHeader.IDE == CAN_ID_STD) ? RxHeader.StdId : RxHeader.ExtId; // ID
+        dlc = RxHeader.DLC;                                                  // DLC
+        data[0] = RxData[0];                                                 // Data
+        data[1] = RxData[1];
+        data[2] = RxData[2];
+        data[3] = RxData[3];
+        data[4] = RxData[4];
+        data[5] = RxData[5];
+        data[6] = RxData[6];
+        data[7] = RxData[7];
+    }
+}
 void main_app() {
     setup();
+    HAL_CAN_Start(&hcan1);
 
-    uart2.init();
-    pwm1.init();
+    CAN_FilterTypeDef filter;
+    filter.FilterIdHigh = 0;                        // フィルターID(上位16ビット)
+    filter.FilterIdLow = 0;                         // フィルターID(下位16ビット)
+    filter.FilterMaskIdHigh = 0;                    // フィルターマスク(上位16ビット)
+    filter.FilterMaskIdLow = 0;                     // フィルターマスク(下位16ビット)
+    filter.FilterScale = CAN_FILTERSCALE_32BIT;     // フィルタースケール
+    filter.FilterFIFOAssignment = CAN_FILTER_FIFO0; // フィルターに割り当てるFIFO
+    filter.FilterBank = 0;                          // フィルターバンクNo
+    filter.FilterMode = CAN_FILTERMODE_IDMASK;      // フィルターモード
+    filter.SlaveStartFilterBank = 14;               // スレーブCANの開始フィルターバンクNo
+    filter.FilterActivation = ENABLE;               // フィルター無効／有効
+    HAL_CAN_ConfigFilter(&hcan1, &filter);
+    if (HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING) != HAL_OK) Error_Handler();
 
-    int deg = 0;
-
-    Timer timer;
     while (1) {
-        timer.reset();
-        deg++;
-        float u = 0.5 * MyMath::sinDeg(deg) + 0.5;
-        float v = 0.5 * MyMath::sinDeg(deg + 120) + 0.5;
-        float w = 0.5 * MyMath::sinDeg(deg + 240) + 0.5;
-
-        pwm1.write(u, v, w);
-        // HAL_Delay(10);
-        // printf("%d %d %d\t", (int)(u * 1000), (int)(v * 1000), (int)(w * 1000));
-        uint16_t deg = encoder1.getAngleDeg();
-        led_blue = (u > 0.5);
-        led_red = (v > 0.5);
-        led_green = (w > 0.5);
-        while (uart2.available()) {
-            recvRx();
-            led_alive = !led_alive;
+        // printf(" id=%ld %3d %3d %3d %3d %3d %3d %3d %3d \n", RxHeader.StdId, RxData[0], RxData[1], RxData[2], RxData[3], RxData[4], RxData[5], RxData[6], RxData[7]);
+        // HAL_Delay(100);
+        uint8_t TxData[8];
+        if (0 < HAL_CAN_GetTxMailboxesFreeLevel(&hcan1)) {
+            TxHeader.StdId = 0x555;                // CAN ID
+            TxHeader.RTR = CAN_RTR_DATA;           // フレームタイプはデータフレーム
+            TxHeader.IDE = CAN_ID_STD;             // 標準ID(11ﾋﾞｯﾄ)
+            TxHeader.DLC = 8;                      // データ長は8バイトに
+            TxHeader.TransmitGlobalTime = DISABLE; // ???
+            TxData[0] = 0x11;
+            TxData[1] = 0x22;
+            TxData[2] = 0x33;
+            TxData[3] = 0x44;
+            TxData[4] = 0x55;
+            TxData[5] = 0x66;
+            TxData[6] = 0x77;
+            TxData[7] = 0x88;
+            HAL_CAN_AddTxMessage(&hcan1, &TxHeader, TxData, &TxMailbox);
         }
-        uint32_t time = timer.read_us();
-        printf("%d %d\n", time, deg);
+        HAL_Delay(100);
+        printf("Send\n");
     }
 }
