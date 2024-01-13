@@ -23,6 +23,7 @@ class Serial {
     }
     void init() {
         HAL_UART_Receive_DMA(_huart, _rxBuf, _rxBufSize);
+        printf("- Serial init\n");
     }
 
     bool available() {

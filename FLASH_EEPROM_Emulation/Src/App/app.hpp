@@ -11,7 +11,7 @@
 #include "Serial.hpp"
 #include "DigitalInOut.hpp"
 #include "Timer.hpp"
-#include "can.h"
+#include "CAN.hpp"
 
 #ifdef __cplusplus
 
