@@ -120,6 +120,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
         data[6] = RxData[6];
         data[7] = RxData[7];
     }
+    printf(" id=%x %3x %3x %3x %3x %3x %3x %3x %3x \n", RxHeader.StdId, RxData[0], RxData[1], RxData[2], RxData[3], RxData[4], RxData[5], RxData[6], RxData[7]);
 }
 void main_app() {
     setup();
@@ -159,7 +160,7 @@ void main_app() {
             TxData[7] = 0x88;
             HAL_CAN_AddTxMessage(&hcan1, &TxHeader, TxData, &TxMailbox);
         }
-        HAL_Delay(100);
+        HAL_Delay(1000);
         printf("Send\n");
     }
 }
