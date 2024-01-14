@@ -5238,30 +5238,6 @@ Number of pins: &lt;b&gt;3&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <label x="121.92" y="162.56" size="0.762" layer="95" xref="yes"/>
 </segment>
 </net>
-<net name="CANTX" class="0">
-<segment>
-<pinref part="U3" gate="G$1" pin="TXD"/>
-<wire x1="133.985" y1="173.99" x2="131.445" y2="173.99" width="0.1524" layer="91"/>
-<label x="131.445" y="173.99" size="0.762" layer="95" rot="R180" xref="yes"/>
-</segment>
-<segment>
-<pinref part="NUCLEO_MAIN" gate="G$1" pin="PB8"/>
-<wire x1="53.34" y1="202.565" x2="53.34" y2="208.28" width="0.1524" layer="91"/>
-<label x="53.34" y="208.28" size="0.762" layer="95" rot="R90" xref="yes"/>
-</segment>
-</net>
-<net name="CANRX" class="0">
-<segment>
-<pinref part="U3" gate="G$1" pin="RXD"/>
-<wire x1="169.545" y1="171.45" x2="172.085" y2="171.45" width="0.1524" layer="91"/>
-<label x="172.085" y="171.45" size="0.762" layer="95" xref="yes"/>
-</segment>
-<segment>
-<pinref part="NUCLEO_MAIN" gate="G$1" pin="PB9"/>
-<wire x1="50.8" y1="202.565" x2="50.8" y2="208.28" width="0.1524" layer="91"/>
-<label x="50.8" y="208.28" size="0.762" layer="95" rot="R90" xref="yes"/>
-</segment>
-</net>
 <net name="C_W" class="0">
 <segment>
 <pinref part="NUCLEO_MAIN" gate="G$1" pin="PA1"/>
@@ -5393,6 +5369,30 @@ Number of pins: &lt;b&gt;3&lt;/b&gt;&lt;b&gt;&lt;P&gt;
 <pinref part="U$1" gate="G$1" pin="G"/>
 <wire x1="236.22" y1="180.34" x2="238.76" y2="180.34" width="0.1524" layer="91"/>
 <label x="238.76" y="180.34" size="0.762" layer="95" xref="yes"/>
+</segment>
+</net>
+<net name="CANRD" class="0">
+<segment>
+<pinref part="NUCLEO_MAIN" gate="G$1" pin="PB8"/>
+<wire x1="53.34" y1="202.565" x2="53.34" y2="208.28" width="0.1524" layer="91"/>
+<label x="53.34" y="208.28" size="0.762" layer="95" rot="R90" xref="yes"/>
+</segment>
+<segment>
+<pinref part="U3" gate="G$1" pin="RXD"/>
+<wire x1="169.545" y1="171.45" x2="172.085" y2="171.45" width="0.1524" layer="91"/>
+<label x="172.085" y="171.45" size="0.762" layer="95" xref="yes"/>
+</segment>
+</net>
+<net name="CANTD" class="0">
+<segment>
+<pinref part="NUCLEO_MAIN" gate="G$1" pin="PB9"/>
+<wire x1="50.8" y1="202.565" x2="50.8" y2="208.28" width="0.1524" layer="91"/>
+<label x="50.8" y="208.28" size="0.762" layer="95" rot="R90" xref="yes"/>
+</segment>
+<segment>
+<pinref part="U3" gate="G$1" pin="TXD"/>
+<wire x1="133.985" y1="173.99" x2="131.445" y2="173.99" width="0.1524" layer="91"/>
+<label x="131.445" y="173.99" size="0.762" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 </nets>
