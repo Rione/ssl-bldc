@@ -90,6 +90,7 @@ void recvRx() {
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
     if (can.getHcan() == &hcan1) {
         can.recv(canRecvData);
+        canRecvData.stdId = 0x555;
         can.send(canRecvData);
         led_alive = !led_alive;
     }
