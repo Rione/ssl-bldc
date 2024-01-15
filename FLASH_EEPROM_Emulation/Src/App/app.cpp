@@ -133,6 +133,6 @@ void main_app() {
         }
 
         uint32_t time = timer.read_us();
-        printf("time: %d deg: %3d CANrecv: %d data:%x %x %x %x %x %x %x %x\n", time, deg, canRecvData.stdId, canRecvData.data[0], canRecvData.data[1], canRecvData.data[2], canRecvData.data[3], canRecvData.data[4], canRecvData.data[5], canRecvData.data[6], canRecvData.data[7]);
+        printf("time: %ld deg: %3d CANrecv: %d data:%x %x %x %x %x %x %x %x\n", time, deg, canRecvData.stdId, canRecvData.data[0], canRecvData.data[1], canRecvData.data[2], canRecvData.data[3], canRecvData.data[4], canRecvData.data[5], canRecvData.data[6], canRecvData.data[7]);
     }
 }
