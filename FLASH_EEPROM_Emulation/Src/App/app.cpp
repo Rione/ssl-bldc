@@ -11,7 +11,7 @@ DigitalOut led_green(led_green_GPIO_Port, led_green_Pin);
 DigitalOut led_alive(led_alive_GPIO_Port, led_alive_Pin);
 
 BLDCMotor BLDC(&pwm1, &encoder1, 8, 0.005);
-
+asm(".global _printf_float");
 Timer timer;
 CAN::CANData canRecvData;
 typedef union {
@@ -97,6 +97,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
 }
 
 void setup() {
+
     printf("Hello World!\n");
     HAL_Delay(100);
 
@@ -122,8 +123,8 @@ void main_app() {
 
         pwm1.write(u, v, w);
         // HAL_Delay(10);
-        // printf("%d %d %d\t", (int)(u * 1000), (int)(v * 1000), (int)(w * 1000));
-        uint16_t deg = encoder1.getAngleDeg();
+        printf("%f %f %f\t", u, v, w);
+        // uint16_t deg = encoder1.getAngleDeg();
         led_blue = (u > 0.5);
         led_red = (v > 0.5);
         led_green = (w > 0.5);
