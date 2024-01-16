@@ -1,4 +1,4 @@
 (fp_lib_table
   (version 7)
-  (lib (name "MOSFET")(type "KiCad")(uri "${KIPRJMOD}/lib/LIB_SIZ254DT-T1-GE3/SIZ254DT-T1-GE3/KiCad/MOSFET.pretty")(options "")(descr ""))
+  (lib (name "BLDC")(type "KiCad")(uri "${KIPRJMOD}/lib/BLDC.pretty")(options "")(descr ""))
 )
