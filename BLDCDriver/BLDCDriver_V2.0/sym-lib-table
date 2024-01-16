@@ -1,0 +1,5 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "AS5048A-HTSP-500")(type "KiCad")(uri "/Users/tomixrm/Documents/Dev/Robots/ssl-bldc/BLDCDriver/BLDCDriver_1.5_KiCad/lib/BLDC_sym/AS5048A-HTSP-500.kicad_sym")(options "")(descr ""))
+  (lib (name "DualNMOS")(type "KiCad")(uri "/Users/tomixrm/Documents/Dev/Robots/ssl-bldc/BLDCDriver/BLDCDriver_1.5_KiCad/lib/BLDC_sym/DualNMOS.kicad_sym")(options "")(descr ""))
+)

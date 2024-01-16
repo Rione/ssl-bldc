@@ -1,9 +1,0 @@
-EESchema-DOCLIB  Version 2.0
-#
-$CMP SIZ254DT-T1-GE3
-D DUAL N-CHANNEL 70 V (D-S) MOSFET
-K
-F https://www.vishay.com/docs/79592/siz254dt.pdf
-$ENDCMP
-#
-#End Doc Library
