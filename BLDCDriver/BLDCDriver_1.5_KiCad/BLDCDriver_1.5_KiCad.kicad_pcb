@@ -2427,7 +2427,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 5e950fd8-f1c0-45c3-9595-b2700ca3f200)
     )
-    (fp_text value "AP7375-33SA-7" (at 0 0 unlocked) (layer "F.Fab")
+    (fp_text value "AP7375-33SA-7" (at 0 0 unlocked) (layer "F.Fab") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 007756f6-f789-46cf-9c40-556bc531cc4c)
     )
@@ -2511,6 +2511,11 @@
       (net 86 "+5V") (pinfunction "VOUT") (pintype "output") (tstamp 41fbc720-9205-4ada-87d9-32fb1e6120ca))
     (pad "3" smd rect (at 0 -0.9652) (size 0.5588 1.27) (layers "F.Cu" "F.Paste" "F.Mask")
       (net 82 "GND") (pinfunction "GND") (pintype "power_out") (tstamp ac72c2d9-7193-4acc-b6a4-6395678aced3))
+    (model "${KICAD7_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23W.step"
+      (offset (xyz 0 0 0))
+      (scale (xyz 1 1 1))
+      (rotate (xyz 0 0 -90))
+    )
   )
 
   (footprint "Capacitor_SMD:C_0402_1005Metric" (layer "F.Cu")
