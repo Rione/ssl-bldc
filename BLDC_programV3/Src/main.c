@@ -30,7 +30,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "./App/app.hpp"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -40,6 +40,13 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#ifdef __GNUC__
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#define GETCHAR_PROTOTYPE int __io_getchar(void)
+#else
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#define GETCHAR_PROTOTYPE int f getc(FILE *f)
+#endif
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -62,6 +69,23 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+asm(".global _printf_float");
+
+int _write(int file, char *ptr, int len) {
+    HAL_UART_Transmit(&huart1, (uint8_t *)ptr, len, 10);
+    return len;
+}
+
+void __io_putchar(uint8_t ch) {
+    HAL_UART_Transmit(&huart1, &ch, 1, 0xFFFFFFFF);
+}
+
+int __io_getchar(void) {
+    uint8_t rxBuf;
+    while (HAL_UART_Receive(&huart1, &rxBuf, 1, 0xFFFFFFFF) != HAL_OK)
+        ;
+    return (rxBuf);
+}
 /* USER CODE END 0 */
 
 /**
@@ -70,7 +94,7 @@ void SystemClock_Config(void);
  */
 int main(void) {
     /* USER CODE BEGIN 1 */
-
+    setbuf(stdout, NULL);
     /* USER CODE END 1 */
 
     /* MCU Configuration--------------------------------------------------------*/
@@ -99,7 +123,6 @@ int main(void) {
     MX_OPAMP1_Init();
     MX_OPAMP3_Init();
     MX_USART1_UART_Init();
-    MX_USART2_UART_Init();
     /* USER CODE BEGIN 2 */
 
     /* USER CODE END 2 */
@@ -107,10 +130,7 @@ int main(void) {
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
     while (1) {
-        HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-        HAL_Delay(500);
-        HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-        HAL_Delay(100);
+        main_app();
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
@@ -159,9 +179,8 @@ void SystemClock_Config(void) {
     }
     /** Initializes the peripherals clocks
      */
-    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_ADC12 | RCC_PERIPHCLK_FDCAN;
+    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_I2C3 | RCC_PERIPHCLK_ADC12 | RCC_PERIPHCLK_FDCAN;
     PeriphClkInit.Usart1ClockSelection = RCC_USART1CLKSOURCE_PCLK2;
-    PeriphClkInit.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
     PeriphClkInit.I2c3ClockSelection = RCC_I2C3CLKSOURCE_PCLK1;
     PeriphClkInit.FdcanClockSelection = RCC_FDCANCLKSOURCE_PCLK1;
     PeriphClkInit.Adc12ClockSelection = RCC_ADC12CLKSOURCE_SYSCLK;

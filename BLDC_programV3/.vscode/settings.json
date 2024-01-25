@@ -55,5 +55,16 @@
   "C_Cpp_Runner.useLeakSanitizer": false,
   "C_Cpp_Runner.showCompilationTime": false,
   "C_Cpp_Runner.useLinkTimeOptimization": false,
-  "C_Cpp_Runner.msvcSecureNoWarnings": false
+  "C_Cpp_Runner.msvcSecureNoWarnings": false,
+  "files.associations": {
+    "opamp.h": "c",
+    "usart.h": "c",
+    "gpio.h": "c",
+    "tim.h": "c",
+    "spi.h": "c",
+    "i2c.h": "c",
+    "fdcan.h": "c",
+    "app.hpp": "c",
+    "main.h": "c"
+  }
 }
