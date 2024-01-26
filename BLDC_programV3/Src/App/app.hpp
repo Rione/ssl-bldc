@@ -3,9 +3,12 @@
 
 #include <stdio.h>
 #include "main.h"
+#include "Timer.hpp"
+#include "AS5048A.hpp"
 #include "Serial.hpp"
 #include "DigitalInOut.hpp"
 #include "FLASH_EEPROM.hpp"
+
 #ifdef __cplusplus
 extern "C" {
 void main_app();

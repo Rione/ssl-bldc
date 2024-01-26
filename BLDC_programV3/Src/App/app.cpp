@@ -1,15 +1,17 @@
 #include "app.hpp"
 
 DigitalOut led_blue(LED_GPIO_Port, LED_Pin);
+AS5048A encoder(&hspi1, SPI1_NSS_GPIO_Port, SPI1_NSS_Pin);
+Flash_EEPROM flash;
 
-float a = 0.0f;
+Timer timer;
 void main_app() {
-    Flash_EEPROM flash;
-    flash.writeFlashTest();
+    // flash.writeFlashTest();
+    printf("Hello World!\n");
     while (1) {
-        a += 0.1f;
-        printf("Hello from main_app()! %f\n", a);
+        float deg = encoder.getAngleDeg();
         led_blue = !led_blue;
+        printf("Angle: %f\n", deg);
         HAL_Delay(500);
     }
 }
