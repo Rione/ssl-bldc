@@ -43,6 +43,9 @@ if __name__ == '__main__':
     try:
         while True:
             try:
+                message.data[0] += 1
+                if message.data[0] >= 0xFF:
+                    message.data[0] = 0
                 bus.send(message)  # ここでメッセージを送信しています。
                 print(
                     f"{Fore.RED}TX:{'E' if message.is_error_frame else ' '} ID:{message.arbitration_id:04x}  data:{message.data[0]:02x} {message.data[1]:02x} {message.data[2]:02x} {message.data[3]:02x} {message.data[4]:02x} {message.data[5]:02x} {message.data[6]:02x} {message.data[7]:02x}")
@@ -50,7 +53,7 @@ if __name__ == '__main__':
                 print("Message NOT sent")
 
             receive_can_messages(bus)  # 受信したデータを表示
-            sleep(0.1)  # 0.1秒待ち
+            sleep(0.001)  # 0.1秒待ち
     except KeyboardInterrupt:
         pass
     finally:

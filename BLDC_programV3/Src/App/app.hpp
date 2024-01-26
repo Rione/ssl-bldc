@@ -8,6 +8,7 @@
 #include "Serial.hpp"
 #include "DigitalInOut.hpp"
 #include "FLASH_EEPROM.hpp"
+#include "CAN.hpp"
 
 #ifdef __cplusplus
 extern "C" {
