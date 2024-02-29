@@ -1,3 +1,4 @@
+/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
   * @file    opamp.c
@@ -6,17 +7,16 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2024 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2024 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
-
+/* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "opamp.h"
 
@@ -39,7 +39,7 @@ void MX_OPAMP1_Init(void)
 
   /* USER CODE END OPAMP1_Init 1 */
   hopamp1.Instance = OPAMP1;
-  hopamp1.Init.PowerMode = OPAMP_POWERMODE_NORMALSPEED;
+  hopamp1.Init.PowerMode = OPAMP_POWERMODE_NORMAL;
   hopamp1.Init.Mode = OPAMP_STANDALONE_MODE;
   hopamp1.Init.InvertingInput = OPAMP_INVERTINGINPUT_IO0;
   hopamp1.Init.NonInvertingInput = OPAMP_NONINVERTINGINPUT_IO0;
@@ -67,7 +67,7 @@ void MX_OPAMP3_Init(void)
 
   /* USER CODE END OPAMP3_Init 1 */
   hopamp3.Instance = OPAMP3;
-  hopamp3.Init.PowerMode = OPAMP_POWERMODE_NORMALSPEED;
+  hopamp3.Init.PowerMode = OPAMP_POWERMODE_NORMAL;
   hopamp3.Init.Mode = OPAMP_STANDALONE_MODE;
   hopamp3.Init.InvertingInput = OPAMP_INVERTINGINPUT_IO0;
   hopamp3.Init.NonInvertingInput = OPAMP_NONINVERTINGINPUT_IO0;
@@ -174,5 +174,3 @@ void HAL_OPAMP_MspDeInit(OPAMP_HandleTypeDef* opampHandle)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
