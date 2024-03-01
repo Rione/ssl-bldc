@@ -9,6 +9,7 @@
 #include "DigitalInOut.hpp"
 #include "FLASH_EEPROM.hpp"
 #include "CAN.hpp"
+#include "PWM.hpp"
 
 #ifdef __cplusplus
 extern "C" {

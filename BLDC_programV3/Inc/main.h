@@ -76,6 +76,10 @@ void Error_Handler(void);
 #define INL3_GPIO_Port GPIOE
 #define INH3_Pin GPIO_PIN_13
 #define INH3_GPIO_Port GPIOE
+#define READY_Pin GPIO_PIN_14
+#define READY_GPIO_Port GPIOE
+#define NFAULT_Pin GPIO_PIN_15
+#define NFAULT_GPIO_Port GPIOE
 #define SW_Pin GPIO_PIN_10
 #define SW_GPIO_Port GPIOB
 #define LED_Pin GPIO_PIN_6

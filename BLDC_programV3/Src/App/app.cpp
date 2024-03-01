@@ -1,10 +1,13 @@
 #include "app.hpp"
-
+#include "tim.h"
 DigitalOut led_alive(LED_ALIVE_GPIO_Port, LED_ALIVE_Pin);
 
 DigitalOut led_red(LED_R_GPIO_Port, LED_R_Pin);
 DigitalOut led_green(LED_G_GPIO_Port, LED_G_Pin);
 DigitalOut led_blue(LED_B_GPIO_Port, LED_B_Pin);
+DigitalOut wake(WAKE_GPIO_Port, WAKE_Pin);
+DigitalIn ready(READY_GPIO_Port, READY_Pin);
+DigitalIn nFault(NFAULT_GPIO_Port, NFAULT_Pin);
 
 AS5048A encoder(&hspi1, SPI1_NSS_GPIO_Port, SPI1_NSS_Pin);
 Flash_EEPROM flash;
@@ -98,16 +101,26 @@ void ledTest() {
 }
 
 void main_app() {
+    static int deg = 0;
+    rgb(rgb_t::OFF);
     // flash.writeFlashTest();
     can.init();
+
+    PwmOut pwm(&htim1, TIM_CHANNEL_1, TIM_CHANNEL_2, TIM_CHANNEL_3);
+    // pwm_init();
+    pwm.init();
+    wake = true;
     printf("Hello World!\n");
     while (1) {
-        float deg = encoder.getAngleDeg();
+        // float deg = encoder.getAngleDeg();
         led_alive = !led_alive;
-
-        printf("Angle: %f\n", deg);
-        printf("canRecvData:%d %d %d %d %d %d %d %d\n", canRecvData.data[0], canRecvData.data[1], canRecvData.data[2], canRecvData.data[3], canRecvData.data[4], canRecvData.data[5], canRecvData.data[6], canRecvData.data[7]);
-        HAL_Delay(100);
-        ledTest();
+        deg++;
+        float duty1 = 0.3 * MyMath::sinDeg(deg) + 0.5;
+        float duty2 = 0.3 * MyMath::sinDeg(deg + 120) + 0.5;
+        float duty3 = 0.3 * MyMath::sinDeg(deg + 240) + 0.5;
+        pwm.write(duty1, duty2, duty3);
+        // pwm.write(0.25, 0.25, 0.25);
+        HAL_Delay(10);
+        printf("status%d READY:%d NFAULT:%d\n", deg, ready.read(), nFault.read());
     }
 }
