@@ -34,7 +34,7 @@ class PwmOut {
         __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, duty1);
         __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, duty2);
         __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, duty3);
-        printf("duty1: %f, duty2: %f, duty3: %f\n", duty1, duty2, duty3);
+        // printf("duty1: %f, duty2: %f, duty3: %f\n", duty1, duty2, duty3);
     }
 
   private:

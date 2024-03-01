@@ -10,6 +10,7 @@
 #include "FLASH_EEPROM.hpp"
 #include "CAN.hpp"
 #include "PWM.hpp"
+#include "MyMath.hpp"
 
 #ifdef __cplusplus
 extern "C" {
