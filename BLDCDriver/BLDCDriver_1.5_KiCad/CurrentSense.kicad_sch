@@ -275,9 +275,6 @@
         )
       )
       (project "BLDCDriver_1.5_KiCad"
-        (path "/7b455adc-1ddb-4b8a-b7cd-7eada40acc4a"
-          (reference "R14") (unit 1)
-        )
         (path "/7b455adc-1ddb-4b8a-b7cd-7eada40acc4a/c1580680-084f-48c1-8e68-df0b782a86f1"
           (reference "R12") (unit 1)
         )
@@ -315,9 +312,6 @@
         )
       )
       (project "BLDCDriver_1.5_KiCad"
-        (path "/7b455adc-1ddb-4b8a-b7cd-7eada40acc4a"
-          (reference "C16") (unit 1)
-        )
         (path "/7b455adc-1ddb-4b8a-b7cd-7eada40acc4a/c1580680-084f-48c1-8e68-df0b782a86f1"
           (reference "C16") (unit 1)
         )
@@ -355,9 +349,6 @@
         )
       )
       (project "BLDCDriver_1.5_KiCad"
-        (path "/7b455adc-1ddb-4b8a-b7cd-7eada40acc4a"
-          (reference "R12") (unit 1)
-        )
         (path "/7b455adc-1ddb-4b8a-b7cd-7eada40acc4a/c1580680-084f-48c1-8e68-df0b782a86f1"
           (reference "R14") (unit 1)
         )
@@ -395,9 +386,6 @@
         )
       )
       (project "BLDCDriver_1.5_KiCad"
-        (path "/7b455adc-1ddb-4b8a-b7cd-7eada40acc4a"
-          (reference "R16") (unit 1)
-        )
         (path "/7b455adc-1ddb-4b8a-b7cd-7eada40acc4a/c1580680-084f-48c1-8e68-df0b782a86f1"
           (reference "R16") (unit 1)
         )
@@ -435,9 +423,6 @@
         )
       )
       (project "BLDCDriver_1.5_KiCad"
-        (path "/7b455adc-1ddb-4b8a-b7cd-7eada40acc4a"
-          (reference "R15") (unit 1)
-        )
         (path "/7b455adc-1ddb-4b8a-b7cd-7eada40acc4a/c1580680-084f-48c1-8e68-df0b782a86f1"
           (reference "R13") (unit 1)
         )
@@ -475,9 +460,6 @@
         )
       )
       (project "BLDCDriver_1.5_KiCad"
-        (path "/7b455adc-1ddb-4b8a-b7cd-7eada40acc4a"
-          (reference "R13") (unit 1)
-        )
         (path "/7b455adc-1ddb-4b8a-b7cd-7eada40acc4a/c1580680-084f-48c1-8e68-df0b782a86f1"
           (reference "R15") (unit 1)
         )
