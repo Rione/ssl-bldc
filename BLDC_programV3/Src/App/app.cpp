@@ -31,13 +31,13 @@ CAN::CANData canSendData;
 #define STATUS_REG 0x80
 
 unsigned char i2c_data[I2C_DATA_SIZE];
-int read_end;
+// int read_end;
 
-void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c) {
-    if (hi2c->Instance == I2C1) {
-        read_end = 1;
-    }
-}
+// void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c) {
+//     if (hi2c->Instance == I2C1) {
+//         read_end = 1;
+//     }
+// }
 
 bool I2C1_WriteData(uint8_t devAddr, uint8_t regAddr, uint8_t data) {
     uint8_t i2c_data[1] = {data};
@@ -183,7 +183,7 @@ void setNFault_status() {
     bit0 [VCC_UVLO_FLT] 1 :Signaling of the VCC UVLO status: Enabled by default, 0 to disable
     */
 
-    uint8_t value = 0b01111000;
+    uint8_t value = 0b01111111;
     // value &= ~(1 << 2); // VDS_P_FLT 0: disable
     // value &= ~(1 << 1); // THSD_FLT 0: disable
     // value &= ~(1 << 0); // VCC_UVLO_FLT 0: disable
@@ -251,10 +251,13 @@ void main_app() {
     clear();
 
     motor.init();
+    motor.setPIDGain(0.1, 0.5, 0);
     while (1) {
         led_alive = !led_alive;
-        motor.updateEncoder();
-        motor.setPhaseVoltage(0.5, 0, motor.getElectricAngle());
+        motor.setVelocity(10);
+        // motor.updateEncoder();
+        // motor.setPhaseVoltage(1, 0, motor.getElectricAngle());
+        motor.drive();
         // printf("angle:%f\n", motor.getShaftAngle());
     }
 }

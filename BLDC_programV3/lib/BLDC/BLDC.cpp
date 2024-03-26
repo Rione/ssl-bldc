@@ -7,7 +7,7 @@ BLDCMotor::BLDCMotor(PwmOut *_pwm, AS5048A *_encoder, uint8_t _polerQty, float _
       velocityPID(0.0001, 0, 0, _dt), // default gain
       velocityLPF(0.01),
       supplyVoltage(16),
-      limitVoltage(6),
+      limitVoltage(5),
       elAngle(0),
       shAngle(0),
       shAnglePrev(0),
@@ -256,5 +256,5 @@ void BLDCMotor::drive() {
     float Uq = velocityPID.getPID();
     float Ud = 0;
     setPhaseVoltage(Uq, Ud, elAngle);
-    // pc->printf("V:%.3f\tUq:%.3f \n", velocity, Uq);
+    printf("V:%5.3f Uq:%5.3f \n", velocity, Uq);
 }
