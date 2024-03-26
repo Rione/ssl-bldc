@@ -1,6 +1,5 @@
 #include "app.hpp"
-#include "tim.h"
-#include "i2c.h"
+
 DigitalOut led_alive(LED_ALIVE_GPIO_Port, LED_ALIVE_Pin);
 
 DigitalOut led_red(LED_R_GPIO_Port, LED_R_Pin);
@@ -258,47 +257,5 @@ void main_app() {
         pwm.write(duty1, duty2, duty3);
         wait_us(10);
         read_status();
-        // pwm.write(0.6, 0.1, 0.1);
-        // HAL_Delay(2);
-
-        // pwm.write(0.6, 0.6, 0.1);
-        // HAL_Delay(2);
-
-        // pwm.write(0.1, 0.6, 0.1);
-        // HAL_Delay(2);
-
-        // pwm.write(0.1, 0.6, 0.6);
-        // HAL_Delay(2);
-
-        // pwm.write(0.1, 0.1, 0.6);
-        // HAL_Delay(2);
-
-        // pwm.write(0.6, 0.1, 0.6);
-        // HAL_Delay(2);
-        // printf("nfault: %d\n", nFault.read());
-        // read_status();
-        // HAL_Delay(50);
-        // pwm.write(0.9, 0.9, 0.1);
-        // printf("nfault: %d\n", nFault.read());
-        // HAL_Delay(50);
-        // pwm.write(0.1, 0.9, 0.1);
-        // printf("nfault: %d\n", nFault.read());
-        // HAL_Delay(50);
-        // pwm.write(0.1, 0.9, 0.9);
-        // printf("nfault: %d\n", nFault.read());
-        // HAL_Delay(50);
-        // pwm.write(0.1, 0.1, 0.9);
-        // printf("nfault: %d\n", nFault.read());
-        // HAL_Delay(50);
-        // pwm.write(0.9, 0.1, 0.9);
-        // printf("nfault: %d\n", nFault.read());
-        // HAL_Delay(50);
-        // printf("nfault: %d\n", nFault.read());
-        // HAL_Delay(50);
-        // clear();
-        // setBuckConverterVoltage(12);
-        // setNFault_status();
-        // read_status();
-        // HAL_Delay(10);
     }
 }

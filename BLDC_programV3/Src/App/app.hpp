@@ -11,6 +11,9 @@
 #include "CAN.hpp"
 #include "PWM.hpp"
 #include "MyMath.hpp"
+#include "tim.h"
+#include "i2c.h"
+#include "BLDC.hpp"
 
 #ifdef __cplusplus
 extern "C" {
