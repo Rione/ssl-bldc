@@ -4,6 +4,7 @@
 
 #include "main.h"
 #include "i2c.h"
+#include "DigitalInOut.hpp"
 #include <stdio.h>
 
 #define STSPING4_CONTROLER_ADDR 0b1000111
@@ -25,6 +26,9 @@ class STSPIN32G4 {
     unsigned char i2c_data[I2C_DATA_SIZE];
     int read_end;
     I2C_HandleTypeDef *_hi2c;
+    DigitalOut wake;
+    DigitalIn ready;
+    DigitalIn nFault;
 
   public:
     STSPIN32G4(I2C_HandleTypeDef *hi2c);
@@ -34,8 +38,8 @@ class STSPIN32G4 {
     void writeRegister(uint8_t registerValue);
     void setBuckConverterVoltage(uint8_t voltage);
     void setNfaultStatus();
-    void clearRegister();
-    void resetStatus();
+    bool clearRegister();
+    void reset();
     void readStatus();
 };
 

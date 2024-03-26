@@ -256,5 +256,5 @@ void BLDCMotor::drive() {
     float Uq = velocityPID.getPID();
     float Ud = 0;
     setPhaseVoltage(Uq, Ud, elAngle);
-    printf("V:%5.3f Uq:%5.3f \n", velocity, Uq);
+    // printf("V:%5.3f Uq:%5.3f \n", velocity, Uq);
 }
