@@ -10,6 +10,7 @@ DigitalIn ready(READY_GPIO_Port, READY_Pin);
 DigitalIn nFault(NFAULT_GPIO_Port, NFAULT_Pin);
 
 AS5048A encoder(&hspi1, SPI1_NSS_GPIO_Port, SPI1_NSS_Pin);
+
 Flash_EEPROM flash;
 CAN can(&hfdcan1, 0x555);
 Timer timer;
@@ -238,6 +239,7 @@ void main_app() {
     can.init();
 
     PwmOut pwm(&htim1, TIM_CHANNEL_1, TIM_CHANNEL_2, TIM_CHANNEL_3);
+    BLDCMotor motor(&pwm, &encoder, 8, 0.001);
     pwm.init();
     wake = true;
     printf("Hello World!\n");
@@ -247,15 +249,12 @@ void main_app() {
     setNFault_status();
     HAL_Delay(1000);
     clear();
+
+    motor.init();
     while (1) {
         led_alive = !led_alive;
-        deg += 60;
-        // printf("Hello World!\n");
-        float duty1 = MyMath::sinDeg(deg) * 0.1 + 0.5;
-        float duty2 = MyMath::sinDeg(deg + 120) * 0.1 + 0.5;
-        float duty3 = MyMath::sinDeg(deg + 240) * 0.1 + 0.5;
-        pwm.write(duty1, duty2, duty3);
-        wait_us(10);
-        read_status();
+        motor.updateEncoder();
+        motor.setPhaseVoltage(0.5, 0, motor.getElectricAngle());
+        // printf("angle:%f\n", motor.getShaftAngle());
     }
 }

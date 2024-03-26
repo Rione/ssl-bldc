@@ -6,7 +6,7 @@ BLDCMotor::BLDCMotor(PwmOut *_pwm, AS5048A *_encoder, uint8_t _polerQty, float _
       polePairQty(_polerQty),
       velocityPID(0.0001, 0, 0, _dt), // default gain
       velocityLPF(0.01),
-      supplyVoltage(12),
+      supplyVoltage(16),
       limitVoltage(6),
       elAngle(0),
       shAngle(0),
@@ -130,7 +130,7 @@ void BLDCMotor::writePwm(float pwmA, float pwmB, float pwmC) {
 }
 
 float BLDCMotor::updateEncoder() {
-    int _angle = encoder->getAngleRad();
+    float _angle = encoder->getAngleRad();
     shAngle = MyMath::gapRadians(shAngleZero, _angle);
     elAngle = MyMath::normalizeRadians(shAngle * polePairQty);
     return _angle;
