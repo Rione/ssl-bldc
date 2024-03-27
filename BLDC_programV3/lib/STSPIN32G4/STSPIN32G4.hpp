@@ -33,7 +33,7 @@ class STSPIN32G4 {
   public:
     STSPIN32G4(I2C_HandleTypeDef *hi2c);
     ~STSPIN32G4();
-
+    void init();
     bool i2cWrite(uint8_t deviceAddr, uint8_t regAddr, uint8_t data);
     void writeRegister(uint8_t registerValue);
     void setBuckConverterVoltage(uint8_t voltage);

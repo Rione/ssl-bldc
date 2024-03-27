@@ -18,6 +18,15 @@ bool STSPIN32G4::i2cWrite(uint8_t deviceAddr, uint8_t regAddr, uint8_t data) {
     return true;
 }
 
+void STSPIN32G4::init() {
+    reset();
+    HAL_Delay(500);
+    setBuckConverterVoltage(8);
+    setNfaultStatus();
+    HAL_Delay(500);
+    clearRegister();
+}
+
 void STSPIN32G4::writeRegister(uint8_t registerValue) {
     uint8_t data[1] = {registerValue};
     HAL_I2C_Master_Transmit(_hi2c, STSPING4_CONTROLER_ADDR, data, 1, 100); // data is the start pointer of our array

@@ -31,9 +31,9 @@ class PwmOut {
         duty2 = (int)(Constrain(duty2, 0.0, 1.0) * maxValue);
         duty3 = (int)(Constrain(duty3, 0.0, 1.0) * maxValue);
 
-        __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, duty1);
-        __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, duty2);
-        __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, duty3);
+        __HAL_TIM_SET_COMPARE(_htim, TIM_CHANNEL_1, duty1);
+        __HAL_TIM_SET_COMPARE(_htim, TIM_CHANNEL_2, duty2);
+        __HAL_TIM_SET_COMPARE(_htim, TIM_CHANNEL_3, duty3);
         // printf("duty1: %f, duty2: %f, duty3: %f\n", duty1, duty2, duty3);
     }
 

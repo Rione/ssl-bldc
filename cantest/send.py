@@ -1,8 +1,9 @@
+from time import sleep
+
 import can
-from serial.tools.list_ports import comports
 import colorama
 from colorama import Fore
-from time import sleep
+from serial.tools.list_ports import comports
 
 colorama.init(autoreset=True)
 
@@ -38,22 +39,33 @@ if __name__ == '__main__':
     bus = can.interface.Bus(
         bustype='slcan', channel=serial_port, bitrate=1000000)
 
-    message = can.Message(arbitration_id=0x123, data=[
-        0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88], is_extended_id=False)
+    # message = can.Message(arbitration_id=0x123, data=[
+    #     0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88], is_extended_id=False)
+    message = can.Message(arbitration_id=0x1AA, is_extended_id=False)
+    vel = 0
+    a = 1
     try:
         while True:
             try:
-                message.data[0] += 1
-                if message.data[0] >= 0xFF:
-                    message.data[0] = 0
+                vel_l = int(vel & 0xFF)
+                vel_h = int((vel >> 8) & 0xFF)
+
+                message = can.Message(arbitration_id=0x1AA, data=[vel_l, vel_h, 0, 0, 0, 0, 0, 0], is_extended_id=False)
+
+                if vel >= 300 or vel <= -300:
+                    a = -a
+                
+                vel += a
+                
+
                 bus.send(message)  # ここでメッセージを送信しています。
                 print(
                     f"{Fore.RED}TX:{'E' if message.is_error_frame else ' '} ID:{message.arbitration_id:04x}  data:{message.data[0]:02x} {message.data[1]:02x} {message.data[2]:02x} {message.data[3]:02x} {message.data[4]:02x} {message.data[5]:02x} {message.data[6]:02x} {message.data[7]:02x}")
             except can.CanError:
                 print("Message NOT sent")
 
-            receive_can_messages(bus)  # 受信したデータを表示
-            sleep(0.001)  # 0.1秒待ち
+            # receive_can_messages(bus)  # 受信したデータを表示
+            sleep(0.05)  # 0.1秒待ち
     except KeyboardInterrupt:
         pass
     finally:
