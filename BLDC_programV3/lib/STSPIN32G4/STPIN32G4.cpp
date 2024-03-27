@@ -20,10 +20,10 @@ bool STSPIN32G4::i2cWrite(uint8_t deviceAddr, uint8_t regAddr, uint8_t data) {
 
 void STSPIN32G4::init() {
     reset();
-    HAL_Delay(500);
+    HAL_Delay(10);
     setBuckConverterVoltage(8);
     setNfaultStatus();
-    HAL_Delay(500);
+    HAL_Delay(10);
     clearRegister();
 }
 
@@ -55,13 +55,13 @@ void STSPIN32G4::setBuckConverterVoltage(uint8_t voltage) {
     bool i2c_status = false;
     i2c_status = i2cWrite(STSPING4_CONTROLER_ADDR, LOCK_REG, 0b11110000);
     printf("unlock!! READY:%d NFAULT:%d I2C_success:%d\n", ready.read(), nFault.read(), i2c_status);
-    HAL_Delay(100);
+    HAL_Delay(10);
     i2c_status = i2cWrite(STSPING4_CONTROLER_ADDR, POWMNG_REG, value);
     printf("Writereg READY:%d NFAULT:%d I2C_success:%d\n", ready.read(), nFault.read(), i2c_status);
-    HAL_Delay(100);
+    HAL_Delay(10);
     i2c_status = i2cWrite(STSPING4_CONTROLER_ADDR, LOCK_REG, 0b00000000);
     printf("lock!!   READY:%d NFAULT:%d I2C_success:%d\n", ready.read(), nFault.read(), i2c_status);
-    HAL_Delay(100);
+    HAL_Delay(10);
 }
 
 void STSPIN32G4::setNfaultStatus() {
@@ -86,13 +86,13 @@ void STSPIN32G4::setNfaultStatus() {
     // unlock
     i2c_status = i2cWrite(STSPING4_CONTROLER_ADDR, LOCK_REG, 0b11110000);
     printf("unlock!! READY:%d NFAULT:%d I2C_success:%d\n", ready.read(), nFault.read(), i2c_status);
-    HAL_Delay(100);
+    HAL_Delay(10);
     i2c_status = i2cWrite(STSPING4_CONTROLER_ADDR, NFAULT_REG, value);
     printf("Writereg READY:%d NFAULT:%d I2C_success:%d\n", ready.read(), nFault.read(), i2c_status);
-    HAL_Delay(100);
+    HAL_Delay(10);
     i2c_status = i2cWrite(STSPING4_CONTROLER_ADDR, LOCK_REG, 0b00000000);
     printf("lock!!   READY:%d NFAULT:%d I2C_success:%d\n", ready.read(), nFault.read(), i2c_status);
-    HAL_Delay(100);
+    HAL_Delay(10);
 }
 
 bool STSPIN32G4::clearRegister() {
@@ -105,13 +105,13 @@ void STSPIN32G4::reset() {
     bool i2c_status = false;
     i2c_status = i2cWrite(STSPING4_CONTROLER_ADDR, LOCK_REG, 0b11110000);
     printf("unlock!! READY:%d NFAULT:%d I2C_success:%d\n", ready.read(), nFault.read(), i2c_status);
-    HAL_Delay(100);
+    HAL_Delay(10);
     i2c_status = i2cWrite(STSPING4_CONTROLER_ADDR, RESET_REG, 0xFF);
     printf("Writereg READY:%d NFAULT:%d I2C_success:%d\n", ready.read(), nFault.read(), i2c_status);
-    HAL_Delay(100);
+    HAL_Delay(10);
     i2c_status = i2cWrite(STSPING4_CONTROLER_ADDR, LOCK_REG, 0b00000000);
     printf("lock!!   READY:%d NFAULT:%d I2C_success:%d\n", ready.read(), nFault.read(), i2c_status);
-    HAL_Delay(100);
+    HAL_Delay(10);
 }
 
 void STSPIN32G4::readStatus() {

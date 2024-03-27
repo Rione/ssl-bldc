@@ -39,9 +39,9 @@ class BLDCMotor {
 
   public:
     BLDCMotor(PwmOut *_pwm, AS5048A *_encoder, uint8_t _polerPairQty, float _dt);
-    void init();
+    void init(bool setZeroPosInInit = true);
 
-    void setAbsoluteZero(int _shAngleZero = NOTSET);
+    void setAbsoluteZero(float _shAngleZero = NOTSET);
     void Diagnose();
 
     void setSupplyVoltage(float _supplyVoltage, float _limitVoltage);
@@ -57,6 +57,7 @@ class BLDCMotor {
     float getShaftAngle();
     float getElectricAngle();
     float getAngularVelocity();
+    float getZeroPos();
 
     void setPhaseVoltage(float _Uq, float Ud, float _elAngle);
     void openLoopControl(float _A, float _elAngle);

@@ -18,24 +18,33 @@ BLDCMotor::BLDCMotor(PwmOut *_pwm, AS5048A *_encoder, uint8_t _polerQty, float _
       available(NOTSET),
       debug(false) {}
 
-void BLDCMotor::init() {
+void BLDCMotor::init(bool setZeroPosInInit) {
     pwm->write(0, 0, 0);
     velocityPID.setLimit(8); // 2.3
+    if (setZeroPosInInit) {
+        setAbsoluteZero();
+        printf("- set Zero Pos\n");
+    } else {
+        printf("skip set Zero Pos\n");
+    }
 
-    setAbsoluteZero();
     Diagnose(); // 故障診断
     available = true;
     printf("- BLDC init\n");
 }
 
-void BLDCMotor::setAbsoluteZero(int _shAngleZero) {
+void BLDCMotor::setAbsoluteZero(float _shAngleZero) {
     if (_shAngleZero != NOTSET) {
         shAngleZero = _shAngleZero;
     } else {
         openLoopControl(1.5, HALF_PI);
         // wait(0.5);
         wait_ms(500);
-        shAngleZero = updateEncoder();
+        float _shAngle = 0;
+        for (size_t i = 0; i < 10; i++) {
+            _shAngle += updateEncoder();
+        }
+        shAngleZero = _shAngle / 10;
 
         if (debug) {
             if (shAngleZero == -1) {
@@ -164,6 +173,10 @@ float BLDCMotor::getAngularVelocity() {
     return angularVelocity;
 }
 
+float BLDCMotor::getZeroPos() {
+    return shAngleZero;
+}
+
 void BLDCMotor::setPhaseVoltage(float Uq, float Ud, float _elAngle) {
     float T0, T1, T2;
     float Ta, Tb, Tc;
@@ -248,7 +261,7 @@ void BLDCMotor::openLoopControl(float _Uq, float _elAngle) {
     setPhaseVoltage(_Uq, 0, _elAngle);
     wait_us(200);
 }
-int deg = 0;
+
 void BLDCMotor::drive() {
     updateEncoder();
     velocity = getAngularVelocity();

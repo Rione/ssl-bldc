@@ -41,7 +41,7 @@ if __name__ == '__main__':
 
     # message = can.Message(arbitration_id=0x123, data=[
     #     0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88], is_extended_id=False)
-    message = can.Message(arbitration_id=0x1AA, is_extended_id=False)
+    message = can.Message(arbitration_id=0x00, is_extended_id=False)
     vel = 0
     a = 1
     try:
@@ -52,20 +52,19 @@ if __name__ == '__main__':
 
                 message = can.Message(arbitration_id=0x1AA, data=[vel_l, vel_h, 0, 0, 0, 0, 0, 0], is_extended_id=False)
 
-                if vel >= 300 or vel <= -300:
+                if vel >= 250 or vel <= -250:
                     a = -a
-                
+
                 vel += a
-                
 
                 bus.send(message)  # ここでメッセージを送信しています。
                 print(
-                    f"{Fore.RED}TX:{'E' if message.is_error_frame else ' '} ID:{message.arbitration_id:04x}  data:{message.data[0]:02x} {message.data[1]:02x} {message.data[2]:02x} {message.data[3]:02x} {message.data[4]:02x} {message.data[5]:02x} {message.data[6]:02x} {message.data[7]:02x}")
+                    f"{Fore.RED}TX:{'E' if message.is_error_frame else ' '} ID:{message.arbitration_id:04x} Vel:{vel} data:{message.data[0]:02x} {message.data[1]:02x} {message.data[2]:02x} {message.data[3]:02x} {message.data[4]:02x} {message.data[5]:02x} {message.data[6]:02x} {message.data[7]:02x}")
             except can.CanError:
                 print("Message NOT sent")
 
             # receive_can_messages(bus)  # 受信したデータを表示
-            sleep(0.05)  # 0.1秒待ち
+            sleep(0.02)  # 0.1秒待ち
     except KeyboardInterrupt:
         pass
     finally:
